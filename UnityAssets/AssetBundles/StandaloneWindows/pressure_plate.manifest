@@ -1,0 +1,42 @@
+ManifestFileVersion: 0
+CRC: 1769316687
+Hashes:
+  AssetFileHash:
+    serializedVersion: 2
+    Hash: b4aa54f8139fcbe31759c4c1449c3d1f
+  TypeTreeHash:
+    serializedVersion: 2
+    Hash: ef7bdaf724e6175214aa2857abbe8bb2
+HashAppended: 0
+ClassTypes:
+- Class: 1
+  Script: {instanceID: 0}
+- Class: 4
+  Script: {instanceID: 0}
+- Class: 21
+  Script: {instanceID: 0}
+- Class: 23
+  Script: {instanceID: 0}
+- Class: 28
+  Script: {instanceID: 0}
+- Class: 33
+  Script: {instanceID: 0}
+- Class: 43
+  Script: {instanceID: 0}
+- Class: 48
+  Script: {instanceID: 0}
+- Class: 65
+  Script: {instanceID: 0}
+- Class: 114
+  Script: {fileID: 2094620348, guid: fc988f832275ed1469b849d84548d688, type: 3}
+- Class: 114
+  Script: {fileID: 1521249158, guid: fc988f832275ed1469b849d84548d688, type: 3}
+- Class: 114
+  Script: {fileID: -560434771, guid: c472213d66a10e9408272c51015f238d, type: 3}
+- Class: 115
+  Script: {instanceID: 0}
+- Class: 213
+  Script: {instanceID: 0}
+Assets:
+- Assets/pressure_plate.prefab
+Dependencies: []
