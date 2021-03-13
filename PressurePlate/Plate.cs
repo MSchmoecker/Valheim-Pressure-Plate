@@ -47,8 +47,11 @@ namespace PressurePlate {
                 List<Door> doors = allDoors.FindAll(i => InRange(i.transform, 3f));
 
                 foreach (Door door in doors) {
-                    int state = door.GetComponent<ZNetView>().GetZDO().GetInt("state");
+                    if (!door.GetComponent<ZNetView>()) {
+                        continue;
+                    }
 
+                    int state = door.GetComponent<ZNetView>().GetZDO().GetInt("state");
                     if (isPressed && state == 0 || !isPressed && state != 0) {
                         door.Interact(lastPlayer, false);
                     }
