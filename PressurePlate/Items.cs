@@ -33,21 +33,40 @@ namespace PressurePlate {
 
         private static void AddPlateItem(AssetBundle assetBundle) {
             Material woodMaterial = Prefab.Cache.GetPrefab<Material>("woodwall");
+            GameObject vfxPlaceWoodFloor = Prefab.Cache.GetPrefab<GameObject>("vfx_Place_wood_floor");
+            GameObject sfxBuildHammerWood = Prefab.Cache.GetPrefab<GameObject>("sfx_build_hammer_wood");
+            GameObject sfxWoodDestroyed = Prefab.Cache.GetPrefab<GameObject>("sfx_wood_destroyed");
+            GameObject vfxSawDust = Prefab.Cache.GetPrefab<GameObject>("vfx_SawDust");
 
             GameObject plate = assetBundle.LoadAsset<GameObject>("pressure_plate.prefab");
             GameObject cloned = plate.InstantiateClone("pressurePlate");
-
-            cloned.GetComponent<WearNTear>().m_new.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
-            cloned.GetComponent<WearNTear>().m_worn.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
-            cloned.GetComponent<WearNTear>().m_broken.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
-
             Piece piece = cloned.GetComponent<Piece>();
+            WearNTear wearNTear = cloned.GetComponent<WearNTear>();
 
-            piece.m_category = Piece.PieceCategory.Misc;
+            wearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            wearNTear.m_worn.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            wearNTear.m_broken.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+
+            wearNTear.m_destroyedEffect.m_effectPrefabs = new[] {
+                new EffectList.EffectData() {m_prefab = sfxWoodDestroyed},
+                new EffectList.EffectData() {m_prefab = vfxSawDust},
+            };
+
+            wearNTear.m_hitEffect.m_effectPrefabs = new[] {
+                new EffectList.EffectData() {m_prefab = vfxSawDust},
+            };
+
+            piece.m_placeEffect.m_effectPrefabs = new[] {
+                new EffectList.EffectData() {m_prefab = vfxPlaceWoodFloor},
+                new EffectList.EffectData() {m_prefab = sfxBuildHammerWood},
+            };
+
             piece.m_resources = GenerateRequirements(new Dictionary<string, int> {
                 {"Wood", 3},
                 {"SurtlingCore", 1}
             });
+
+            piece.m_category = Piece.PieceCategory.Misc;
 
             GameObject hammerPrefab = Prefab.Cache.GetPrefab<GameObject>("_HammerPieceTable");
             PieceTable hammerTable = hammerPrefab.GetComponent<PieceTable>();
