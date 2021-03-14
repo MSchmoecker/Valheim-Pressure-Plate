@@ -1,0 +1,180 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net472</TargetFramework>
+        <LangVersion>8</LangVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="libs" />
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <Reference Include="0Harmony, Version=2.3.2.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\0Harmony.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_googleanalytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_googleanalytics.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_guiutils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_guiutils.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_lux, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_lux.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_postprocessing, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_postprocessing.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_simplemeshcombine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_simplemeshcombine.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_steamworks, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_steamworks.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_sunshafts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_sunshafts.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_utils.dll</HintPath>
+      </Reference>
+      <Reference Include="assembly_valheim, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\assembly_valheim.dll</HintPath>
+      </Reference>
+      <Reference Include="BepInEx, Version=5.4.8.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\BepInEx.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_googleanalytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_googleanalytics.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_guiutils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_guiutils.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_lux, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_lux.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_postprocessing, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_postprocessing.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_simplemeshcombine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_simplemeshcombine.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_steamworks, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_steamworks.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_sunshafts, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_sunshafts.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_utils, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_utils.dll</HintPath>
+      </Reference>
+      <Reference Include="MMHOOK_assembly_valheim, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\MMHOOK_assembly_valheim.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.AIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AndroidJNIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.AndroidJNIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AnimationModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.AnimationModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AssetBundleModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.AssetBundleModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.AudioModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.AudioModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ClothModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.ClothModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.CoreModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.DirectorModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.DirectorModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.GridModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.GridModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.IMGUIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.IMGUIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.InputLegacyModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.InputLegacyModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.InputModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.InputModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ParticleSystemModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.ParticleSystemModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.Physics2DModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.Physics2DModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.PhysicsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.ScreenCaptureModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.ScreenCaptureModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SharedInternalsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.SharedInternalsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.SubsystemsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.SubsystemsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TerrainModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.TerrainModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.TextRenderingModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.TilemapModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.TilemapModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UI, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.UI.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UIElementsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.UIElementsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.UIModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityAnalyticsModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.UnityAnalyticsModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.UnityWebRequestModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.UnityWebRequestWWWModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.UnityWebRequestWWWModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VFXModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.VFXModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VideoModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.VideoModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.VRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.VRModule.dll</HintPath>
+      </Reference>
+      <Reference Include="UnityEngine.XRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\UnityEngine.XRModule.dll</HintPath>
+      </Reference>
+      <Reference Include="ValheimLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\ValheimLib.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <None Remove="pressure_plate" />
+      <EmbeddedResource Include="pressure_plate" />
+    </ItemGroup>
+</Project>

@@ -5,7 +5,6 @@ using System.Reflection;
 using UnityEngine;
 using ValheimLib;
 using ValheimLib.ODB;
-using Newtonsoft.Json;
 
 namespace PressurePlate {
     public class Items {
