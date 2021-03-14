@@ -37,6 +37,7 @@ namespace PressurePlate {
             GameObject sfxBuildHammerWood = Prefab.Cache.GetPrefab<GameObject>("sfx_build_hammer_wood");
             GameObject sfxWoodDestroyed = Prefab.Cache.GetPrefab<GameObject>("sfx_wood_destroyed");
             GameObject vfxSawDust = Prefab.Cache.GetPrefab<GameObject>("vfx_SawDust");
+            GameObject workbench = Prefab.Cache.GetPrefab<GameObject>("piece_workbench");
 
             GameObject plate = assetBundle.LoadAsset<GameObject>("pressure_plate.prefab");
             GameObject cloned = plate.InstantiateClone("pressurePlate");
@@ -66,7 +67,8 @@ namespace PressurePlate {
                 {"SurtlingCore", 1}
             });
 
-            piece.m_category = Piece.PieceCategory.Misc;
+            piece.m_category = Piece.PieceCategory.Building;
+            piece.m_craftingStation = workbench.GetComponent<CraftingStation>();
 
             GameObject hammerPrefab = Prefab.Cache.GetPrefab<GameObject>("_HammerPieceTable");
             PieceTable hammerTable = hammerPrefab.GetComponent<PieceTable>();
