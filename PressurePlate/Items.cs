@@ -37,12 +37,16 @@ namespace PressurePlate {
             GameObject plate = assetBundle.LoadAsset<GameObject>("pressure_plate.prefab");
             GameObject cloned = plate.InstantiateClone("pressurePlate");
 
-            cloned.GetComponent<Plate>().plate.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            cloned.GetComponent<WearNTear>().m_new.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            cloned.GetComponent<WearNTear>().m_worn.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            cloned.GetComponent<WearNTear>().m_broken.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+
             Piece piece = cloned.GetComponent<Piece>();
 
             piece.m_category = Piece.PieceCategory.Misc;
             piece.m_resources = GenerateRequirements(new Dictionary<string, int> {
-                {"Wood", 4}
+                {"Wood", 3},
+                {"SurtlingCore", 1}
             });
 
             GameObject hammerPrefab = Prefab.Cache.GetPrefab<GameObject>("_HammerPieceTable");

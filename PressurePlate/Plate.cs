@@ -21,6 +21,10 @@ namespace PressurePlate {
         }
 
         private void FixedUpdate() {
+            if (!GetComponent<ZNetView>()) {
+                return;
+            }
+            
             bool wasPressed = isPressed;
             bool newPressed = FindPlayerInRange();
 
@@ -41,7 +45,11 @@ namespace PressurePlate {
             Vector3 pos = isPressed ? new Vector3(0f, -0.025f, 0f) : new Vector3(0f, 0.05f, 0f);
             plate.transform.localPosition = pos;
 
-            if (isPressed != wasPressed) {
+            if (lastPlayer == null) {
+                return;
+            }
+
+            if (isPressed != wasPressed || isPressed) {
                 allDoors.RemoveAll(i => i == null);
 
                 List<Door> doors = allDoors.FindAll(i => InRange(i.transform, 3f));
@@ -73,6 +81,18 @@ namespace PressurePlate {
         private bool InRange(Transform target, float range) {
             return Vector3.Distance(transform.position, target.position) <= range;
         }
+
+        // private void OnTriggerEnter(Collider other) {
+        //     Player player = other.GetComponent<Player>();
+        //     if (player == null) {
+        //         return;
+        //     }
+        //
+        //     lastPlayer = player;
+        // }
+        //
+        // private void OnTriggerExit(Collider other) {
+        // }
     }
 
     [HarmonyPatch]
