@@ -17,4 +17,7 @@ Place the same assemblies in `UnityAssets/Assets/Assemblies` (create the folder 
 
 ## Changelog
 0.0.1
-* Release
+- Release
+
+## Credits
+- Sound effects: http://www.freesfx.co.uk

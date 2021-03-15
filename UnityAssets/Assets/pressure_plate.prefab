@@ -116,6 +116,26 @@ MonoBehaviour:
   plate: {fileID: 8881251175063360947}
   isPressed: 0
   lastPlayer: {fileID: 0}
+  pressEffects:
+    m_effectPrefabs:
+    - m_prefab: {fileID: 1158216214100954689, guid: f05699fa83a7bbe4b9e92c03e7333287,
+        type: 3}
+      m_enabled: 1
+      m_attach: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_randomRotation: 0
+      m_scale: 0
+  releaseEffects:
+    m_effectPrefabs:
+    - m_prefab: {fileID: 1570967947250614743, guid: deec4bba3687ce34ab4735b7a24a731b,
+        type: 3}
+      m_enabled: 1
+      m_attach: 0
+      m_inheritParentRotation: 0
+      m_inheritParentScale: 0
+      m_randomRotation: 0
+      m_scale: 0
 --- !u!114 &8547922169484203406
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -16,6 +16,8 @@ namespace PressurePlate {
         public bool isPressed;
         public Player lastPlayer;
         private float notPressedCooldown;
+        public EffectList pressEffects = new EffectList();
+        public EffectList releaseEffects = new EffectList();
 
         private void Awake() {
             allPlates.Add(this);
@@ -48,6 +50,14 @@ namespace PressurePlate {
 
             Vector3 pos = isPressed ? new Vector3(0f, -0.025f, 0f) : new Vector3(0f, 0.05f, 0f);
             plate.transform.localPosition = pos;
+
+            if (stateChange) {
+                if (isPressed) {
+                    pressEffects.Create(transform.position, Quaternion.identity);
+                } else {
+                    releaseEffects.Create(transform.position, Quaternion.identity);
+                }
+            }
 
             if (lastPlayer == null) {
                 return;
