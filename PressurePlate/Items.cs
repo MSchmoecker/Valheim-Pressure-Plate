@@ -44,8 +44,6 @@ namespace PressurePlate {
             WearNTear wearNTear = cloned.GetComponent<WearNTear>();
 
             wearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
-            wearNTear.m_worn.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
-            wearNTear.m_broken.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
 
             wearNTear.m_destroyedEffect.m_effectPrefabs = new[] {
                 new EffectList.EffectData() {m_prefab = sfxWoodDestroyed},
