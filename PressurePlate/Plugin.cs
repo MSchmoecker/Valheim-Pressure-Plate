@@ -5,7 +5,7 @@ using HarmonyLib;
 using ValheimLib;
 
 namespace PressurePlate {
-    [BepInPlugin(ModGuid, "Pressure-Plate", "0.0.1")]
+    [BepInPlugin(ModGuid, "Pressure-Plate", "0.0.3")]
     [BepInDependency(ValheimLib.ValheimLib.ModGuid)]
     [BepInProcess("valheim.exe")]
     public class Plugin : BaseUnityPlugin {
