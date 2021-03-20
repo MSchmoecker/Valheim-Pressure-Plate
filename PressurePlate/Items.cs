@@ -2,14 +2,22 @@
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using HarmonyLib;
 using UnityEngine;
 using ValheimLib;
 using ValheimLib.ODB;
 
 namespace PressurePlate {
+    [HarmonyPatch]
     public class Items {
+        private static bool addedItems;
+
+        [HarmonyPatch(typeof(ZNetScene), "Awake"), HarmonyPrefix]
         public static void Init() {
-            ObjectDBHelper.OnAfterInit += AddItems;
+            if (!addedItems) {
+                AddItems();
+                addedItems = true;
+            }
         }
 
         private static void AddItems() {
