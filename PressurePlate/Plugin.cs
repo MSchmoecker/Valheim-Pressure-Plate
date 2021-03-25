@@ -19,6 +19,7 @@ namespace PressurePlate {
             Harmony harmony = new Harmony(ModGuid);
             harmony.PatchAll();
 
+            Items.Init();
             Language.AddToken("$pressure_plate", "Pressure Plate");
         }
     }
