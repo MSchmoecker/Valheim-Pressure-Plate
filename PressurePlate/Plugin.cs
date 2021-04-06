@@ -7,7 +7,6 @@ using ValheimLib;
 namespace PressurePlate {
     [BepInPlugin(ModGuid, "Pressure-Plate", "0.0.3")]
     [BepInDependency(ValheimLib.ValheimLib.ModGuid)]
-    [BepInProcess("valheim.exe")]
     public class Plugin : BaseUnityPlugin {
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
         internal static Plugin Instance { get; private set; }
