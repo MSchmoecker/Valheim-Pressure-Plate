@@ -19,6 +19,12 @@ Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to auto
 
 
 ## Changelog
+0.0.4
+- Updated ValheimLib to 0.0.15
+- Reverted last fix as it was fixed in ValheimLib
+- Removed unnecessary 'valheim.exe' restriction
+- Removed HookGenPatcher dependency
+
 0.0.3
 - Fixed "Destroyed invalid prefab ZDO..."-bug when moving through portals
 
