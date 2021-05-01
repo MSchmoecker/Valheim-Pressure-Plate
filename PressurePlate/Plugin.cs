@@ -18,8 +18,9 @@ namespace PressurePlate {
             Harmony harmony = new Harmony(ModGuid);
             harmony.PatchAll();
 
+            Language.AddToken("$pressure_plate_wood", "Wooden Pressure Plate");
+            Language.AddToken("$pressure_plate_stone", "Stone Pressure Plate");
             Items.Init();
-            Language.AddToken("$pressure_plate", "Pressure Plate");
         }
     }
 }

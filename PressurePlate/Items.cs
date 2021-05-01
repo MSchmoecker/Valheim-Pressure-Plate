@@ -31,6 +31,7 @@ namespace PressurePlate {
         }
 
         private static void AddPlateItem(AssetBundle assetBundle) {
+            // load wood assets
             Material woodMaterial = Prefab.Cache.GetPrefab<Material>("woodwall");
             GameObject vfxPlaceWoodFloor = Prefab.Cache.GetPrefab<GameObject>("vfx_Place_wood_floor");
             GameObject sfxBuildHammerWood = Prefab.Cache.GetPrefab<GameObject>("sfx_build_hammer_wood");
@@ -38,38 +39,78 @@ namespace PressurePlate {
             GameObject vfxSawDust = Prefab.Cache.GetPrefab<GameObject>("vfx_SawDust");
             GameObject workbench = Prefab.Cache.GetPrefab<GameObject>("piece_workbench");
 
+            // load stone assets
+            Material stoneMaterial = Prefab.Cache.GetPrefab<Material>("stonefloor");
+            GameObject vfxPlaceStoneFloor = Prefab.Cache.GetPrefab<GameObject>("vfx_Place_stone_wall_2x1");
+            GameObject sfxBuildHammerStone = Prefab.Cache.GetPrefab<GameObject>("sfx_build_hammer_stone");
+            GameObject vfxRockDestroyed = Prefab.Cache.GetPrefab<GameObject>("vfx_RockDestroyed");
+            GameObject sfxRockDestroyed = Prefab.Cache.GetPrefab<GameObject>("sfx_rock_destroyed");
+            GameObject vfxRockHit = Prefab.Cache.GetPrefab<GameObject>("vfx_RockHit");
+            GameObject sfxRockHit = Prefab.Cache.GetPrefab<GameObject>("sfx_rock_hit");
+            GameObject stonecutter = Prefab.Cache.GetPrefab<GameObject>("piece_stonecutter");
+
+            // load plate GameObject
             GameObject plate = assetBundle.LoadAsset<GameObject>("pressure_plate.prefab");
-            GameObject cloned = plate.InstantiateClone("pressurePlate");
-            Piece piece = cloned.GetComponent<Piece>();
-            WearNTear wearNTear = cloned.GetComponent<WearNTear>();
 
-            wearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            // create wood pressure plate
+            GameObject woodPressurePlate = plate.InstantiateClone("pressurePlate");
+            Piece woodPiece = woodPressurePlate.GetComponent<Piece>();
+            WearNTear woodWearNTear = woodPressurePlate.GetComponent<WearNTear>();
 
-            wearNTear.m_destroyedEffect.m_effectPrefabs = new[] {
+            woodWearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] {woodMaterial};
+            woodWearNTear.m_destroyedEffect.m_effectPrefabs = new[] {
                 new EffectList.EffectData() {m_prefab = sfxWoodDestroyed},
                 new EffectList.EffectData() {m_prefab = vfxSawDust},
             };
-
-            wearNTear.m_hitEffect.m_effectPrefabs = new[] {
+            woodWearNTear.m_hitEffect.m_effectPrefabs = new[] {
                 new EffectList.EffectData() {m_prefab = vfxSawDust},
             };
-
-            piece.m_placeEffect.m_effectPrefabs = new[] {
+            woodPiece.m_placeEffect.m_effectPrefabs = new[] {
                 new EffectList.EffectData() {m_prefab = vfxPlaceWoodFloor},
                 new EffectList.EffectData() {m_prefab = sfxBuildHammerWood},
             };
-
-            piece.m_resources = GenerateRequirements(new Dictionary<string, int> {
+            woodPiece.m_resources = GenerateRequirements(new Dictionary<string, int> {
                 {"Wood", 3},
                 {"SurtlingCore", 1}
             });
+            woodPiece.m_category = Piece.PieceCategory.Building;
+            woodPiece.m_craftingStation = workbench.GetComponent<CraftingStation>();
+            woodPiece.m_name = "$pressure_plate_wood";
 
-            piece.m_category = Piece.PieceCategory.Building;
-            piece.m_craftingStation = workbench.GetComponent<CraftingStation>();
+            // create stone pressure plate
+            GameObject stonePressurePlate = plate.InstantiateClone("pressurePlate_stone");
+            Piece stonePiece = stonePressurePlate.GetComponent<Piece>();
+            WearNTear stoneWearNTear = stonePressurePlate.GetComponent<WearNTear>();
 
+            stoneMaterial = new Material(stoneMaterial);
+            stoneMaterial.SetTextureScale("_MainTex", new Vector2(0.14f, 0.14f));
+            stoneMaterial.SetTextureOffset("_MainTex", new Vector2(0.28f, 0.08f));
+            stoneWearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] {stoneMaterial};
+            stoneWearNTear.m_destroyedEffect.m_effectPrefabs = new[] {
+                new EffectList.EffectData() {m_prefab = vfxRockDestroyed},
+                new EffectList.EffectData() {m_prefab = sfxRockDestroyed},
+            };
+            stoneWearNTear.m_hitEffect.m_effectPrefabs = new[] {
+                new EffectList.EffectData() {m_prefab = vfxRockHit},
+                new EffectList.EffectData() {m_prefab = sfxRockHit},
+            };
+            stonePiece.m_placeEffect.m_effectPrefabs = new[] {
+                new EffectList.EffectData() {m_prefab = vfxPlaceStoneFloor},
+                new EffectList.EffectData() {m_prefab = sfxBuildHammerStone},
+            };
+            stonePiece.m_resources = GenerateRequirements(new Dictionary<string, int> {
+                {"Stone", 3},
+                {"SurtlingCore", 1}
+            });
+            stonePiece.m_category = Piece.PieceCategory.Building;
+            stonePiece.m_craftingStation = stonecutter.GetComponent<CraftingStation>();
+            stonePiece.m_name = "$pressure_plate_stone";
+
+            // add pressure plates to hammer
             GameObject hammerPrefab = Prefab.Cache.GetPrefab<GameObject>("_HammerPieceTable");
             PieceTable hammerTable = hammerPrefab.GetComponent<PieceTable>();
-            hammerTable.m_pieces.Add(cloned.gameObject);
+            hammerTable.m_pieces.Add(woodPressurePlate.gameObject);
+            hammerTable.m_pieces.Add(stonePressurePlate.gameObject);
         }
 
         public static AssetBundle GetAssetBundleFromResources(string fileName) {
