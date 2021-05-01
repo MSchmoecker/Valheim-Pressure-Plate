@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: b20fb1908b9cd2c42a64b07b5eaff1b8
+guid: dae2e1409091e7f4da1789d6b5aada8d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -112,5 +112,5 @@ TextureImporter:
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
   userData: 
-  assetBundleName: 
+  assetBundleName: pressure_plate
   assetBundleVariant: 

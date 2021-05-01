@@ -1,9 +1,9 @@
 ManifestFileVersion: 0
-CRC: 3286203887
+CRC: 2862716238
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c1a347d1545f38e8b9e32b2488981fd9
+    Hash: 6b05117744e835adf8748e3823a842d3
   TypeTreeHash:
     serializedVersion: 2
     Hash: a2ad520f1aa783f2964cfbe334335e84
@@ -50,5 +50,7 @@ ClassTypes:
 - Class: 213
   Script: {instanceID: 0}
 Assets:
+- Assets/pressure_plate_wood_icon.png
+- Assets/pressure_plate_stone_icon.png
 - Assets/pressure_plate.prefab
 Dependencies: []

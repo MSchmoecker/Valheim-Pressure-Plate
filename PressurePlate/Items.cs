@@ -51,6 +51,8 @@ namespace PressurePlate {
 
             // load plate GameObject
             GameObject plate = assetBundle.LoadAsset<GameObject>("pressure_plate.prefab");
+            Sprite plateIconWood = assetBundle.LoadAsset<Sprite>("pressure_plate_wood_icon.png");
+            Sprite plateIconStone = assetBundle.LoadAsset<Sprite>("pressure_plate_stone_icon.png");
 
             // create wood pressure plate
             GameObject woodPressurePlate = plate.InstantiateClone("pressurePlate");
@@ -76,6 +78,7 @@ namespace PressurePlate {
             woodPiece.m_category = Piece.PieceCategory.Building;
             woodPiece.m_craftingStation = workbench.GetComponent<CraftingStation>();
             woodPiece.m_name = "$pressure_plate_wood";
+            woodPiece.m_icon = plateIconWood;
 
             // create stone pressure plate
             GameObject stonePressurePlate = plate.InstantiateClone("pressurePlate_stone");
@@ -105,6 +108,7 @@ namespace PressurePlate {
             stonePiece.m_category = Piece.PieceCategory.Building;
             stonePiece.m_craftingStation = stonecutter.GetComponent<CraftingStation>();
             stonePiece.m_name = "$pressure_plate_stone";
+            stonePiece.m_icon = plateIconStone;
 
             // add pressure plates to hammer
             GameObject hammerPrefab = Prefab.Cache.GetPrefab<GameObject>("_HammerPieceTable");
