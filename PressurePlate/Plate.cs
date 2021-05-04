@@ -5,8 +5,6 @@ using System.Linq;
 using System.Reflection;
 using HarmonyLib;
 using UnityEngine;
-using ValheimLib;
-using ValheimLib.ODB;
 
 namespace PressurePlate {
     public class Plate : MonoBehaviour {
@@ -95,11 +93,11 @@ namespace PressurePlate {
         }
 
         public List<Door> FindDoorsInRange() {
-            return allDoors.FindAll(i => InRange(i.transform, 3f));
+            return allDoors.FindAll(i => InRange(i.transform.position, 3f));
         }
 
         private bool FindPlayerInRange() {
-            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform, 1f));
+            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform.position, 1f));
 
             if (player != null) {
                 lastPlayer = player;
@@ -109,8 +107,8 @@ namespace PressurePlate {
             return false;
         }
 
-        private bool InRange(Transform target, float range) {
-            return Vector3.Distance(transform.position, target.position) <= range;
+        private bool InRange(Vector3 target, float range) {
+            return Vector3.Distance(transform.position, target) <= range;
         }
 
         private void OnDestroy() {
