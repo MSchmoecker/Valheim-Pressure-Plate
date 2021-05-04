@@ -1,8 +1,8 @@
 # Pressure-Plate
 ## About
 Adds a pressure plate, which opens and closes doors within a range if a player stands on it.
-Craftable with 3 wood and 1 surtling core with the Hammer.
-
+- Wooden pressure plate: 3 wood, 1 surtling core with the hammer. Requires a workbench in range
+- Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a stonecutter in range
 
 ## Installation
 Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
@@ -19,6 +19,11 @@ Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to auto
 
 
 ## Changelog
+0.0.5
+- Added stone pressure plate
+- Updated wood pressure plate icon
+- Changed Language tokens: $pressure_plate -> $pressure_plate_wood, added $pressure_plate_stone
+
 0.0.4
 - Updated ValheimLib to 0.0.15
 - Reverted last fix as it was fixed in ValheimLib
