@@ -97,7 +97,7 @@ namespace PressurePlate {
         }
 
         private bool FindPlayerInRange() {
-            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform.position, 1f, 1f));
+            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform.position, Plugin.playerPlateRadiusXZ.Value, Plugin.playerPlateRadiusY.Value));
 
             if (player != null) {
                 lastPlayer = player;
