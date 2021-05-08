@@ -31,7 +31,7 @@ namespace PressurePlate {
             bool newPressed = FindPlayerInRange();
 
             if (newPressed) {
-                notPressedCooldown = 1;
+                notPressedCooldown = Plugin.plateOpenDelay.Value;
                 isPressed = true;
             }
 

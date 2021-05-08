@@ -16,6 +16,7 @@ namespace PressurePlate {
         public static ConfigEntry<float> plateRadiusY;
         public static ConfigEntry<float> playerPlateRadiusXZ;
         public static ConfigEntry<float> playerPlateRadiusY;
+        public static ConfigEntry<float> plateOpenDelay;
 
         private void Awake() {
             Instance = this;
@@ -25,6 +26,7 @@ namespace PressurePlate {
             plateRadiusY = Config.Bind<float>("General", "PressurePlateRadiusVertical", 3, new ConfigDescription("Max vertical distance from a pressure plate to open/close a door. Value in Unity units, e.g. 2 is 1m in Valheim"));
             playerPlateRadiusXZ = Config.Bind<float>("General", "PressurePlatePlayerRadiusHorizontal", 1, new ConfigDescription("Max horizontal distance from a player to trigger a pressure plate. Value in Unity units, e.g. 2 is 1m in Valheim"));
             playerPlateRadiusY = Config.Bind<float>("General", "PressurePlatePlayerRadiusVertical", 1, new ConfigDescription("Max vertical distance from a player to trigger a pressure plate. Value in Unity units, e.g. 2 is 1m in Valheim"));
+            plateOpenDelay = Config.Bind<float>("General", "PressurePlateOpenDelay", 1, new ConfigDescription("Time in which a pressure plate is still pressed after the player leaves it"));
 
             Harmony harmony = new Harmony(ModGuid);
             harmony.PatchAll();
