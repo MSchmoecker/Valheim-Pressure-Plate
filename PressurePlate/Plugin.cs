@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using BepInEx;
+using BepInEx.Configuration;
 using HarmonyLib;
 using ValheimLib;
 
@@ -11,9 +12,15 @@ namespace PressurePlate {
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
         internal static Plugin Instance { get; private set; }
 
+        public static ConfigEntry<float> plateRadiusXZ;
+        public static ConfigEntry<float> plateRadiusY;
+
         private void Awake() {
             Instance = this;
             Log.Init(Logger);
+
+            plateRadiusXZ = Config.Bind<float>("General", "PressurePlateRadiusHorizontal", 3, new ConfigDescription("Max horizontal distance from a pressure plate to open/close a door. Value in Unity units, e.g. 2 is 1m in Valheim"));
+            plateRadiusY = Config.Bind<float>("General", "PressurePlateRadiusVertical", 3, new ConfigDescription("Max vertical distance from a pressure plate to open/close a door. Value in Unity units, e.g. 2 is 1m in Valheim"));
 
             Harmony harmony = new Harmony(ModGuid);
             harmony.PatchAll();

@@ -64,7 +64,7 @@ namespace PressurePlate {
             if (stateChange || isPressed) {
                 allDoors.RemoveAll(i => i == null);
 
-                List<Door> doors = FindDoorsInRange();
+                List<Door> doors = FindDoorsInPlateRange();
 
                 foreach (Door door in doors) {
                     if (!door.GetComponent<ZNetView>()) {
@@ -82,7 +82,7 @@ namespace PressurePlate {
                     }
 
                     if (!isPressed && state != 0) { //close
-                        if (allPlates.Any(i => i != this && i.isPressed && i.FindDoorsInRange().Contains(door))) {
+                        if (allPlates.Any(i => i != this && i.isPressed && i.FindDoorsInPlateRange().Contains(door))) {
                             continue; //don't close the door if another plate is pressed
                         }
 
@@ -92,12 +92,12 @@ namespace PressurePlate {
             }
         }
 
-        public List<Door> FindDoorsInRange() {
-            return allDoors.FindAll(i => InRange(i.transform.position, 3f));
+        public List<Door> FindDoorsInPlateRange() {
+            return allDoors.FindAll(i => InRange(i.transform.position, Plugin.plateRadiusXZ.Value, Plugin.plateRadiusY.Value));
         }
 
         private bool FindPlayerInRange() {
-            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform.position, 1f));
+            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform.position, 1f, 1f));
 
             if (player != null) {
                 lastPlayer = player;
@@ -107,8 +107,11 @@ namespace PressurePlate {
             return false;
         }
 
-        private bool InRange(Vector3 target, float range) {
-            return Vector3.Distance(transform.position, target) <= range;
+        private bool InRange(Vector3 target, float rangeXZ, float rangeY) {
+            Vector3 delta = transform.position - target;
+            bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
+            bool inY = Mathf.Abs(delta.y) <= rangeY;
+            return inXZ && inY;
         }
 
         private void OnDestroy() {
