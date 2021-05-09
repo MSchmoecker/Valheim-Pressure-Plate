@@ -4,6 +4,8 @@ Adds a pressure plate, which opens and closes doors within a range if a player s
 - Wooden pressure plate: 3 wood, 1 surtling core with the hammer. Requires a workbench in range
 - Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a stonecutter in range
 
+Triggering range is configurable.
+
 ## Installation
 Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
 
@@ -19,6 +21,13 @@ Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to auto
 
 
 ## Changelog
+0.0.6
+- Added configuration: PressurePlateRadiusHorizontal
+- Added configuration: PressurePlateRadiusVertical
+- Added configuration: PressurePlatePlayerRadiusHorizontal
+- Added configuration: PressurePlatePlayerRadiusVertical
+- Added configuration: PressurePlateOpenDelay
+
 0.0.5
 - Added stone pressure plate
 - Updated wood pressure plate icon
