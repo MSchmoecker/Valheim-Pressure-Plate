@@ -48,6 +48,12 @@ Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to auto
 0.0.1
 - Release
 
+## Links
+Nexusmods: https://www.nexusmods.com/valheim/mods/498
+
+Thunderstore: https://valheim.thunderstore.io/package/MSchmoecker/PressurePlate/
+
+Github: https://github.com/MSchmoecker/Valheim-Pressure-Plate
 
 ## Credits
 - Sound effects: http://www.freesfx.co.uk
