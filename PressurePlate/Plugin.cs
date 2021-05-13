@@ -3,11 +3,11 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
-using ValheimLib;
+using Jotunn.Managers;
 
 namespace PressurePlate {
     [BepInPlugin(ModGuid, "Pressure-Plate", "0.0.6")]
-    [BepInDependency(ValheimLib.ValheimLib.ModGuid)]
+    [BepInDependency(Jotunn.Main.ModGuid)]
     public class Plugin : BaseUnityPlugin {
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
         internal static Plugin Instance { get; private set; }
@@ -31,8 +31,8 @@ namespace PressurePlate {
             Harmony harmony = new Harmony(ModGuid);
             harmony.PatchAll();
 
-            Language.AddToken("$pressure_plate_wood", "Wooden Pressure Plate");
-            Language.AddToken("$pressure_plate_stone", "Stone Pressure Plate");
+            LocalizationManager.Instance.AddToken("$pressure_plate_wood", "Wooden Pressure Plate", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_stone", "Stone Pressure Plate", false);
             Items.Init();
         }
     }

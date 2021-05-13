@@ -44,6 +44,12 @@
       <Reference Include="BepInEx, Version=5.4.8.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>libs\BepInEx.dll</HintPath>
       </Reference>
+      <Reference Include="Jotunn, Version=2.0.7.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\Jotunn.dll</HintPath>
+      </Reference>
+      <Reference Include="Jotunn, Version=2.0.9.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>libs\Jotunn.dll</HintPath>
+      </Reference>
       <Reference Include="MMHOOK_assembly_googleanalytics, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>libs\MMHOOK_assembly_googleanalytics.dll</HintPath>
       </Reference>
@@ -166,9 +172,6 @@
       </Reference>
       <Reference Include="UnityEngine.XRModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>libs\UnityEngine.XRModule.dll</HintPath>
-      </Reference>
-      <Reference Include="ValheimLib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
-        <HintPath>libs\ValheimLib.dll</HintPath>
       </Reference>
     </ItemGroup>
 
