@@ -21,6 +21,9 @@ Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to auto
 
 
 ## Changelog
+0.1.0
+- Replaced ValheimLib with Jotunn, everything is backwards compatible
+
 0.0.6
 - Added configuration: PressurePlateRadiusHorizontal
 - Added configuration: PressurePlateRadiusVertical
