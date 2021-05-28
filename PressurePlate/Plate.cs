@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using HarmonyLib;
 using UnityEngine;
 
 namespace PressurePlate {
@@ -116,16 +115,6 @@ namespace PressurePlate {
 
         private void OnDestroy() {
             allPlates.Remove(this);
-        }
-    }
-
-    [HarmonyPatch]
-    public static class DoorPatch {
-        [HarmonyPatch(typeof(Door), "Awake"), HarmonyPostfix]
-        public static void DoorAwake(Door __instance) {
-            if (!Plate.allDoors.Contains(__instance)) {
-                Plate.allDoors.Add(__instance);
-            }
         }
     }
 }
