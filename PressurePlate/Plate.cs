@@ -70,7 +70,7 @@ namespace PressurePlate {
                         continue; //wait for network spawn
                     }
 
-                    int state = door.GetComponent<ZNetView>().GetZDO().GetInt("state");
+                    int state = door.GetState();
 
                     if (!PrivateHelper.InvokePrivateMethod<Door, bool>(door, "CanInteract", new object[0])) {
                         isPressed = true; //wait till door can be closed 
