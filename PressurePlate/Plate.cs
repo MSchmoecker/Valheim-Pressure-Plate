@@ -8,11 +8,10 @@ using UnityEngine;
 namespace PressurePlate {
     public class Plate : MonoBehaviour {
         public GameObject plate;
-        public static List<Door> allDoors = new List<Door>();
         public static List<Plate> allPlates = new List<Plate>();
         public bool isPressed;
         public Player lastPlayer;
-        private float notPressedCooldown;
+        private float pressCooldown;
         public EffectList pressEffects = new EffectList();
         public EffectList releaseEffects = new EffectList();
 
@@ -30,13 +29,15 @@ namespace PressurePlate {
             bool newPressed = FindPlayerInRange();
 
             if (newPressed) {
-                notPressedCooldown = Plugin.plateOpenDelay.Value;
-                isPressed = true;
-            }
+                List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
 
-            if (!newPressed) {
-                if (notPressedCooldown > 0) {
-                    notPressedCooldown -= Time.fixedDeltaTime;
+                float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
+                pressCooldown = maxTime ?? Plugin.plateOpenDelay.Value;
+
+                isPressed = true;
+            } else {
+                if (pressCooldown > 0) {
+                    pressCooldown -= Time.fixedDeltaTime;
                     isPressed = true;
                 } else {
                     isPressed = false;
@@ -60,39 +61,26 @@ namespace PressurePlate {
                 return;
             }
 
-            if (stateChange || isPressed) {
-                allDoors.RemoveAll(i => i == null);
+            if (stateChange) {
+                List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
 
-                List<Door> doors = FindDoorsInPlateRange();
-
-                foreach (Door door in doors) {
-                    if (!door.GetComponent<ZNetView>()) {
-                        continue; //wait for network spawn
+                foreach (DoorPowerState door in doors) {
+                    if (isPressed) {
+                        door.AddPoweringPlate(this);
+                    } else {
+                        door.RemovePoweringPlate(this);
                     }
 
-                    int state = door.GetState();
+                    if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
+                    if (lastPlayer == null) continue;
 
-                    if (!PrivateHelper.InvokePrivateMethod<Door, bool>(door, "CanInteract", new object[0])) {
-                        isPressed = true; //wait till door can be closed 
-                    }
-
-                    if (isPressed && state == 0) { //open
-                        door.Interact(lastPlayer, false);
-                    }
-
-                    if (!isPressed && state != 0) { //close
-                        if (allPlates.Any(i => i != this && i.isPressed && i.FindDoorsInPlateRange().Contains(door))) {
-                            continue; //don't close the door if another plate is pressed
-                        }
-
-                        door.Interact(lastPlayer, false);
+                    if (isPressed) {
+                        door.Open(lastPlayer);
+                    } else {
+                        door.Close(lastPlayer);
                     }
                 }
             }
-        }
-
-        public List<Door> FindDoorsInPlateRange() {
-            return allDoors.FindAll(i => InRange(i.transform.position, Plugin.plateRadiusXZ.Value, Plugin.plateRadiusY.Value));
         }
 
         private bool FindPlayerInRange() {
