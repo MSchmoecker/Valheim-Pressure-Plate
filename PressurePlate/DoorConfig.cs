@@ -5,11 +5,13 @@ using UnityEngine;
 namespace PressurePlate {
     public class DoorConfig {
         public bool openClosedInverted;
+        public float openTime;
 
         private static readonly Dictionary<string, DoorConfig> specificDoors = new Dictionary<string, DoorConfig>();
 
-        public DoorConfig(bool openClosedInverted = false) {
+        public DoorConfig(bool openClosedInverted = false, float openTime = 1) {
             this.openClosedInverted = openClosedInverted;
+            this.openTime = openTime;
         }
 
         public static bool AddDoorConfig(string pieceName, DoorConfig doorConfig) {
