@@ -10,15 +10,45 @@ Triggering range is configurable.
 Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
 
 
-## Developer
+## Development
+### Setup
 Inside the repo are two folders, `PressurePlate` for the mod and `UnityAssets` for the unity files.
-
 
 Place all Unity, Valheim and dependencies assemblies in the `PressurePlate/libs` folder (create the folder if it doesn't exist) and add them as references to the visual studio project.
 
 Place the same assemblies in `UnityAssets/Assets/Assemblies` (create the folder if it doesn't exist) if you want to edit the AssetBundle.
 Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to automatically copy the resulting file to the mod folder.
 
+### Adding custom door config
+Custom door settings can be applied for every door type. This can only be done with code and is an optional for other mods. Vanilla items are configurable, too.
+
+Here is a quick instruction:
+1. Add this mod .dll to your assembly references. The next step ensures that everything works if a user doesn't have pressure plate installed.
+2. Check if the mod is loaded:
+    ```
+    const string pressurePlateGUID = "com.maxsch.valheim.pressure_plate";
+    if (Chainloader.PluginInfos.ContainsKey(pressurePlateGUID)) {
+        // next steps...
+    }
+    ```
+    This should be done at your plugins `Start()`. If you use `Awake()` and your mod is loaded first it may not detect it properly. Any following steps can be done whenever you like, even after the loading phase.
+3. Create the config: `DoorConfig config = new DoorConfig();`
+
+    It takes two optional parameters:
+    - bool openClosedInverted, default: false
+    - float openTime, default: 1
+
+    This may requires `using PressurePlate;`
+4. Add the config to the gameobject:
+    ```
+    const prefabName = "your_door_piece_name"
+    DoorConfig.AddDoorConfig(prefabName, config);
+    ```
+    or directly with your prefab
+    ```
+    GameObject door = myDoorPrefab;
+    DoorConfig.AddDoorConfig(door.GetComponent<Door>(), config);
+    ```
 
 ## Changelog
 0.1.0
