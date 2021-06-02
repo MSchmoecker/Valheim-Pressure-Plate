@@ -51,6 +51,11 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.2.0
+- Reworked internally how a pressure plate opens doors
+- Modders can now set custom configurations for doors. This includes if the open/close is reversed and opening time
+- A pressure plate no longer interrupts a open or close animation
+
 0.1.0
 - Replaced ValheimLib with Jotunn, everything is backwards compatible
 
