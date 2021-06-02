@@ -7,25 +7,36 @@ namespace PressurePlate {
         public bool openClosedInverted;
         public float openTime;
 
-        private static readonly Dictionary<string, DoorConfig> specificDoors = new Dictionary<string, DoorConfig>();
+        private static readonly Dictionary<int, DoorConfig> specificDoors = new Dictionary<int, DoorConfig>();
 
         public DoorConfig(bool openClosedInverted = false, float openTime = 1) {
             this.openClosedInverted = openClosedInverted;
             this.openTime = openTime;
         }
 
-        public static bool AddDoorConfig(string pieceName, DoorConfig doorConfig) {
-            if (specificDoors.ContainsKey(pieceName)) {
-                return false;
+        public static bool AddDoorConfig(Door door, DoorConfig doorConfig) {
+            if (!door.TryGetComponent(out DoorPowerState doorPowerState)) {
+                doorPowerState = door.gameObject.AddComponent<DoorPowerState>();
             }
 
-            specificDoors.Add(pieceName, doorConfig);
+            if (specificDoors.ContainsKey(doorPowerState.GetPrefabId())) return false;
+
+            specificDoors.Add(doorPowerState.GetPrefabId(), doorConfig);
             return true;
         }
 
-        public static DoorConfig GetDoorConfig(string pieceName) {
-            if (specificDoors.ContainsKey(pieceName)) {
-                return specificDoors[pieceName];
+        public static bool AddDoorConfig(string prefabName, DoorConfig doorConfig) {
+            int hashCode = prefabName.GetStableHashCode();
+
+            if (specificDoors.ContainsKey(hashCode)) return false;
+
+            specificDoors.Add(hashCode, doorConfig);
+            return true;
+        }
+
+        public static DoorConfig GetDoorConfig(DoorPowerState doorPowerState) {
+            if (specificDoors.ContainsKey(doorPowerState.GetPrefabId())) {
+                return specificDoors[doorPowerState.GetPrefabId()];
             }
 
             return null;

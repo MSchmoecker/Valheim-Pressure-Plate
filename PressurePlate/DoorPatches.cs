@@ -20,6 +20,7 @@ namespace PressurePlate {
         private List<Plate> poweringPlates = new List<Plate>();
         private ZNetView zNetView;
         private Door door;
+        private int prefabId = -1;
 
         private void Awake() {
             AllStates.Add(this);
@@ -32,7 +33,7 @@ namespace PressurePlate {
         }
 
         public DoorConfig GetDoorConfig() {
-            return DoorConfig.GetDoorConfig(gameObject.name);
+            return DoorConfig.GetDoorConfig(this);
         }
 
         public int GetState() {
@@ -93,6 +94,14 @@ namespace PressurePlate {
             bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
             bool inY = Mathf.Abs(delta.y) <= rangeY;
             return inXZ && inY;
+        }
+
+        public int GetPrefabId() {
+            if (prefabId == -1) {
+                prefabId = Utils.GetPrefabName(gameObject).GetStableHashCode();
+            }
+
+            return prefabId;
         }
     }
 }
