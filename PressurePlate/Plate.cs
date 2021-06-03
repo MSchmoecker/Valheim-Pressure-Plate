@@ -57,10 +57,6 @@ namespace PressurePlate {
                 }
             }
 
-            if (lastPlayer == null) {
-                return;
-            }
-
             if (stateChange) {
                 List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
 

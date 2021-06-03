@@ -18,13 +18,11 @@ namespace PressurePlate {
         public static readonly List<DoorPowerState> AllStates = new List<DoorPowerState>();
 
         private List<Plate> poweringPlates = new List<Plate>();
-        private ZNetView zNetView;
         private Door door;
         private int prefabId = -1;
 
         private void Awake() {
             AllStates.Add(this);
-            zNetView = GetComponent<ZNetView>();
             door = GetComponent<Door>();
         }
 
@@ -37,13 +35,12 @@ namespace PressurePlate {
         }
 
         public int GetState() {
+            if(!IsReallySpawned(out ZNetView zNetView)) return 0;
+
             int state = zNetView.GetZDO().GetInt("state");
-
-            if (GetDoorConfig() == null) {
-                return state;
-            }
-
             DoorConfig doorConfig = GetDoorConfig();
+
+            if (doorConfig == null) return state;
 
             if (doorConfig.openClosedInverted) {
                 state = 1 - Math.Abs(state);
@@ -52,13 +49,23 @@ namespace PressurePlate {
             return state;
         }
 
+        public bool IsReallySpawned(out ZNetView zNetView) {
+            // If the player places a new door prefab, the door exists but no ZNetView
+            zNetView = GetComponent<ZNetView>();
+            return zNetView != null;
+        }
+
         public void Open(Humanoid humanoid) {
+            if(!IsReallySpawned(out _)) return;
+
             if (!IsOpen()) {
                 door.Interact(humanoid, false);
             }
         }
 
         public void Close(Humanoid humanoid) {
+            if(!IsReallySpawned(out _)) return;
+
             if (IsOpen()) {
                 door.Interact(humanoid, false);
             }
