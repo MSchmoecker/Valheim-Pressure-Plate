@@ -55,9 +55,7 @@ namespace PressurePlate {
                 } else {
                     releaseEffects.Create(transform.position, Quaternion.identity);
                 }
-            }
 
-            if (stateChange) {
                 List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
 
                 foreach (DoorPowerState door in doors) {
@@ -66,13 +64,21 @@ namespace PressurePlate {
                     } else {
                         door.RemovePoweringPlate(this);
                     }
+                }
+            }
 
-                    if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
-                    if (lastPlayer == null) continue;
+            if (lastPlayer == null) return;
 
+            if (stateChange || isPressed) {
+                List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
+                foreach (DoorPowerState door in doors) {
                     if (isPressed) {
+                        // always open the door if the plate is pressed
                         door.Open(lastPlayer);
                     } else {
+                        // only close the door if this is the last plate powering it
+                        if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
+
                         door.Close(lastPlayer);
                     }
                 }
