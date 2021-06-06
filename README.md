@@ -56,6 +56,10 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.2.1
+- Fixed null error when placing a new door, as no ZNetView exists yet
+- Fixed not opening a door if the player presses the plate while the door is closing
+
 0.2.0
 - Reworked internally how a pressure plate opens doors
 - Modders can now set custom configurations for doors. This includes if the open/close is reversed and opening time
