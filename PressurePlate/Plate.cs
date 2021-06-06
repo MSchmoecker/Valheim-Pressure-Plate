@@ -8,7 +8,6 @@ using UnityEngine;
 namespace PressurePlate {
     public class Plate : MonoBehaviour {
         public GameObject plate;
-        public static List<Plate> allPlates = new List<Plate>();
         public bool isPressed;
         public Player lastPlayer;
         private float pressCooldown;
@@ -16,7 +15,6 @@ namespace PressurePlate {
         public EffectList releaseEffects = new EffectList();
 
         private void Awake() {
-            allPlates.Add(this);
             isPressed = FindPlayerInRange();
         }
 
@@ -101,10 +99,6 @@ namespace PressurePlate {
             bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
             bool inY = Mathf.Abs(delta.y) <= rangeY;
             return inXZ && inY;
-        }
-
-        private void OnDestroy() {
-            allPlates.Remove(this);
         }
     }
 }
