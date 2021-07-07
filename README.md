@@ -30,6 +30,8 @@ If you use r2modman you can set the path too, but this is optional.
 </Project>
 ````
 
+This requires the publicized Valheim dlls. See here for example: https://github.com/CabbageCrow/AssemblyPublicizer
+
 ### Unity Setup
 This step is only needed if you want to compile the AssetBundle.
 
