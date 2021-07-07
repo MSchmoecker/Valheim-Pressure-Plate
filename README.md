@@ -11,12 +11,31 @@ Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
 
 
 ## Development
-### Setup
-Inside the repo are two folders, `PressurePlate` for the mod and `UnityAssets` for the unity files.
+Inside the repo are two folders, `PressurePlate` for the mod and `UnityAssets` for the Unity files.
 
-Place all Unity, Valheim and dependencies assemblies in the `PressurePlate/libs` folder (create the folder if it doesn't exist) and add them as references to the visual studio project.
+### Mod Setup
+Create a file called `Environment.props` inside the project root.
+Copy the example and change the Valheim install path to your location.
+If you use r2modman you can set the path too, but this is optional.
 
-Place the same assemblies in `UnityAssets/Assets/Assemblies` (create the folder if it doesn't exist) if you want to edit the AssetBundle.
+````
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <!-- Needs to be your path to the base Valheim folder -->
+        <VALHEIM_INSTALL>E:\Programme\Steam\steamapps\common\Valheim</VALHEIM_INSTALL>
+        <!-- Optional, needs to be the path to a r2modmanPlus profile folder -->
+        <R2MODMAN_INSTALL>C:\Users\[user]\AppData\Roaming\r2modmanPlus-local\Valheim\profiles\Develop</R2MODMAN_INSTALL>
+    </PropertyGroup>
+</Project>
+````
+
+### Unity Setup
+This step is only needed if you want to compile the AssetBundle.
+
+Place all needed Unity, Valheim and dependencies assemblies in the `UnityAssets/Assets/Assemblies` folder.
+See `PressurePlate/PressurePlate.csproj` for reference. If some are still missing, Unity prints the name of a missing dependencies to the console.
+
 Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to automatically copy the resulting file to the mod folder.
 
 ### Adding custom door config
@@ -46,7 +65,7 @@ Here is a quick instruction:
 
 4. Add the config to the gameobject:
     ```
-    const prefabName = "your_door_piece_name"
+    const prefabName = "your_door_piece_name";
     DoorConfig.AddDoorConfig(prefabName, config);
     ```
     or directly with your prefab
