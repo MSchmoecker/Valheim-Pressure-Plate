@@ -48,14 +48,18 @@ namespace PressurePlate {
                 Label privateAreaReturnLabel = new Label();
                 code[checkAccessCallIndex + 2].WithLabels(privateAreaReturnLabel);
 
-                // after CheckAccess was false
-                code.InsertRange(checkAccessCallIndex + 2, new[] {
+                CodeInstruction[] bypassWard = {
                     // check if ward should be bypassed
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, GetComponentDoorPowerState),
                     new CodeInstruction(OpCodes.Ldfld, GetPlateBypassWard),
                     new CodeInstruction(OpCodes.Brtrue, afterReturnLabel), // skip the return and continue method
-                });
+                };
+
+                code[checkAccessCallIndex - 6].MoveLabelsTo(bypassWard[0]);
+
+                // bevore CheckAccess is called
+                code.InsertRange(checkAccessCallIndex - 6, bypassWard);
             }
 
             return code.AsEnumerable();
