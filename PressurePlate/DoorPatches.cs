@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Emit;
 using HarmonyLib;
 using UnityEngine;
 
@@ -12,10 +15,65 @@ namespace PressurePlate {
                 __instance.gameObject.AddComponent<DoorPowerState>();
             }
         }
+
+        private static readonly MethodInfo CheckAccessCall =
+            AccessTools.GetDeclaredMethods(typeof(PrivateArea)).First(m => m.Name == "CheckAccess");
+
+        private static readonly FieldInfo ConfigByPassWards =
+            AccessTools.Field(typeof(Plugin), nameof(Plugin.bypassWards));
+
+        private static readonly MethodInfo ConfigByPassWardsGetValue =
+            AccessTools.PropertyGetter(typeof(BepInEx.Configuration.ConfigEntry<bool>), "Value");
+
+        private static readonly MethodInfo GetComponentDoorPowerState =
+            AccessTools.Method(typeof(Component), "GetComponent", new Type[0], new[] {typeof(DoorPowerState)});
+
+        private static readonly FieldInfo GetPlateIsInteracting =
+            AccessTools.Field(typeof(DoorPowerState), nameof(DoorPowerState.plateIsInteracting));
+
+        [HarmonyPatch(typeof(Door), "Interact"), HarmonyTranspiler]
+        public static IEnumerable<CodeInstruction> DoorInteract(IEnumerable<CodeInstruction> instructions) {
+            List<CodeInstruction> code = new List<CodeInstruction>(instructions);
+
+            int checkAccessCallIndex = -1;
+            Label afterReturnLabel = new Label();
+
+            for (int i = 0; i < code.Count; i++) {
+                CodeInstruction instruction = code[i];
+
+                if (instruction.Is(OpCodes.Call, CheckAccessCall)) {
+                    checkAccessCallIndex = i;
+                }
+
+                if (checkAccessCallIndex > -1 && i == checkAccessCallIndex + 1) {
+                    afterReturnLabel = (Label) instruction.operand;
+                }
+            }
+
+            if (checkAccessCallIndex > -1) {
+                Label privateAreaReturnLabel = new Label();
+                code[checkAccessCallIndex + 2].WithLabels(privateAreaReturnLabel);
+
+                // after CheckAccess was false
+                code.InsertRange(checkAccessCallIndex + 2, new[] {
+                    new CodeInstruction(OpCodes.Ldsfld, ConfigByPassWards),
+                    new CodeInstruction(OpCodes.Callvirt, ConfigByPassWardsGetValue),
+                    new CodeInstruction(OpCodes.Brfalse,
+                                        privateAreaReturnLabel), // when bypassWards.Value is false exit normally
+                    new CodeInstruction(OpCodes.Ldarg_0),
+                    new CodeInstruction(OpCodes.Call, GetComponentDoorPowerState),
+                    new CodeInstruction(OpCodes.Ldfld, GetPlateIsInteracting),
+                    new CodeInstruction(OpCodes.Brtrue, afterReturnLabel), // skip the return and continue method
+                });
+            }
+
+            return code.AsEnumerable();
+        }
     }
 
     public class DoorPowerState : MonoBehaviour {
         public static readonly List<DoorPowerState> AllStates = new List<DoorPowerState>();
+        public bool plateIsInteracting;
 
         private List<Plate> poweringPlates = new List<Plate>();
         private Door door;
@@ -35,7 +93,7 @@ namespace PressurePlate {
         }
 
         public int GetState() {
-            if(!IsReallySpawned(out ZNetView zNetView)) return 0;
+            if (!IsReallySpawned(out ZNetView zNetView)) return 0;
 
             int state = zNetView.GetZDO().GetInt("state");
             DoorConfig doorConfig = GetDoorConfig();
@@ -56,18 +114,22 @@ namespace PressurePlate {
         }
 
         public void Open(Humanoid humanoid) {
-            if(!IsReallySpawned(out _)) return;
+            if (!IsReallySpawned(out _)) return;
 
             if (!IsOpen()) {
+                plateIsInteracting = true;
                 door.Interact(humanoid, false);
+                plateIsInteracting = false;
             }
         }
 
         public void Close(Humanoid humanoid) {
-            if(!IsReallySpawned(out _)) return;
+            if (!IsReallySpawned(out _)) return;
 
             if (IsOpen()) {
+                plateIsInteracting = true;
                 door.Interact(humanoid, false);
+                plateIsInteracting = false;
             }
         }
 
