@@ -67,6 +67,7 @@ namespace PressurePlate {
             }
 
             if (lastPlayer == null) return;
+            if (lastPlayer != Player.m_localPlayer) return;
             if (!hasAccess) return;
             if (!stateChange && !isPressed) return;
 
