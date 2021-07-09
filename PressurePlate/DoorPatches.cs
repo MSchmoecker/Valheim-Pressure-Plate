@@ -19,16 +19,10 @@ namespace PressurePlate {
         private static readonly MethodInfo CheckAccessCall =
             AccessTools.GetDeclaredMethods(typeof(PrivateArea)).First(m => m.Name == "CheckAccess");
 
-        private static readonly FieldInfo ConfigByPassWards =
-            AccessTools.Field(typeof(Plugin), nameof(Plugin.bypassWards));
-
-        private static readonly MethodInfo ConfigByPassWardsGetValue =
-            AccessTools.PropertyGetter(typeof(BepInEx.Configuration.ConfigEntry<bool>), "Value");
-
         private static readonly MethodInfo GetComponentDoorPowerState =
             AccessTools.Method(typeof(Component), "GetComponent", new Type[0], new[] {typeof(DoorPowerState)});
 
-        private static readonly FieldInfo GetPlateIsInteracting =
+        private static readonly FieldInfo GetPlateBypassWard =
             AccessTools.Field(typeof(DoorPowerState), nameof(DoorPowerState.bypassWard));
 
         [HarmonyPatch(typeof(Door), "Interact"), HarmonyTranspiler]
@@ -56,13 +50,10 @@ namespace PressurePlate {
 
                 // after CheckAccess was false
                 code.InsertRange(checkAccessCallIndex + 2, new[] {
-                    new CodeInstruction(OpCodes.Ldsfld, ConfigByPassWards),
-                    new CodeInstruction(OpCodes.Callvirt, ConfigByPassWardsGetValue),
-                    new CodeInstruction(OpCodes.Brfalse,
-                                        privateAreaReturnLabel), // when bypassWards.Value is false exit normally
+                    // check if ward should be bypassed
                     new CodeInstruction(OpCodes.Ldarg_0),
                     new CodeInstruction(OpCodes.Call, GetComponentDoorPowerState),
-                    new CodeInstruction(OpCodes.Ldfld, GetPlateIsInteracting),
+                    new CodeInstruction(OpCodes.Ldfld, GetPlateBypassWard),
                     new CodeInstruction(OpCodes.Brtrue, afterReturnLabel), // skip the return and continue method
                 });
             }
@@ -117,7 +108,7 @@ namespace PressurePlate {
             if (!IsReallySpawned(out _)) return;
 
             if (!IsOpen()) {
-                bypassWard = plate.ZNetView.GetZDO().GetBool("pressure_plate_is_public");
+                bypassWard = plate.zNetView.GetZDO().GetBool("pressure_plate_is_public");
                 door.Interact(humanoid, false);
                 bypassWard = false;
             }
@@ -127,7 +118,7 @@ namespace PressurePlate {
             if (!IsReallySpawned(out _)) return;
 
             if (IsOpen()) {
-                bypassWard = plate.ZNetView.GetZDO().GetBool("pressure_plate_is_public");
+                bypassWard = plate.zNetView.GetZDO().GetBool("pressure_plate_is_public");
                 door.Interact(humanoid, false);
                 bypassWard = false;
             }

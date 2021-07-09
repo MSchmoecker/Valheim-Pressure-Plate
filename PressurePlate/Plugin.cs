@@ -18,7 +18,6 @@ namespace PressurePlate {
         public static ConfigEntry<float> playerPlateRadiusXZ;
         public static ConfigEntry<float> playerPlateRadiusY;
         public static ConfigEntry<float> plateOpenDelay;
-        public static ConfigEntry<bool> bypassWards;
 
         private void Awake() {
             Instance = this;
@@ -29,7 +28,6 @@ namespace PressurePlate {
             playerPlateRadiusXZ = Config.Bind<float>("General", "PressurePlatePlayerRadiusHorizontal", 1, new ConfigDescription("The horizontal radius, around the pressure plate, in which players trigger it. Value in Unity units, e.g. 2 is 1m in Valheim"));
             playerPlateRadiusY = Config.Bind<float>("General", "PressurePlatePlayerRadiusVertical", 1, new ConfigDescription("The vertical radius, around the pressure plate, in which players triggers it. Value in Unity units, e.g. 2 is 1m in Valheim"));
             plateOpenDelay = Config.Bind<float>("General", "PressurePlateOpenDelay", 1, new ConfigDescription("Time in which a pressure plate is still pressed after the player leaves it"));
-            bypassWards = Config.Bind<bool>("General", "BypassWards", false, new ConfigDescription(""));
 
             harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
@@ -40,7 +38,7 @@ namespace PressurePlate {
         }
 
         private void OnDestroy() {
-            harmony?.UnpatchAll();
+            harmony?.UnpatchAll(ModGuid);
         }
     }
 }

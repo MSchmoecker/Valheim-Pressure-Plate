@@ -13,24 +13,23 @@ namespace PressurePlate {
         private float pressCooldown;
         public EffectList pressEffects = new EffectList();
         public EffectList releaseEffects = new EffectList();
-        public ZNetView ZNetView;
+        public ZNetView zNetView;
 
         private void Awake() {
-            isPressed = FindPlayerInRange();
-            ZNetView = GetComponent<ZNetView>();
+            CheckPlayerPress(out isPressed);
+            zNetView = GetComponent<ZNetView>();
         }
 
         private void FixedUpdate() {
-            if (!ZNetView.IsValid()) {
+            if (!zNetView.IsValid()) {
                 return; //wait for network spawn
             }
 
             bool wasPressed = isPressed;
-            bool newPressed = FindPlayerInRange();
+            bool hasAccess = CheckPlayerPress(out bool newPressed);
+            List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
 
             if (newPressed) {
-                List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
-
                 float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
                 pressCooldown = maxTime ?? Plugin.plateOpenDelay.Value;
 
@@ -56,44 +55,51 @@ namespace PressurePlate {
                     releaseEffects.Create(transform.position, Quaternion.identity);
                 }
 
-                List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
-
-                foreach (DoorPowerState door in doors) {
-                    if (isPressed) {
-                        door.AddPoweringPlate(this);
-                    } else {
-                        door.RemovePoweringPlate(this);
+                if (hasAccess) {
+                    foreach (DoorPowerState door in doors) {
+                        if (isPressed) {
+                            door.AddPoweringPlate(this);
+                        } else {
+                            door.RemovePoweringPlate(this);
+                        }
                     }
                 }
             }
 
             if (lastPlayer == null) return;
+            if (!hasAccess) return;
+            if (!stateChange && !isPressed) return;
 
-            if (stateChange || isPressed) {
-                List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
-                foreach (DoorPowerState door in doors) {
-                    if (isPressed) {
-                        // always open the door if the plate is pressed
-                        door.Open(lastPlayer, this);
-                    } else {
-                        // only close the door if this is the last plate powering it
-                        if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
+            foreach (DoorPowerState door in doors) {
+                if (isPressed) {
+                    // always open the door if the plate is pressed
+                    door.Open(lastPlayer, this);
+                } else {
+                    // only close the door if this is the last plate powering it
+                    if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
 
-                        door.Close(lastPlayer, this);
-                    }
+                    door.Close(lastPlayer, this);
                 }
             }
         }
 
-        private bool FindPlayerInRange() {
-            Player player = Player.GetAllPlayers().Find(i => InRange(i.transform.position, Plugin.playerPlateRadiusXZ.Value, Plugin.playerPlateRadiusY.Value));
+        private bool CheckPlayerPress(out bool pressed) {
+            pressed = false;
 
-            if (player != null) {
-                lastPlayer = player;
-                return true;
+            if (Player.m_localPlayer == null) {
+                lastPlayer = null;
+                return false;
             }
 
-            return false;
+            foreach (Player player in Player.GetAllPlayers()) {
+                if (InRange(player.transform.position, Plugin.playerPlateRadiusXZ.Value, Plugin.playerPlateRadiusY.Value)) {
+                    lastPlayer = player;
+                    pressed = true;
+                    break;
+                }
+            }
+
+            return PrivateArea.CheckAccess(transform.position, 0.0f, false) || zNetView.GetZDO().GetBool("pressure_plate_is_public");
         }
 
         private bool InRange(Vector3 target, float rangeXZ, float rangeY) {
@@ -104,10 +110,10 @@ namespace PressurePlate {
         }
 
         public string GetHoverText() {
-            if (!ZNetView.IsValid()) return "";
+            if (!zNetView.IsValid()) return "";
 
             string text = ""; // "$Public (ignore wards): ";
-            bool plateIsPublic = ZNetView.GetZDO().GetBool("pressure_plate_is_public");
+            bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
 
             if (plateIsPublic) {
                 text += "$Public\n";
@@ -121,7 +127,6 @@ namespace PressurePlate {
         }
 
         public string GetHoverName() {
-            Debug.Log("name: " + name +", " + GetComponent<Piece>().m_name);
             return name;
         }
 
@@ -136,8 +141,8 @@ namespace PressurePlate {
                 return true;
             }
 
-            bool plateIsPublic = ZNetView.GetZDO().GetBool("pressure_plate_is_public");
-            ZNetView.GetZDO().Set("pressure_plate_is_public", !plateIsPublic);
+            bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
+            zNetView.GetZDO().Set("pressure_plate_is_public", !plateIsPublic);
             return true;
         }
 
