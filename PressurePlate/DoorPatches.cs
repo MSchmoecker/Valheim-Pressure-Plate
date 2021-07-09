@@ -29,7 +29,7 @@ namespace PressurePlate {
             AccessTools.Method(typeof(Component), "GetComponent", new Type[0], new[] {typeof(DoorPowerState)});
 
         private static readonly FieldInfo GetPlateIsInteracting =
-            AccessTools.Field(typeof(DoorPowerState), nameof(DoorPowerState.plateIsInteracting));
+            AccessTools.Field(typeof(DoorPowerState), nameof(DoorPowerState.bypassWard));
 
         [HarmonyPatch(typeof(Door), "Interact"), HarmonyTranspiler]
         public static IEnumerable<CodeInstruction> DoorInteract(IEnumerable<CodeInstruction> instructions) {
@@ -73,7 +73,7 @@ namespace PressurePlate {
 
     public class DoorPowerState : MonoBehaviour {
         public static readonly List<DoorPowerState> AllStates = new List<DoorPowerState>();
-        public bool plateIsInteracting;
+        public bool bypassWard;
 
         private List<Plate> poweringPlates = new List<Plate>();
         private Door door;
@@ -113,23 +113,23 @@ namespace PressurePlate {
             return zNetView != null;
         }
 
-        public void Open(Humanoid humanoid) {
+        public void Open(Humanoid humanoid, Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
             if (!IsOpen()) {
-                plateIsInteracting = true;
+                bypassWard = plate.ZNetView.GetZDO().GetBool("pressure_plate_is_public");
                 door.Interact(humanoid, false);
-                plateIsInteracting = false;
+                bypassWard = false;
             }
         }
 
-        public void Close(Humanoid humanoid) {
+        public void Close(Humanoid humanoid, Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
             if (IsOpen()) {
-                plateIsInteracting = true;
+                bypassWard = plate.ZNetView.GetZDO().GetBool("pressure_plate_is_public");
                 door.Interact(humanoid, false);
-                plateIsInteracting = false;
+                bypassWard = false;
             }
         }
 

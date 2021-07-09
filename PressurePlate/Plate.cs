@@ -6,20 +6,22 @@ using System.Reflection;
 using UnityEngine;
 
 namespace PressurePlate {
-    public class Plate : MonoBehaviour {
+    public class Plate : MonoBehaviour, Hoverable, Interactable {
         public GameObject plate;
         public bool isPressed;
         public Player lastPlayer;
         private float pressCooldown;
         public EffectList pressEffects = new EffectList();
         public EffectList releaseEffects = new EffectList();
+        public ZNetView ZNetView;
 
         private void Awake() {
             isPressed = FindPlayerInRange();
+            ZNetView = GetComponent<ZNetView>();
         }
 
         private void FixedUpdate() {
-            if (!GetComponent<ZNetView>()) {
+            if (!ZNetView.IsValid()) {
                 return; //wait for network spawn
             }
 
@@ -72,12 +74,12 @@ namespace PressurePlate {
                 foreach (DoorPowerState door in doors) {
                     if (isPressed) {
                         // always open the door if the plate is pressed
-                        door.Open(lastPlayer);
+                        door.Open(lastPlayer, this);
                     } else {
                         // only close the door if this is the last plate powering it
                         if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
 
-                        door.Close(lastPlayer);
+                        door.Close(lastPlayer, this);
                     }
                 }
             }
@@ -99,6 +101,48 @@ namespace PressurePlate {
             bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
             bool inY = Mathf.Abs(delta.y) <= rangeY;
             return inXZ && inY;
+        }
+
+        public string GetHoverText() {
+            if (!ZNetView.IsValid()) return "";
+
+            string text = ""; // "$Public (ignore wards): ";
+            bool plateIsPublic = ZNetView.GetZDO().GetBool("pressure_plate_is_public");
+
+            if (plateIsPublic) {
+                text += "$Public\n";
+                text += "[<color=yellow><b>$KEY_Use</b></color>] $Activate";
+            } else {
+                text += "$Private\n";
+                text += "[<color=yellow><b>$KEY_Use</b></color>] $Deactivate";
+            }
+
+            return Localization.instance.Localize(text);
+        }
+
+        public string GetHoverName() {
+            Debug.Log("name: " + name +", " + GetComponent<Piece>().m_name);
+            return name;
+        }
+
+        public bool Interact(Humanoid user, bool hold) {
+            if (hold) {
+                Debug.Log("hold");
+                return false;
+            }
+
+            if (!PrivateArea.CheckAccess(base.transform.position)) {
+                Debug.Log("no Access");
+                return true;
+            }
+
+            bool plateIsPublic = ZNetView.GetZDO().GetBool("pressure_plate_is_public");
+            ZNetView.GetZDO().Set("pressure_plate_is_public", !plateIsPublic);
+            return true;
+        }
+
+        public bool UseItem(Humanoid user, ItemDrop.ItemData item) {
+            return false;
         }
     }
 }
