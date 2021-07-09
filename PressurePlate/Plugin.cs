@@ -11,6 +11,7 @@ namespace PressurePlate {
     public class Plugin : BaseUnityPlugin {
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
         internal static Plugin Instance { get; private set; }
+        private Harmony harmony;
 
         public static ConfigEntry<float> plateRadiusXZ;
         public static ConfigEntry<float> plateRadiusY;
@@ -30,12 +31,16 @@ namespace PressurePlate {
             plateOpenDelay = Config.Bind<float>("General", "PressurePlateOpenDelay", 1, new ConfigDescription("Time in which a pressure plate is still pressed after the player leaves it"));
             bypassWards = Config.Bind<bool>("General", "BypassWards", false, new ConfigDescription(""));
 
-            Harmony harmony = new Harmony(ModGuid);
+            harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
 
             LocalizationManager.Instance.AddToken("$pressure_plate_wood", "Wooden Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_stone", "Stone Pressure Plate", false);
             Items.Init();
+        }
+
+        private void OnDestroy() {
+            harmony?.UnpatchAll();
         }
     }
 }
