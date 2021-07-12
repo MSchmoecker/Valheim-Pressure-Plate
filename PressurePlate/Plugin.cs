@@ -32,8 +32,16 @@ namespace PressurePlate {
             harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
 
+            LocalizationManager.Instance.AddToken("$pressure_plate", "Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_wood", "Wooden Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_stone", "Stone Pressure Plate", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_public_text", "Ignore access rights to doors", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_private_text", "Respect access rights to doors", false);
+            LocalizationManager.Instance.AddToken("$public", "Public", false);
+            LocalizationManager.Instance.AddToken("$private", "Private", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_set_public", "Set public", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_set_private", "Set private", false);
+
             Items.Init();
         }
 

@@ -14,6 +14,7 @@ namespace PressurePlate {
         public EffectList pressEffects = new EffectList();
         public EffectList releaseEffects = new EffectList();
         public ZNetView zNetView;
+        public string showName = "$pressure_plate";
 
         private void Awake() {
             CheckPlayerPress(out isPressed);
@@ -113,32 +114,43 @@ namespace PressurePlate {
         public string GetHoverText() {
             if (!zNetView.IsValid()) return "";
 
-            string text = ""; // "$Public (ignore wards): ";
+            bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
             bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
 
+            string text = "";
+
             if (plateIsPublic) {
-                text += "$Public\n";
-                text += "[<color=yellow><b>$KEY_Use</b></color>] $Activate";
+                text += showName + " ($public)\n";
             } else {
-                text += "$Private\n";
-                text += "[<color=yellow><b>$KEY_Use</b></color>] $Deactivate";
+                text += showName + " ($private)\n";
+            }
+
+            if (!hasAccess) {
+                text += "$piece_noaccess";
+                return Localization.instance.Localize(text);
+            }
+
+            if (plateIsPublic) {
+                text += "$pressure_plate_public_text\n";
+                text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_private";
+            } else {
+                text += "$pressure_plate_private_text\n";
+                text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_public";
             }
 
             return Localization.instance.Localize(text);
         }
 
         public string GetHoverName() {
-            return name;
+            return Localization.instance.Localize(showName);
         }
 
         public bool Interact(Humanoid user, bool hold) {
             if (hold) {
-                Debug.Log("hold");
                 return false;
             }
 
-            if (!PrivateArea.CheckAccess(base.transform.position)) {
-                Debug.Log("no Access");
+            if (!PrivateArea.CheckAccess(transform.position)) {
                 return true;
             }
 
