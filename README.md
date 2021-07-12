@@ -4,7 +4,7 @@ Adds a pressure plate, which opens and closes doors within a range if a player s
 - Wooden pressure plate: 3 wood, 1 surtling core with the hammer. Requires a workbench in range
 - Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a stonecutter in range
 
-Triggering range is configurable.
+Triggering range is configurable. A plate can toggled to be public, this allows other player to open doors even if they have no access.
 
 ## Installation
 Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
@@ -77,6 +77,10 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.3.0
+- Added option to set plates public, this allows plates to bypass wards
+- Fixed multiplayer async, resulting in opening a door after it was closed
+
 0.2.1
 - Fixed null error when placing a new door, as no ZNetView exists yet
 - Fixed not opening a door if the player presses the plate while the door is closing
