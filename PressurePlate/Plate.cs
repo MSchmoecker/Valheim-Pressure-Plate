@@ -112,7 +112,7 @@ namespace PressurePlate {
         }
 
         public string GetHoverText() {
-            if (!zNetView.IsValid()) return "";
+            if (!zNetView.IsValid() || !PrivateArea.CheckInPrivateArea(transform.position)) return "";
 
             bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
             bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
