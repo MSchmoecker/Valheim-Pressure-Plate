@@ -111,8 +111,15 @@ namespace PressurePlate {
             return inXZ && inY;
         }
 
+        private bool ShowInteraction() {
+            // only show interaction when inside active ward
+            return zNetView.IsValid() && PrivateArea.CheckInPrivateArea(transform.position);
+        }
+
         public string GetHoverText() {
-            if (!zNetView.IsValid() || !PrivateArea.CheckInPrivateArea(transform.position)) return "";
+            if (!ShowInteraction()) {
+                return "";
+            }
 
             bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
             bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
@@ -146,6 +153,10 @@ namespace PressurePlate {
         }
 
         public bool Interact(Humanoid user, bool hold) {
+            if (!ShowInteraction()) {
+                return false;
+            }
+
             if (hold) {
                 return false;
             }
