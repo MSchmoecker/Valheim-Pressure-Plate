@@ -105,7 +105,7 @@ namespace PressurePlate {
         public bool IsReallySpawned(out ZNetView zNetView) {
             // If the player places a new door prefab, the door exists but no ZNetView
             zNetView = GetComponent<ZNetView>();
-            return zNetView != null;
+            return zNetView != null && zNetView.IsValid();
         }
 
         public void Open(Humanoid humanoid, Plate plate) {
