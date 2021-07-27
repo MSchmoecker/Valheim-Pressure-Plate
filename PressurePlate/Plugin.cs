@@ -23,11 +23,17 @@ namespace PressurePlate {
             Instance = this;
             Log.Init(Logger);
 
-            plateRadiusXZ = Config.Bind<float>("General", "PressurePlateRadiusHorizontal", 3, new ConfigDescription("The horizontal radius, around the pressure plate, in which doors are opened and closed. Value in Unity units, e.g. 2 is 1m in Valheim"));
-            plateRadiusY = Config.Bind<float>("General", "PressurePlateRadiusVertical", 3, new ConfigDescription("The vertical radius, around the pressure plate, in which doors are opened and closed. Value in Unity units, e.g. 2 is 1m in Valheim"));
-            playerPlateRadiusXZ = Config.Bind<float>("General", "PressurePlatePlayerRadiusHorizontal", 1, new ConfigDescription("The horizontal radius, around the pressure plate, in which players trigger it. Value in Unity units, e.g. 2 is 1m in Valheim"));
-            playerPlateRadiusY = Config.Bind<float>("General", "PressurePlatePlayerRadiusVertical", 1, new ConfigDescription("The vertical radius, around the pressure plate, in which players triggers it. Value in Unity units, e.g. 2 is 1m in Valheim"));
-            plateOpenDelay = Config.Bind<float>("General", "PressurePlateOpenDelay", 1, new ConfigDescription("Time in which a pressure plate is still pressed after the player leaves it"));
+            const string plateRadiusXZDescription = "The horizontal radius, around the pressure plate, in which doors are opened and closed. Value in Unity units, e.g. 2 is 1m in Valheim";
+            const string plateRadiusYDescription = "The vertical radius, around the pressure plate, in which doors are opened and closed. Value in Unity units, e.g. 2 is 1m in Valheim";
+            const string playerPlateRadiusXZDescription = "The horizontal radius, around the pressure plate, in which players trigger it. Value in Unity units, e.g. 2 is 1m in Valheim";
+            const string playerPlateRadiusYDescription = "The vertical radius, around the pressure plate, in which players triggers it. Value in Unity units, e.g. 2 is 1m in Valheim";
+            const string plateOpenDelayDescription = "Time in which a pressure plate is still pressed after the player leaves it";
+
+            plateRadiusXZ = Config.Bind("General", "PressurePlateRadiusHorizontal", 3f, new ConfigDescription(plateRadiusXZDescription, new AcceptableValueRange<float>(0f, 8f)));
+            plateRadiusY = Config.Bind("General", "PressurePlateRadiusVertical", 3f, new ConfigDescription(plateRadiusYDescription, new AcceptableValueRange<float>(0f, 8f)));
+            playerPlateRadiusXZ = Config.Bind("General", "PressurePlatePlayerRadiusHorizontal", 1f, new ConfigDescription(playerPlateRadiusXZDescription, new AcceptableValueRange<float>(0f, 8f)));
+            playerPlateRadiusY = Config.Bind("General", "PressurePlatePlayerRadiusVertical", 1f, new ConfigDescription(playerPlateRadiusYDescription, new AcceptableValueRange<float>(0f, 8f)));
+            plateOpenDelay = Config.Bind("General", "PressurePlateOpenDelay", 1f, new ConfigDescription(plateOpenDelayDescription));
 
             harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
