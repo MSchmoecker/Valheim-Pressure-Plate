@@ -77,6 +77,11 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.3.1
+- Only show public/private option when the plate is inside an active ward
+- Limited radius of configurable radius to 8 units
+- Fixed a null error when destroying doors while standing on a pressure plate
+
 0.3.0
 - Added option to set plates public, this allows plates to bypass wards
 - Fixed multiplayer async, resulting in opening a door after it was closed
