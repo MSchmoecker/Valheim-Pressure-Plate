@@ -6,10 +6,13 @@ using HarmonyLib;
 using Jotunn.Managers;
 
 namespace PressurePlate {
-    [BepInPlugin(ModGuid, "Pressure-Plate", "0.3.1")]
+    [BepInPlugin(ModGuid, ModName, ModVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
     public class Plugin : BaseUnityPlugin {
+        public const string ModName = "Pressure-Plate";
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
+        public const string ModVersion = "0.3.1";
+
         internal static Plugin Instance { get; private set; }
         private Harmony harmony;
 

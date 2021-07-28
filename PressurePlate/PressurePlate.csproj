@@ -9,6 +9,11 @@
     <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
       <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
+    <PropertyGroup>
+      <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+      <GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+      <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+    </PropertyGroup>
     <ItemGroup>
       <Reference Include="0Harmony, Culture=neutral, PublicKeyToken=null">
         <HintPath>$(VALHEIM_INSTALL)\BepInEx\core\0Harmony.dll</HintPath>
