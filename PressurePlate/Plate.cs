@@ -17,7 +17,7 @@ namespace PressurePlate {
         public string showName = "$pressure_plate";
 
         private void Awake() {
-            CheckPlayerPress(out isPressed);
+            CheckPlayerPress(out isPressed, out _);
             zNetView = GetComponent<ZNetView>();
         }
 
@@ -27,7 +27,7 @@ namespace PressurePlate {
             }
 
             bool wasPressed = isPressed;
-            bool hasAccess = CheckPlayerPress(out bool newPressed);
+            CheckPlayerPress(out bool newPressed, out bool hasAccess);
             List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
 
             if (newPressed) {
@@ -85,12 +85,12 @@ namespace PressurePlate {
             }
         }
 
-        private bool CheckPlayerPress(out bool pressed) {
+        private void CheckPlayerPress(out bool pressed, out bool hasAccess) {
             pressed = false;
 
             if (Player.m_localPlayer == null) {
                 lastPlayer = null;
-                return false;
+                hasAccess = false;
             }
 
             foreach (Player player in Player.GetAllPlayers()) {
@@ -101,7 +101,7 @@ namespace PressurePlate {
                 }
             }
 
-            return PrivateArea.CheckAccess(transform.position, 0.0f, false) || zNetView.GetZDO().GetBool("pressure_plate_is_public");
+            hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || zNetView.GetZDO().GetBool("pressure_plate_is_public");
         }
 
         private bool InRange(Vector3 target, float rangeXZ, float rangeY) {
