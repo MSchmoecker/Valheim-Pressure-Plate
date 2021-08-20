@@ -4,6 +4,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
 using Jotunn.Managers;
+using UnityEngine;
 
 namespace PressurePlate {
     [BepInPlugin(ModGuid, ModName, ModVersion)]
@@ -21,6 +22,8 @@ namespace PressurePlate {
         public static ConfigEntry<float> playerPlateRadiusXZ;
         public static ConfigEntry<float> playerPlateRadiusY;
         public static ConfigEntry<float> plateOpenDelay;
+        public static ConfigEntry<KeyboardShortcut> addTimeKey;
+        public static ConfigEntry<KeyboardShortcut> subtractTimeKey;
 
         private void Awake() {
             Instance = this;
@@ -37,6 +40,8 @@ namespace PressurePlate {
             playerPlateRadiusXZ = Config.Bind("General", "PressurePlatePlayerRadiusHorizontal", 1f, new ConfigDescription(playerPlateRadiusXZDescription, new AcceptableValueRange<float>(0f, 8f)));
             playerPlateRadiusY = Config.Bind("General", "PressurePlatePlayerRadiusVertical", 1f, new ConfigDescription(playerPlateRadiusYDescription, new AcceptableValueRange<float>(0f, 8f)));
             plateOpenDelay = Config.Bind("General", "PressurePlateOpenDelay", 1f, new ConfigDescription(plateOpenDelayDescription));
+            addTimeKey = Config.Bind("Hotkeys", "AddTime", new KeyboardShortcut(KeyCode.KeypadPlus), new ConfigDescription(""));
+            subtractTimeKey = Config.Bind("Hotkeys", "SubtractTime", new KeyboardShortcut(KeyCode.KeypadMinus), new ConfigDescription(""));
 
             harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
@@ -50,6 +55,10 @@ namespace PressurePlate {
             LocalizationManager.Instance.AddToken("$private", "Private", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_set_public", "Set public", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_set_private", "Set private", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay", "Trigger delay", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_seconds_short", "s", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay_off", "off", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay_description", "Change time", false);
 
             Items.Init();
         }

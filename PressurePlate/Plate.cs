@@ -11,6 +11,7 @@ namespace PressurePlate {
         public bool isPressed;
         public Player lastPlayer;
         private float pressCooldown;
+        private float pressTriggerDelay; // time before the plate is triggered
         public EffectList pressEffects = new EffectList();
         public EffectList releaseEffects = new EffectList();
         public ZNetView zNetView;
@@ -19,6 +20,7 @@ namespace PressurePlate {
         private void Awake() {
             CheckPlayerPress(out isPressed, out _);
             zNetView = GetComponent<ZNetView>();
+            pressTriggerDelay = zNetView.IsValid() ? zNetView.GetZDO().GetFloat("pressure_plate_trigger_delay") : 0;
         }
 
         private void FixedUpdate() {
@@ -34,7 +36,12 @@ namespace PressurePlate {
                 float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
                 pressCooldown = maxTime ?? Plugin.plateOpenDelay.Value;
 
-                isPressed = true;
+                if (pressTriggerDelay <= 0) {
+                    pressTriggerDelay = zNetView.GetZDO().GetFloat("pressure_plate_trigger_delay");
+                    isPressed = true;
+                } else {
+                    pressTriggerDelay -= Time.fixedDeltaTime;
+                }
             } else {
                 if (pressCooldown > 0) {
                     pressCooldown -= Time.fixedDeltaTime;
@@ -111,39 +118,62 @@ namespace PressurePlate {
             return inXZ && inY;
         }
 
-        private bool ShowInteraction() {
+        private bool InsidePrivateArea() {
             // only show interaction when inside active ward
             return zNetView.IsValid() && PrivateArea.CheckInPrivateArea(transform.position);
         }
 
         public string GetHoverText() {
-            if (!ShowInteraction()) {
-                return "";
-            }
-
-            bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
-            bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
-
             string text = "";
 
-            if (plateIsPublic) {
-                text += showName + " ($public)\n";
-            } else {
-                text += showName + " ($private)\n";
+            float currentTriggerDelay = zNetView.GetZDO().GetFloat("pressure_plate_trigger_delay");
+
+            // not the cleanest way to handle input here but this way it only listens when the player hovers over the plate
+            if (Plugin.addTimeKey.Value.IsDown()) {
+                currentTriggerDelay += 0.25f;
+                zNetView.GetZDO().Set("pressure_plate_trigger_delay", currentTriggerDelay);
+                pressTriggerDelay = currentTriggerDelay;
             }
 
-            if (!hasAccess) {
-                text += "$piece_noaccess";
-                return Localization.instance.Localize(text);
+            if (Plugin.subtractTimeKey.Value.IsDown()) {
+                currentTriggerDelay = Mathf.Max(0, currentTriggerDelay - .25f);
+                zNetView.GetZDO().Set("pressure_plate_trigger_delay", currentTriggerDelay);
+                pressTriggerDelay = currentTriggerDelay;
             }
 
-            if (plateIsPublic) {
-                text += "$pressure_plate_public_text\n";
-                text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_private";
-            } else {
-                text += "$pressure_plate_private_text\n";
-                text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_public";
+            if (InsidePrivateArea()) {
+                bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
+                bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
+
+                if (plateIsPublic) {
+                    text += showName + " ($public)\n";
+                } else {
+                    text += showName + " ($private)\n";
+                }
+
+                if (!hasAccess) {
+                    text += "$piece_noaccess";
+                    return Localization.instance.Localize(text);
+                }
+
+                if (plateIsPublic) {
+                    text += "$pressure_plate_public_text\n";
+                    text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_private\n";
+                } else {
+                    text += "$pressure_plate_private_text\n";
+                    text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_public\n";
+                }
             }
+
+            if (currentTriggerDelay == 0) {
+                text += "$pressure_plate_trigger_delay: $pressure_plate_trigger_delay_off\n";
+            } else {
+                text += $"$pressure_plate_trigger_delay: {currentTriggerDelay}$pressure_plate_seconds_short\n";
+            }
+
+            text += $"[<color=yellow><b>{Plugin.addTimeKey.Value.ToString()}</b></color>]/";
+            text += $"[<color=yellow><b>{Plugin.subtractTimeKey.Value.ToString()}</b></color>] ";
+            text += "$pressure_plate_trigger_delay_description\n";
 
             return Localization.instance.Localize(text);
         }
@@ -153,7 +183,7 @@ namespace PressurePlate {
         }
 
         public bool Interact(Humanoid user, bool hold) {
-            if (!ShowInteraction()) {
+            if (!InsidePrivateArea()) {
                 return false;
             }
 
