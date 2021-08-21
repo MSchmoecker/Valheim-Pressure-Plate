@@ -1699,7 +1699,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Invert
+  m_Text: 'Invert Door
+
+'
 --- !u!1 &4487281816315165440
 GameObject:
   m_ObjectHideFlags: 0

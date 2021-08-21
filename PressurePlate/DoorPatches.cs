@@ -111,7 +111,7 @@ namespace PressurePlate {
         public void Open(Humanoid humanoid, Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
-            if (!IsOpen()) {
+            if (!IsOpen(plate)) {
                 bypassWard = plate.GetIgnoreWards();
                 door.Interact(humanoid, false);
                 bypassWard = false;
@@ -121,15 +121,15 @@ namespace PressurePlate {
         public void Close(Humanoid humanoid, Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
-            if (IsOpen()) {
+            if (IsOpen(plate)) {
                 bypassWard = plate.GetIgnoreWards();
                 door.Interact(humanoid, false);
                 bypassWard = false;
             }
         }
 
-        public bool IsOpen() {
-            return GetState() != 0;
+        public bool IsOpen(Plate plate) {
+            return (plate == null || !plate.GetInvert()) ? GetState() != 0 : GetState() == 0;
         }
 
         public List<Plate> GetPoweringPlates() {
