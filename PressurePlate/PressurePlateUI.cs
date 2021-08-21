@@ -24,10 +24,13 @@ namespace PressurePlate {
         [SerializeField] private InputField triggerDelay;
         [SerializeField] private Toggle invert;
         [SerializeField] private Toggle ignoreWards;
+        [SerializeField] private Button copyButton;
+        [SerializeField] private Button pasteButton;
 #pragma warning restore 0649
 
         private static GameObject uiRoot;
         private Plate target;
+        private PlateData copyData;
 
         public static void Init(AssetBundle assetBundle) {
             GameObject prefab = assetBundle.LoadAsset<GameObject>("PressurePlateUI");
@@ -53,6 +56,14 @@ namespace PressurePlate {
             triggerDelay.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerDelay, i));
             invert.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyInvert, i));
             ignoreWards.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyIgnoreWards, i));
+            copyButton.onClick.AddListener(() => {
+                copyData ??= new PlateData();
+                copyData.GetData(target);
+            });
+            pasteButton.onClick.AddListener(() => {
+                copyData.SetData(target);
+                UpdateText();
+            });
         }
 
         private void Update() {
@@ -65,12 +76,17 @@ namespace PressurePlate {
                 target = null;
                 SetGUIState(false);
             }
+
+            pasteButton.interactable = copyData != null;
         }
 
         public void OpenUI(Plate plate) {
             target = plate;
             SetGUIState(true);
+            UpdateText();
+        }
 
+        private void UpdateText() {
             triggerRadiusHorizontal.text = target.GetTriggerRadiusHorizontal().ToString();
             triggerRadiusVertical.text = target.GetTriggerRadiusVertical().ToString();
             openRadiusHorizontal.text = target.GetOpenRadiusHorizontal().ToString();

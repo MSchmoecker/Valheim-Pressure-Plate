@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 6840535720438171786}
   - component: {fileID: 5825399555537256860}
   m_Layer: 5
-  m_Name: Button
+  m_Name: Copy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1622,6 +1622,8 @@ MonoBehaviour:
   triggerDelay: {fileID: 8808593469493941505}
   invert: {fileID: 5989414302640373002}
   ignoreWards: {fileID: 4328541408961454483}
+  copyButton: {fileID: 5825399555537256860}
+  pasteButton: {fileID: 7822352953833600402}
 --- !u!1 &4104483928377829385
 GameObject:
   m_ObjectHideFlags: 0
@@ -3871,7 +3873,7 @@ GameObject:
   - component: {fileID: 8591010923603289780}
   - component: {fileID: 7822352953833600402}
   m_Layer: 5
-  m_Name: Button (1)
+  m_Name: Paste
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
