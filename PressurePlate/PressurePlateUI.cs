@@ -8,8 +8,11 @@ using UnityEngine.UI;
 namespace PressurePlate {
     public class PressurePlateUI : MonoBehaviour {
         public static PressurePlateUI instance;
-        public bool IsOpen { get; private set; }
+        public static bool IsOpen() => isOpen;
+
         public bool IsFrameBlocked { get; private set; }
+
+        private static bool isOpen;
 
         // Disable Field XYZ is never assigned to, and will always have its default value XX
 #pragma warning disable 0649
@@ -56,7 +59,7 @@ namespace PressurePlate {
             Enum.TryParse(ZInput.instance.GetBoundKeyString("Use"), out KeyCode useKey);
             IsFrameBlocked = false;
 
-            if (IsOpen && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(useKey))) {
+            if (IsOpen() && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(useKey))) {
                 IsFrameBlocked = true;
 
                 target = null;
@@ -79,7 +82,7 @@ namespace PressurePlate {
         }
 
         private void SetGUIState(bool active) {
-            IsOpen = active;
+            isOpen = active;
             uiRoot.SetActive(active);
             GUIManager.BlockInput(active);
         }

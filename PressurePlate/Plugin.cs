@@ -27,6 +27,7 @@ namespace PressurePlate {
 
             harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
+            harmony.PatchAll(typeof(MenuPatches));
 
             LocalizationManager.Instance.AddToken("$pressure_plate", "Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_wood", "Wooden Pressure Plate", false);

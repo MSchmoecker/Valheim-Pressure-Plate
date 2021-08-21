@@ -164,7 +164,7 @@ namespace PressurePlate {
                 return true;
             }
 
-            if (!PressurePlateUI.instance.IsOpen && !PressurePlateUI.instance.IsFrameBlocked) {
+            if (!PressurePlateUI.IsOpen() && !PressurePlateUI.instance.IsFrameBlocked) {
                 PressurePlateUI.instance.OpenUI(this);
             }
 
