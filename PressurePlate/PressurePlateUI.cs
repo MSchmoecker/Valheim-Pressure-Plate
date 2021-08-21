@@ -75,7 +75,7 @@ namespace PressurePlate {
             Enum.TryParse(ZInput.instance.GetBoundKeyString("Use"), out KeyCode useKey);
             IsFrameBlocked = false;
 
-            if (IsOpen() && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(useKey))) {
+            if (IsOpen() && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(useKey) || ZInput.GetButtonDown("Inventory"))) {
                 IsFrameBlocked = true;
 
                 target = null;
