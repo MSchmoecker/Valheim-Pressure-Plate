@@ -26,6 +26,7 @@ namespace PressurePlate {
         [SerializeField] private Toggle ignoreWards;
         [SerializeField] private Button copyButton;
         [SerializeField] private Button pasteButton;
+        [SerializeField] private Button resetButton;
 #pragma warning restore 0649
 
         private static GameObject uiRoot;
@@ -62,6 +63,10 @@ namespace PressurePlate {
             });
             pasteButton.onClick.AddListener(() => {
                 copyData.SetData(target);
+                UpdateText();
+            });
+            resetButton.onClick.AddListener(() => {
+                target.ResetValues();
                 UpdateText();
             });
         }

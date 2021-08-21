@@ -42,6 +42,7 @@ namespace PressurePlate {
             LocalizationManager.Instance.AddToken("$pressure_plate_ignore_wards", "Ignore Wards", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_copy", "Copy", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_paste", "Paste", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_reset", "Reset", false);
 
             AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
             Items.Init(assetBundle);

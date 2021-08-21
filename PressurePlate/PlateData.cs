@@ -21,15 +21,14 @@
         }
 
         public void SetData(Plate plate) {
-            ZDO zdo = plate.zNetView.GetZDO();
-            zdo.Set(Plate.KeyTriggerRadiusHorizontal, triggerRadiusHorizontal);
-            zdo.Set(Plate.KeyTriggerRadiusVertical, triggerRadiusVertical);
-            zdo.Set(Plate.KeyOpenRadiusHorizontal, openRadiusHorizontal);
-            zdo.Set(Plate.KeyOpenRadiusVertical, openRadiusVertical);
-            zdo.Set(Plate.KeyOpenTime, openTime);
-            zdo.Set(Plate.KeyTriggerDelay, triggerDelay);
-            zdo.Set(Plate.KeyInvert, invert);
-            zdo.Set(Plate.KeyIgnoreWards, ignoreWards);
+            plate.SetTriggerRadiusHorizontal(triggerRadiusHorizontal);
+            plate.SetTriggerRadiusVertical(triggerRadiusVertical);
+            plate.SetOpenRadiusHorizontal(openRadiusHorizontal);
+            plate.SetOpenRadiusVertical(openRadiusVertical);
+            plate.SetOpenTime(openTime);
+            plate.SetTriggerDelay(triggerDelay);
+            plate.SetInvert(invert);
+            plate.SetIgnoreWards(ignoreWards);
         }
     }
 }

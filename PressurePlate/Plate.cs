@@ -176,6 +176,15 @@ namespace PressurePlate {
             return false;
         }
 
+        public void SetTriggerRadiusHorizontal(float value) => zNetView.GetZDO().Set(KeyTriggerRadiusHorizontal, value);
+        public void SetTriggerRadiusVertical(float value) => zNetView.GetZDO().Set(KeyTriggerRadiusVertical, value);
+        public void SetOpenRadiusHorizontal(float value) => zNetView.GetZDO().Set(KeyOpenRadiusHorizontal, value);
+        public void SetOpenRadiusVertical(float value) => zNetView.GetZDO().Set(KeyOpenRadiusVertical, value);
+        public void SetOpenTime(float value) => zNetView.GetZDO().Set(KeyOpenTime, value);
+        public void SetTriggerDelay(float value) => zNetView.GetZDO().Set(KeyTriggerDelay, value);
+        public void SetInvert(bool value) => zNetView.GetZDO().Set(KeyInvert, value);
+        public void SetIgnoreWards(bool value) => zNetView.GetZDO().Set(KeyIgnoreWards, value);
+
         public float GetTriggerRadiusHorizontal() => zNetView.GetZDO().GetFloat(KeyTriggerRadiusHorizontal, 1);
         public float GetTriggerRadiusVertical() => zNetView.GetZDO().GetFloat(KeyTriggerRadiusVertical, 1);
         public float GetOpenRadiusHorizontal() => zNetView.GetZDO().GetFloat(KeyOpenRadiusHorizontal, 3);
@@ -184,5 +193,16 @@ namespace PressurePlate {
         public float GetTriggerDelay() => zNetView.GetZDO().GetFloat(KeyTriggerDelay, 0);
         public bool GetInvert() => zNetView.GetZDO().GetBool(KeyInvert, false);
         public bool GetIgnoreWards() => zNetView.GetZDO().GetBool(KeyIgnoreWards, false);
+
+        public void ResetValues() {
+            SetTriggerRadiusHorizontal(1f);
+            SetTriggerRadiusVertical(1f);
+            SetOpenRadiusHorizontal(3f);
+            SetOpenRadiusVertical(3f);
+            SetOpenTime(1f);
+            SetTriggerDelay(0f);
+            SetInvert(false);
+            SetIgnoreWards(false);
+        }
     }
 }
