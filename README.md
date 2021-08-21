@@ -6,6 +6,11 @@ Adds a pressure plate, which opens and closes doors within a range if a player s
 
 Triggering range is configurable. A plate can toggled to be public, this allows other player to open doors even if they have no access.
 
+![showcase](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/Showcase.gif)
+
+![config](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/ExampleGUI.png)
+
+
 ## Installation
 Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
 
@@ -77,6 +82,11 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.4.0
+- Added UI to configure each plate individually
+- Renamed "public/private" to "ignore wards"
+- Removed global player settings
+
 0.3.1
 - Only show public/private option when the plate is inside an active ward
 - Limited radius of configurable radius to 8 units
