@@ -37,6 +37,7 @@ namespace PressurePlate {
             ApplyWoodpanel(uiRoot.GetComponent<Image>());
             Text title = uiRoot.transform.Find("Title").GetComponent<Text>();
             ApplyText(title, GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
+            ApplyLocalization();
 
             uiRoot.SetActive(false);
         }
@@ -146,6 +147,12 @@ namespace PressurePlate {
 
             ApplyAllDarken(root);
             ApplyAllSunken(root);
+        }
+
+        public static void ApplyLocalization() {
+            foreach (Text text in uiRoot.GetComponentsInChildren<Text>()) {
+                text.text = Localization.instance.Localize(text.text);
+            }
         }
     }
 }

@@ -32,19 +32,20 @@ namespace PressurePlate {
             LocalizationManager.Instance.AddToken("$pressure_plate", "Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_wood", "Wooden Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_stone", "Stone Pressure Plate", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_public_text", "Ignore access rights to doors", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_private_text", "Respect access rights to doors", false);
-            LocalizationManager.Instance.AddToken("$public", "Public", false);
-            LocalizationManager.Instance.AddToken("$private", "Private", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_set_public", "Set public", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_set_private", "Set private", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay", "Trigger delay", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_seconds_short", "s", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay_off", "off", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay_description", "Change time", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_radius_horizontal", "Trigger Radius Horizontal", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_radius_vertical", "Trigger Radius Vertial", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_horizontal", "Open Radius Horizontal", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_vertical", "Open Radius Vertical", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_open_time", "Open Time", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay", "Trigger Delay", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_invert", "Invert Doors", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_ignore_wards", "Ignore Wards", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_copy", "Copy", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_paste", "Paste", false);
 
             AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
             Items.Init(assetBundle);
+
             GUIManager.OnPixelFixCreated += () => PressurePlateUI.Init(assetBundle);
         }
 

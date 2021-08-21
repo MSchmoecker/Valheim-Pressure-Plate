@@ -785,7 +785,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ignore Wards
+  m_Text: $pressure_plate_ignore_wards
 --- !u!1 &1456420281690943765
 GameObject:
   m_ObjectHideFlags: 0
@@ -1093,7 +1093,9 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Paste
+  m_Text: '$pressure_plate_paste
+
+'
 --- !u!1 &2210165074889852699
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,7 +1173,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Open Time
+  m_Text: $pressure_plate_open_time
 --- !u!1 &2213202437730122862
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,9 +1366,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Copy
-
-'
+  m_Text: $pressure_plate_copy
 --- !u!1 &2750198670208877292
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,7 +1592,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 460, y: 420}
+  m_SizeDelta: {x: 480, y: 420}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5311595687142943509
 CanvasRenderer:
@@ -1699,9 +1699,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Invert Door
-
-'
+  m_Text: $pressure_plate_invert
 --- !u!1 &4487281816315165440
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2089,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Trigger Radius Vertial
+  m_Text: $pressure_plate_trigger_radius_vertical
 --- !u!1 &5528633058174541088
 GameObject:
   m_ObjectHideFlags: 0
@@ -2243,7 +2241,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Trigger Radius Horizontal
+  m_Text: $pressure_plate_trigger_radius_horizontal
 --- !u!1 &6256745212277476845
 GameObject:
   m_ObjectHideFlags: 0
@@ -2643,7 +2641,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Open Radius Horizontal
+  m_Text: $pressure_plate_open_radius_horizontal
 --- !u!1 &7061964437131408064
 GameObject:
   m_ObjectHideFlags: 0
@@ -2721,7 +2719,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Open Radius Vertical
+  m_Text: $pressure_plate_open_radius_vertical
 --- !u!1 &7420107625599360033
 GameObject:
   m_ObjectHideFlags: 0
@@ -3567,7 +3565,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Trigger Delay
+  m_Text: $pressure_plate_trigger_delay
 --- !u!1 &8650282498975917289
 GameObject:
   m_ObjectHideFlags: 0

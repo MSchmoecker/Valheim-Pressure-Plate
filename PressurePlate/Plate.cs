@@ -148,7 +148,7 @@ namespace PressurePlate {
                 }
             }
 
-            text += "[<color=yellow><b>$KEY_Use</b></color>]";
+            text += "[<color=yellow><b>$KEY_Use</b></color>] $piece_use";
             return Localization.instance.Localize(text);
         }
 
