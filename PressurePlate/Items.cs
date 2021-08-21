@@ -9,11 +9,9 @@ using Jotunn.Managers;
 
 namespace PressurePlate {
     public class Items {
-        public static void Init() {
-            AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
+        public static void Init(AssetBundle assetBundle) {
             AddWoodPressurePlate(assetBundle);
             AddStonePressurePlate(assetBundle);
-            assetBundle.Unload(false);
         }
 
         private static void AddWoodPressurePlate(AssetBundle assetBundle) {
@@ -121,13 +119,6 @@ namespace PressurePlate {
             }
 
             PieceManager.Instance.AddPiece(customPiece);
-        }
-
-        public static AssetBundle GetAssetBundleFromResources(string fileName) {
-            Assembly execAssembly = Assembly.GetExecutingAssembly();
-            string resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(fileName));
-            using Stream stream = execAssembly.GetManifestResourceStream(resourceName);
-            return AssetBundle.LoadFromStream(stream);
         }
     }
 }

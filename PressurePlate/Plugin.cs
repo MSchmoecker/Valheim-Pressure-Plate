@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
@@ -60,11 +62,20 @@ namespace PressurePlate {
             LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay_off", "off", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay_description", "Change time", false);
 
-            Items.Init();
+            AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
+            Items.Init(assetBundle);
+            GUIManager.OnPixelFixCreated += () => PressurePlateUI.Init(assetBundle);
         }
 
         private void OnDestroy() {
             harmony?.UnpatchAll(ModGuid);
+        }
+
+        public static AssetBundle GetAssetBundleFromResources(string fileName) {
+            Assembly execAssembly = Assembly.GetExecutingAssembly();
+            string resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(fileName));
+            using Stream stream = execAssembly.GetManifestResourceStream(resourceName);
+            return AssetBundle.LoadFromStream(stream);
         }
     }
 }

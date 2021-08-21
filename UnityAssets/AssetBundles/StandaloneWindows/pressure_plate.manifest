@@ -1,12 +1,12 @@
 ManifestFileVersion: 0
-CRC: 2862716238
+CRC: 3669530092
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 6b05117744e835adf8748e3823a842d3
+    Hash: 16c2a121fd8eba2da5f9133d3c88dbf3
   TypeTreeHash:
     serializedVersion: 2
-    Hash: a2ad520f1aa783f2964cfbe334335e84
+    Hash: 3e52ea7fe96a02dd5ab57335f78bc854
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -36,21 +36,40 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 2094620348, guid: fc988f832275ed1469b849d84548d688, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+- Class: 114
   Script: {fileID: 895252998, guid: fc988f832275ed1469b849d84548d688, type: 3}
 - Class: 114
   Script: {fileID: 1521249158, guid: fc988f832275ed1469b849d84548d688, type: 3}
 - Class: 114
   Script: {fileID: 313648218, guid: fc988f832275ed1469b849d84548d688, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d199490a83bb2b844b9695cbf13b01ef, type: 3}
+- Class: 114
   Script: {fileID: -817305988, guid: c472213d66a10e9408272c51015f238d, type: 3}
 - Class: 114
   Script: {fileID: -560434771, guid: c472213d66a10e9408272c51015f238d, type: 3}
+- Class: 114
+  Script: {fileID: 438103903, guid: c472213d66a10e9408272c51015f238d, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 9085046f02f69544eb97fd06b6048fe2, type: 3}
 - Class: 115
   Script: {instanceID: 0}
+- Class: 128
+  Script: {instanceID: 0}
 - Class: 213
+  Script: {instanceID: 0}
+- Class: 222
+  Script: {instanceID: 0}
+- Class: 224
   Script: {instanceID: 0}
 Assets:
 - Assets/pressure_plate_wood_icon.png
 - Assets/pressure_plate_stone_icon.png
 - Assets/pressure_plate.prefab
+- Assets/PressurePlateUI.prefab
 Dependencies: []
