@@ -42,7 +42,6 @@ namespace PressurePlate {
         }
 
         private void Awake() {
-            Log.LogInfo(instance == null);
             instance = this;
 
             triggerRadiusHorizontal.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerRadiusHorizontal, i));
@@ -90,10 +89,7 @@ namespace PressurePlate {
         private void SetSettingFloat(string key, string input) {
             ZDO zdo = target.zNetView.GetZDO();
             if (float.TryParse(input, out float value)) {
-                Log.LogInfo(value);
                 zdo.Set(key, value);
-            } else {
-                Log.LogInfo("no: " + input);
             }
         }
 

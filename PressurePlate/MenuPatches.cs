@@ -33,7 +33,7 @@ namespace PressurePlate {
         }
 
         static CodeInstruction LogInst(CodeInstruction instruction) {
-            Log.LogInfo(instruction);
+            // Log.LogInfo(instruction);
             return instruction;
         }
     }
