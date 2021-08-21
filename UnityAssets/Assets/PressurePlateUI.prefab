@@ -1614,6 +1614,14 @@ MonoBehaviour:
   m_Script: {fileID: 438103903, guid: c472213d66a10e9408272c51015f238d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triggerRadiusHorizontal: {fileID: 6270054934464431947}
+  triggerRadiusVertical: {fileID: 7079019731600987038}
+  openRadiusHorizontal: {fileID: 4264636067781493602}
+  openRadiusVertical: {fileID: 740481136868996523}
+  openTime: {fileID: 1968784502243429957}
+  triggerDelay: {fileID: 8808593469493941505}
+  invert: {fileID: 5989414302640373002}
+  ignoreWards: {fileID: 4328541408961454483}
 --- !u!1 &4104483928377829385
 GameObject:
   m_ObjectHideFlags: 0

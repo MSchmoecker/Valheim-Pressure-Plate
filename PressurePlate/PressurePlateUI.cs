@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using Jotunn.Managers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,13 +11,20 @@ namespace PressurePlate {
         public bool IsOpen { get; private set; }
         public bool IsFrameBlocked { get; private set; }
 
+        // Disable Field XYZ is never assigned to, and will always have its default value XX
+#pragma warning disable 0649
+        [SerializeField] private InputField triggerRadiusHorizontal;
+        [SerializeField] private InputField triggerRadiusVertical;
+        [SerializeField] private InputField openRadiusHorizontal;
+        [SerializeField] private InputField openRadiusVertical;
+        [SerializeField] private InputField openTime;
+        [SerializeField] private InputField triggerDelay;
+        [SerializeField] private Toggle invert;
+        [SerializeField] private Toggle ignoreWards;
+#pragma warning restore 0649
+
         private static GameObject uiRoot;
         private Plate target;
-
-        private void Awake() {
-            Log.LogInfo(instance == null);
-            instance = this;
-        }
 
         public static void Init(AssetBundle assetBundle) {
             GameObject prefab = assetBundle.LoadAsset<GameObject>("PressurePlateUI");
@@ -24,14 +32,24 @@ namespace PressurePlate {
 
             ApplyAllComponents(uiRoot);
             ApplyWoodpanel(uiRoot.GetComponent<Image>());
-            ApplyText(uiRoot.transform.Find("Title").GetComponent<Text>(), GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
+            Text title = uiRoot.transform.Find("Title").GetComponent<Text>();
+            ApplyText(title, GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
 
             uiRoot.SetActive(false);
         }
 
-        public void OpenUI(Plate plate) {
-            target = plate;
-            SetGUIState(true);
+        private void Awake() {
+            Log.LogInfo(instance == null);
+            instance = this;
+
+            triggerRadiusHorizontal.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerRadiusHorizontal, i));
+            triggerRadiusVertical.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerRadiusVertical, i));
+            openRadiusHorizontal.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyOpenRadiusHorizontal, i));
+            openRadiusVertical.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyOpenRadiusVertical, i));
+            openTime.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyOpenTime, i));
+            triggerDelay.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerDelay, i));
+            invert.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyInvert, i));
+            ignoreWards.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyIgnoreWards, i));
         }
 
         private void Update() {
@@ -46,10 +64,39 @@ namespace PressurePlate {
             }
         }
 
+        public void OpenUI(Plate plate) {
+            target = plate;
+            SetGUIState(true);
+
+            triggerRadiusHorizontal.text = target.GetTriggerRadiusHorizontal().ToString();
+            triggerRadiusVertical.text = target.GetTriggerRadiusVertical().ToString();
+            openRadiusHorizontal.text = target.GetOpenRadiusHorizontal().ToString();
+            openRadiusVertical.text = target.GetOpenRadiusVertical().ToString();
+            openTime.text = target.GetOpenTime().ToString();
+            triggerDelay.text = target.GetTriggerDelay().ToString();
+            invert.isOn = target.GetInvert();
+            ignoreWards.isOn = target.GetIgnoreWards();
+        }
+
         private void SetGUIState(bool active) {
             IsOpen = active;
             uiRoot.SetActive(active);
             GUIManager.BlockInput(active);
+        }
+
+        private void SetSettingFloat(string key, string input) {
+            ZDO zdo = target.zNetView.GetZDO();
+            if (float.TryParse(input, out float value)) {
+                Log.LogInfo(value);
+                zdo.Set(key, value);
+            } else {
+                Log.LogInfo("no: " + input);
+            }
+        }
+
+        private void SetSettingBool(string key, bool input) {
+            ZDO zdo = target.zNetView.GetZDO();
+            zdo.Set(key, input);
         }
 
         public static void ApplyWoodpanel(Image image) {
@@ -92,6 +139,10 @@ namespace PressurePlate {
 
             foreach (Toggle toggle in root.GetComponentsInChildren<Toggle>()) {
                 GUIManager.Instance.ApplyToogleStyle(toggle);
+            }
+
+            foreach (Button button in root.GetComponentsInChildren<Button>()) {
+                GUIManager.Instance.ApplyButtonStyle(button);
             }
 
             ApplyAllDarken(root);

@@ -20,7 +20,7 @@ namespace PressurePlate {
             AccessTools.GetDeclaredMethods(typeof(PrivateArea)).First(m => m.Name == "CheckAccess");
 
         private static readonly MethodInfo GetComponentDoorPowerState =
-            AccessTools.Method(typeof(Component), "GetComponent", new Type[0], new[] {typeof(DoorPowerState)});
+            AccessTools.Method(typeof(Component), "GetComponent", new Type[0], new[] { typeof(DoorPowerState) });
 
         private static readonly FieldInfo GetPlateBypassWard =
             AccessTools.Field(typeof(DoorPowerState), nameof(DoorPowerState.bypassWard));
@@ -40,7 +40,7 @@ namespace PressurePlate {
                 }
 
                 if (checkAccessCallIndex > -1 && i == checkAccessCallIndex + 1) {
-                    afterReturnLabel = (Label) instruction.operand;
+                    afterReturnLabel = (Label)instruction.operand;
                 }
             }
 
@@ -149,8 +149,8 @@ namespace PressurePlate {
             }
         }
 
-        public static List<DoorPowerState> FindDoorsInPlateRange(Vector3 platePos) {
-            return AllStates.FindAll(i => i.InRange(platePos, Plugin.plateRadiusXZ.Value, Plugin.plateRadiusY.Value));
+        public static List<DoorPowerState> FindDoorsInPlateRange(Plate plate, Vector3 platePos) {
+            return AllStates.FindAll(i => i.InRange(platePos, plate.GetOpenRadiusHorizontal(), plate.GetOpenRadiusVertical()));
         }
 
         private bool InRange(Vector3 target, float rangeXZ, float rangeY) {

@@ -17,10 +17,22 @@ namespace PressurePlate {
         public ZNetView zNetView;
         public string showName = "$pressure_plate";
 
+        public const string KeyTriggerRadiusHorizontal = "pressure_plate_trigger_radius_horizontal";
+        public const string KeyTriggerRadiusVertical = "pressure_plate_trigger_radius_vertical";
+        public const string KeyOpenRadiusHorizontal = "pressure_plate_open_radius_horizontal";
+        public const string KeyOpenRadiusVertical = "pressure_plate_open_radius_vertical";
+        public const string KeyOpenTime = "pressure_plate_open_time";
+        public const string KeyTriggerDelay = "pressure_plate_trigger_delay";
+        public const string KeyInvert = "pressure_plate_invert";
+        public const string KeyIgnoreWards = "pressure_plate_ignore_wards";
+
         private void Awake() {
-            CheckPlayerPress(out isPressed, out _);
             zNetView = GetComponent<ZNetView>();
-            pressTriggerDelay = zNetView.IsValid() ? zNetView.GetZDO().GetFloat("pressure_plate_trigger_delay") : 0;
+
+            if (zNetView.IsValid()) {
+                CheckPlayerPress(out isPressed, out _);
+                pressTriggerDelay = GetTriggerDelay();
+            }
         }
 
         private void FixedUpdate() {
@@ -30,14 +42,14 @@ namespace PressurePlate {
 
             bool wasPressed = isPressed;
             CheckPlayerPress(out bool newPressed, out bool hasAccess);
-            List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(transform.position);
+            List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(this, transform.position);
 
             if (newPressed) {
                 float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
-                pressCooldown = maxTime ?? Plugin.plateOpenDelay.Value;
+                pressCooldown = maxTime ?? GetOpenTime();
 
                 if (pressTriggerDelay <= 0) {
-                    pressTriggerDelay = zNetView.GetZDO().GetFloat("pressure_plate_trigger_delay");
+                    pressTriggerDelay = GetTriggerDelay();
                     isPressed = true;
                 } else {
                     pressTriggerDelay -= Time.fixedDeltaTime;
@@ -101,7 +113,7 @@ namespace PressurePlate {
             }
 
             foreach (Player player in Player.GetAllPlayers()) {
-                if (InRange(player.transform.position, Plugin.playerPlateRadiusXZ.Value, Plugin.playerPlateRadiusY.Value)) {
+                if (InRange(player.transform.position, GetTriggerRadiusHorizontal(), GetTriggerRadiusVertical())) {
                     lastPlayer = player;
                     pressed = true;
                     break;
@@ -162,5 +174,14 @@ namespace PressurePlate {
         public bool UseItem(Humanoid user, ItemDrop.ItemData item) {
             return false;
         }
+
+        public float GetTriggerRadiusHorizontal() => zNetView.GetZDO().GetFloat(KeyTriggerRadiusHorizontal, 1);
+        public float GetTriggerRadiusVertical() => zNetView.GetZDO().GetFloat(KeyTriggerRadiusVertical, 1);
+        public float GetOpenRadiusHorizontal() => zNetView.GetZDO().GetFloat(KeyOpenRadiusHorizontal, 3);
+        public float GetOpenRadiusVertical() => zNetView.GetZDO().GetFloat(KeyOpenRadiusVertical, 3);
+        public float GetOpenTime() => zNetView.GetZDO().GetFloat(KeyOpenTime, 1);
+        public float GetTriggerDelay() => zNetView.GetZDO().GetFloat(KeyTriggerDelay, 0);
+        public bool GetInvert() => zNetView.GetZDO().GetBool(KeyInvert, false);
+        public bool GetIgnoreWards() => zNetView.GetZDO().GetBool(KeyIgnoreWards, false);
     }
 }
