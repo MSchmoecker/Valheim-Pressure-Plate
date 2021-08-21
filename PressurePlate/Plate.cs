@@ -126,55 +126,16 @@ namespace PressurePlate {
         public string GetHoverText() {
             string text = "";
 
-            float currentTriggerDelay = zNetView.GetZDO().GetFloat("pressure_plate_trigger_delay");
-
-            // not the cleanest way to handle input here but this way it only listens when the player hovers over the plate
-            if (Plugin.addTimeKey.Value.IsDown()) {
-                currentTriggerDelay += 0.25f;
-                zNetView.GetZDO().Set("pressure_plate_trigger_delay", currentTriggerDelay);
-                pressTriggerDelay = currentTriggerDelay;
-            }
-
-            if (Plugin.subtractTimeKey.Value.IsDown()) {
-                currentTriggerDelay = Mathf.Max(0, currentTriggerDelay - .25f);
-                zNetView.GetZDO().Set("pressure_plate_trigger_delay", currentTriggerDelay);
-                pressTriggerDelay = currentTriggerDelay;
-            }
-
             if (InsidePrivateArea()) {
                 bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
-                bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
-
-                if (plateIsPublic) {
-                    text += showName + " ($public)\n";
-                } else {
-                    text += showName + " ($private)\n";
-                }
 
                 if (!hasAccess) {
                     text += "$piece_noaccess";
                     return Localization.instance.Localize(text);
                 }
-
-                if (plateIsPublic) {
-                    text += "$pressure_plate_public_text\n";
-                    text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_private\n";
-                } else {
-                    text += "$pressure_plate_private_text\n";
-                    text += "[<color=yellow><b>$KEY_Use</b></color>] $pressure_plate_set_public\n";
-                }
             }
 
-            if (currentTriggerDelay == 0) {
-                text += "$pressure_plate_trigger_delay: $pressure_plate_trigger_delay_off\n";
-            } else {
-                text += $"$pressure_plate_trigger_delay: {currentTriggerDelay}$pressure_plate_seconds_short\n";
-            }
-
-            text += $"[<color=yellow><b>{Plugin.addTimeKey.Value.ToString()}</b></color>]/";
-            text += $"[<color=yellow><b>{Plugin.subtractTimeKey.Value.ToString()}</b></color>] ";
-            text += "$pressure_plate_trigger_delay_description\n";
-
+            text += "[<color=yellow><b>$KEY_Use</b></color>]";
             return Localization.instance.Localize(text);
         }
 
@@ -183,10 +144,6 @@ namespace PressurePlate {
         }
 
         public bool Interact(Humanoid user, bool hold) {
-            if (!InsidePrivateArea()) {
-                return false;
-            }
-
             if (hold) {
                 return false;
             }
@@ -195,8 +152,10 @@ namespace PressurePlate {
                 return true;
             }
 
-            bool plateIsPublic = zNetView.GetZDO().GetBool("pressure_plate_is_public");
-            zNetView.GetZDO().Set("pressure_plate_is_public", !plateIsPublic);
+            if (!PressurePlateUI.instance.IsOpen && !PressurePlateUI.instance.IsFrameBlocked) {
+                PressurePlateUI.instance.OpenUI(this);
+            }
+
             return true;
         }
 
