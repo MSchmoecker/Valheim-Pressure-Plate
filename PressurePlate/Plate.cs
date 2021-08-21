@@ -98,7 +98,7 @@ namespace PressurePlate {
                 } else {
                     // only close the door if this is the last plate powering it
                     if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
-
+            
                     door.Close(lastPlayer, this);
                 }
             }

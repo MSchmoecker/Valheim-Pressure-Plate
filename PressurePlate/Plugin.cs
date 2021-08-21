@@ -34,9 +34,9 @@ namespace PressurePlate {
             LocalizationManager.Instance.AddToken("$pressure_plate_stone", "Stone Pressure Plate", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_trigger_radius_horizontal", "Trigger Radius Horizontal", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_trigger_radius_vertical", "Trigger Radius Vertial", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_horizontal", "Open Radius Horizontal", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_vertical", "Open Radius Vertical", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_open_time", "Open Time", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_horizontal", "Door Radius Horizontal", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_vertical", "Door Radius Vertical", false);
+            LocalizationManager.Instance.AddToken("$pressure_plate_open_time", "Activation Time", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay", "Trigger Delay", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_invert", "Invert Doors", false);
             LocalizationManager.Instance.AddToken("$pressure_plate_ignore_wards", "Ignore Wards", false);
