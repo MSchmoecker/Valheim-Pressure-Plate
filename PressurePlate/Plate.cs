@@ -24,7 +24,7 @@ namespace PressurePlate {
         public const string KeyOpenTime = "pressure_plate_open_time";
         public const string KeyTriggerDelay = "pressure_plate_trigger_delay";
         public const string KeyInvert = "pressure_plate_invert";
-        public const string KeyIgnoreWards = "pressure_plate_ignore_wards";
+        public const string KeyIgnoreWards = "pressure_plate_is_public";
 
         private void Awake() {
             zNetView = GetComponent<ZNetView>();
@@ -110,6 +110,7 @@ namespace PressurePlate {
             if (Player.m_localPlayer == null) {
                 lastPlayer = null;
                 hasAccess = false;
+                return;
             }
 
             foreach (Player player in Player.GetAllPlayers()) {
@@ -120,7 +121,7 @@ namespace PressurePlate {
                 }
             }
 
-            hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || zNetView.GetZDO().GetBool("pressure_plate_is_public");
+            hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || GetIgnoreWards();
         }
 
         private bool InRange(Vector3 target, float rangeXZ, float rangeY) {

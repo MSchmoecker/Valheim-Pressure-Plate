@@ -112,7 +112,7 @@ namespace PressurePlate {
             if (!IsReallySpawned(out _)) return;
 
             if (!IsOpen()) {
-                bypassWard = plate.zNetView.GetZDO().GetBool("pressure_plate_is_public");
+                bypassWard = plate.GetIgnoreWards();
                 door.Interact(humanoid, false);
                 bypassWard = false;
             }
@@ -122,7 +122,7 @@ namespace PressurePlate {
             if (!IsReallySpawned(out _)) return;
 
             if (IsOpen()) {
-                bypassWard = plate.zNetView.GetZDO().GetBool("pressure_plate_is_public");
+                bypassWard = plate.GetIgnoreWards();
                 door.Interact(humanoid, false);
                 bypassWard = false;
             }
