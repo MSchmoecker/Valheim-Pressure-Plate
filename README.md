@@ -4,12 +4,17 @@ Adds a pressure plate, which opens and closes doors within a range if a player s
 - Wooden pressure plate: 3 wood, 1 surtling core with the hammer. Requires a workbench in range
 - Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a stonecutter in range
 
-Triggering range is configurable. A plate can toggled to be public, this allows other player to open doors even if they have no access.
-
 ![showcase](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/Showcase.gif)
 
-![config](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/ExampleGUI.png)
+## Ingame settings
 
+![config](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/ExampleGUI.png)
+- Trigger Radius: if a player is inside this range, the plate is pressed
+- Door Radius: all doors inside this radius are opened/closed
+- Activation Time: duration in which the plate is pressed
+- Trigger Delay: duration it takes before the plate is pressed
+- Invert Doors: inverts open/closed state
+- Ignore wards: allows other players to open doors even they have no access
 
 ## Installation
 Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
@@ -82,6 +87,10 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.4.1
+- Fixed trigger delay was ignored when the player left the plate, resulting in pressing the plate for a fraction of time
+- Fixed trigger delay was not reset when the player left the plate
+
 0.4.0
 - Added UI to configure each plate individually
 - Renamed "public/private" to "ignore wards"
