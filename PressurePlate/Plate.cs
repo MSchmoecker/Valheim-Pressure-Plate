@@ -45,12 +45,12 @@ namespace PressurePlate {
             List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(this, transform.position);
 
             if (newPressed) {
-                float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
-                pressCooldown = maxTime ?? GetOpenTime();
-
                 if (pressTriggerDelay <= 0) {
                     pressTriggerDelay = GetTriggerDelay();
                     isPressed = true;
+
+                    float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
+                    pressCooldown = maxTime ?? GetOpenTime();
                 } else {
                     pressTriggerDelay -= Time.fixedDeltaTime;
                 }
@@ -60,6 +60,7 @@ namespace PressurePlate {
                     isPressed = true;
                 } else {
                     isPressed = false;
+                    pressTriggerDelay = GetTriggerDelay();
                 }
             }
 
