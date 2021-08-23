@@ -16,6 +16,7 @@ namespace PressurePlate {
 
         // Disable Field XYZ is never assigned to, and will always have its default value XX
 #pragma warning disable 0649
+        [SerializeField] private Text title;
         [SerializeField] private InputField triggerRadiusHorizontal;
         [SerializeField] private InputField triggerRadiusVertical;
         [SerializeField] private InputField openRadiusHorizontal;
@@ -35,12 +36,12 @@ namespace PressurePlate {
 
         public static void Init(AssetBundle assetBundle) {
             GameObject prefab = assetBundle.LoadAsset<GameObject>("PressurePlateUI");
-            uiRoot = Instantiate(prefab, GUIManager.PixelFix.transform, false).transform.GetChild(0).gameObject;
+            PressurePlateUI ui = Instantiate(prefab, GUIManager.PixelFix.transform, false).GetComponent<PressurePlateUI>();
+            uiRoot = ui.transform.GetChild(0).gameObject;
 
             ApplyAllComponents(uiRoot);
             ApplyWoodpanel(uiRoot.GetComponent<Image>());
-            Text title = uiRoot.transform.Find("Title").GetComponent<Text>();
-            ApplyText(title, GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
+            ApplyText(ui.title, GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
             ApplyLocalization();
 
             uiRoot.SetActive(false);
@@ -92,6 +93,7 @@ namespace PressurePlate {
         }
 
         private void UpdateText() {
+            title.text = Localization.instance.Localize(target.piece.m_name);
             triggerRadiusHorizontal.text = target.GetTriggerRadiusHorizontal().ToString();
             triggerRadiusVertical.text = target.GetTriggerRadiusVertical().ToString();
             openRadiusHorizontal.text = target.GetOpenRadiusHorizontal().ToString();
