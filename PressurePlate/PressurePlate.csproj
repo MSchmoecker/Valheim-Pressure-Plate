@@ -79,6 +79,10 @@
     <ItemGroup>
       <None Remove="pressure_plate" />
       <EmbeddedResource Include="pressure_plate" />
+      <None Remove="Localization\English.json" />
+      <EmbeddedResource Include="Localization\English.json" />
+      <None Remove="Localization\Deutsch.json" />
+      <EmbeddedResource Include="Localization\German.json" />
     </ItemGroup>
     <Import Project="../Environment.props" />
 </Project>

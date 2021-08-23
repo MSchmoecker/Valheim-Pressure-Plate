@@ -29,20 +29,8 @@ namespace PressurePlate {
             harmony.PatchAll(typeof(DoorPatches));
             harmony.PatchAll(typeof(MenuPatches));
 
-            LocalizationManager.Instance.AddToken("$pressure_plate", "Pressure Plate", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_wood", "Wooden Pressure Plate", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_stone", "Stone Pressure Plate", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_radius_horizontal", "Trigger Radius Horizontal", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_radius_vertical", "Trigger Radius Vertial", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_horizontal", "Door Radius Horizontal", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_open_radius_vertical", "Door Radius Vertical", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_open_time", "Activation Time", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_trigger_delay", "Trigger Delay", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_invert", "Invert Doors", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_ignore_wards", "Ignore Wards", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_copy", "Copy", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_paste", "Paste", false);
-            LocalizationManager.Instance.AddToken("$pressure_plate_reset", "Reset", false);
+            LocalizationManager.Instance.AddJson("English", GetTextFileFromResources("Localization.English.json"));
+            LocalizationManager.Instance.AddJson("German", GetTextFileFromResources("Localization.German.json"));
 
             AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
             Items.Init(assetBundle);
@@ -59,6 +47,14 @@ namespace PressurePlate {
             string resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(fileName));
             using Stream stream = execAssembly.GetManifestResourceStream(resourceName);
             return AssetBundle.LoadFromStream(stream);
+        }
+
+        public static string GetTextFileFromResources(string fileName) {
+            Assembly execAssembly = Assembly.GetExecutingAssembly();
+            string resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(fileName));
+            using Stream stream = execAssembly.GetManifestResourceStream(resourceName);
+            using StreamReader reader = new StreamReader(stream);
+            return reader.ReadToEnd();
         }
     }
 }

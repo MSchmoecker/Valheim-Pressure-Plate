@@ -1,0 +1,16 @@
+{
+  "pressure_plate": "Pressure Plate",
+  "pressure_plate_wood": "Wooden Pressure Plate",
+  "pressure_plate_stone": "Stone Pressure Plate",
+  "pressure_plate_trigger_radius_horizontal": "Trigger Radius Horizontal",
+  "pressure_plate_trigger_radius_vertical": "Trigger Radius Vertial",
+  "pressure_plate_open_radius_horizontal": "Door Radius Horizontal",
+  "pressure_plate_open_radius_vertical": "Door Radius Vertical",
+  "pressure_plate_open_time": "Activation Time",
+  "pressure_plate_trigger_delay": "Trigger Delay",
+  "pressure_plate_invert": "Invert Doors",
+  "pressure_plate_ignore_wards": "Ignore Wards",
+  "pressure_plate_copy": "Copy",
+  "pressure_plate_paste": "Paste",
+  "pressure_plate_reset": "Reset"
+}
