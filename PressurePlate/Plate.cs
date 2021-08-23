@@ -8,6 +8,7 @@ using UnityEngine;
 namespace PressurePlate {
     public class Plate : MonoBehaviour, Hoverable, Interactable {
         public GameObject plate;
+        public Piece piece;
         public bool isPressed;
         public Player lastPlayer;
         private float pressCooldown;
@@ -28,6 +29,7 @@ namespace PressurePlate {
 
         private void Awake() {
             zNetView = GetComponent<ZNetView>();
+            piece = GetComponent<Piece>();
 
             if (zNetView.IsValid()) {
                 CheckPlayerPress(out isPressed, out _);
@@ -139,6 +141,8 @@ namespace PressurePlate {
 
         public string GetHoverText() {
             string text = "";
+
+            text += piece.m_name + "\n";
 
             if (InsidePrivateArea()) {
                 bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
