@@ -9,7 +9,8 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Mm]emoryCaptures/
-/[Aa]ssets/Assemblies
+/[Aa]ssets/Assemblies/
+/AssetBundles/StandaloneWindows/[^.]*
 
 # Never ignore Asset meta data
 !/[Aa]ssets/**/*.meta

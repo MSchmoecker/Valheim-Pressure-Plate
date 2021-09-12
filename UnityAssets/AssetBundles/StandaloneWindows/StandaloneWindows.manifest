@@ -1,7 +1,0 @@
-ManifestFileVersion: 0
-CRC: 584675068
-AssetBundleManifest:
-  AssetBundleInfos:
-    Info_0:
-      Name: pressure_plate
-      Dependencies: {}
