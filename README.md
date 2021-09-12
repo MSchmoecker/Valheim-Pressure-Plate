@@ -87,6 +87,11 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.4.2
+- Added german translation
+- Show plate name in UI and mouse hover
+- Fixed input field text was not visible because of Jötunn 2.2.8
+
 0.4.1
 - Fixed trigger delay was ignored when the player left the plate, resulting in pressing the plate for a fraction of time
 - Fixed trigger delay was not reset when the player left the plate
