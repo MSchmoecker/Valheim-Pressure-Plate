@@ -35,7 +35,7 @@ namespace PressurePlate {
             AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
             Items.Init(assetBundle);
 
-            GUIManager.OnPixelFixCreated += () => PressurePlateUI.Init(assetBundle);
+            GUIManager.OnCustomGUIAvailable += () => PressurePlateUI.Init(assetBundle);
         }
 
         private void OnDestroy() {

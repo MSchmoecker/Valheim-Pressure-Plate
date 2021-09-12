@@ -36,7 +36,7 @@ namespace PressurePlate {
 
         public static void Init(AssetBundle assetBundle) {
             GameObject prefab = assetBundle.LoadAsset<GameObject>("PressurePlateUI");
-            PressurePlateUI ui = Instantiate(prefab, GUIManager.PixelFix.transform, false).GetComponent<PressurePlateUI>();
+            PressurePlateUI ui = Instantiate(prefab, GUIManager.CustomGUIFront.transform, false).GetComponent<PressurePlateUI>();
             uiRoot = ui.transform.GetChild(0).gameObject;
 
             ApplyAllComponents(uiRoot);
@@ -157,7 +157,7 @@ namespace PressurePlate {
             }
 
             foreach (InputField inputField in root.GetComponentsInChildren<InputField>()) {
-                GUIManager.Instance.ApplyInputFieldStyle(inputField);
+                GUIManager.Instance.ApplyInputFieldStyle(inputField, 16);
             }
 
             foreach (Toggle toggle in root.GetComponentsInChildren<Toggle>()) {
