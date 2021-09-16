@@ -161,7 +161,7 @@ namespace PressurePlate {
             return Localization.instance.Localize(showName);
         }
 
-        public bool Interact(Humanoid user, bool hold) {
+        public bool Interact(Humanoid user, bool hold, bool alt) {
             if (hold) {
                 return false;
             }

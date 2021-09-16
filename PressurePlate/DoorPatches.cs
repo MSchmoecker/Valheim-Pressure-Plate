@@ -113,7 +113,7 @@ namespace PressurePlate {
 
             if (!IsOpen(plate)) {
                 bypassWard = plate.GetIgnoreWards();
-                door.Interact(humanoid, false);
+                door.Interact(humanoid, false, false);
                 bypassWard = false;
             }
         }
@@ -123,7 +123,7 @@ namespace PressurePlate {
 
             if (IsOpen(plate)) {
                 bypassWard = plate.GetIgnoreWards();
-                door.Interact(humanoid, false);
+                door.Interact(humanoid, false, false);
                 bypassWard = false;
             }
         }
