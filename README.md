@@ -87,6 +87,9 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.4.3
+- Fixed incompatibility with H&H update
+
 0.4.2
 - Added german translation
 - Show plate name in UI and mouse hover
