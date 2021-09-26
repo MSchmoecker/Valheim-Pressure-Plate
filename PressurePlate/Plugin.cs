@@ -5,6 +5,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
+using Jotunn.Entities;
 using Jotunn.Managers;
 using UnityEngine;
 
@@ -29,8 +30,10 @@ namespace PressurePlate {
             harmony.PatchAll(typeof(DoorPatches));
             harmony.PatchAll(typeof(MenuPatches));
 
-            LocalizationManager.Instance.AddJson("English", GetTextFileFromResources("Localization.English.json"));
-            LocalizationManager.Instance.AddJson("German", GetTextFileFromResources("Localization.German.json"));
+            CustomLocalization localization = new CustomLocalization();
+            localization.AddJsonFile("English", GetTextFileFromResources("Localization.English.json"));
+            localization.AddJsonFile("German", GetTextFileFromResources("Localization.German.json"));
+            LocalizationManager.Instance.AddLocalization(localization);
 
             AssetBundle assetBundle = GetAssetBundleFromResources("pressure_plate");
             Items.Init(assetBundle);
