@@ -110,10 +110,10 @@ namespace PressurePlate {
 
         private void CustomDoorInteract(Character character, Plate plate) {
             if (character is Humanoid humanoid) {
-                bypassWard = plate.GetIgnoreWards();
+                bypassWard = plate.IgnoreWards;
                 door.Interact(humanoid, false, false);
                 bypassWard = false;
-            } else if (!door.m_keyItem && plate.GetIgnoreWards()) {
+            } else if (!door.m_keyItem && plate.IgnoreWards) {
                 Vector3 deltaDir = (character.transform.position - transform.position).normalized;
                 bool forward = Vector3.Dot(transform.forward, deltaDir) < 0.0f;
                 door.m_nview.InvokeRPC("UseDoor", forward);
@@ -137,7 +137,7 @@ namespace PressurePlate {
         }
 
         public bool IsOpen(Plate plate) {
-            return (plate == null || !plate.GetInvert()) ? GetState() != 0 : GetState() == 0;
+            return (plate == null || !plate.Invert) ? GetState() != 0 : GetState() == 0;
         }
 
         public List<Plate> GetPoweringPlates() {
@@ -158,7 +158,7 @@ namespace PressurePlate {
         }
 
         public static List<DoorPowerState> FindDoorsInPlateRange(Plate plate, Vector3 platePos) {
-            return AllStates.FindAll(i => i.InRange(platePos, plate.GetOpenRadiusHorizontal(), plate.GetOpenRadiusVertical()));
+            return AllStates.FindAll(i => i.InRange(platePos, plate.OpenRadiusHorizontal, plate.OpenRadiusVertical));
         }
 
         private bool InRange(Vector3 target, float rangeXZ, float rangeY) {

@@ -11,7 +11,8 @@ namespace PressurePlate {
         public static IEnumerable<CodeInstruction> MenuUpdate(IEnumerable<CodeInstruction> instructions) {
             List<CodeInstruction> list = new List<CodeInstruction>(instructions);
 
-            MethodInfo minimapIsOpen = AccessTools.GetDeclaredMethods(typeof(Minimap)).First(m => m.Name == nameof(Minimap.IsOpen));
+            MethodInfo minimapIsOpen = AccessTools.GetDeclaredMethods(typeof(Minimap))
+                                                  .First(m => m.Name == nameof(Minimap.IsOpen));
             MethodInfo pressurePlateUIIsOpen = AccessTools.GetDeclaredMethods(typeof(PressurePlateUI))
                                                           .First(m => m.Name == nameof(PressurePlateUI.IsOpen));
 

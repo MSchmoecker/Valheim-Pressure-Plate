@@ -100,15 +100,15 @@ namespace PressurePlate {
 
         private void UpdateText() {
             title.text = Localization.instance.Localize(target.piece.m_name);
-            triggerRadiusHorizontal.text = target.GetTriggerRadiusHorizontal().ToString();
-            triggerRadiusVertical.text = target.GetTriggerRadiusVertical().ToString();
-            openRadiusHorizontal.text = target.GetOpenRadiusHorizontal().ToString();
-            openRadiusVertical.text = target.GetOpenRadiusVertical().ToString();
-            openTime.text = target.GetOpenTime().ToString();
-            triggerDelay.text = target.GetTriggerDelay().ToString();
-            invert.isOn = target.GetInvert();
-            ignoreWards.isOn = target.GetIgnoreWards();
-            allowMobs.isOn = target.GetAllowMobs();
+            triggerRadiusHorizontal.text = target.TriggerRadiusHorizontal.ToString();
+            triggerRadiusVertical.text = target.TriggerRadiusVertical.ToString();
+            openRadiusHorizontal.text = target.OpenRadiusHorizontal.ToString();
+            openRadiusVertical.text = target.OpenRadiusVertical.ToString();
+            openTime.text = target.OpenTime.ToString();
+            triggerDelay.text = target.TriggerDelay.ToString();
+            invert.isOn = target.Invert;
+            ignoreWards.isOn = target.IgnoreWards;
+            allowMobs.isOn = target.AllowMobs;
 
             UpdateDeactivated();
         }
