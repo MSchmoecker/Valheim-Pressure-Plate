@@ -40,7 +40,7 @@ namespace PressurePlate {
                 }
 
                 if (checkAccessCallIndex > -1 && i == checkAccessCallIndex + 1) {
-                    afterReturnLabel = (Label)instruction.operand;
+                    afterReturnLabel = (Label) instruction.operand;
                 }
             }
 
@@ -108,23 +108,31 @@ namespace PressurePlate {
             return zNetView != null && zNetView.IsValid();
         }
 
-        public void Open(Humanoid humanoid, Plate plate) {
-            if (!IsReallySpawned(out _)) return;
-
-            if (!IsOpen(plate)) {
+        private void CustomDoorInteract(Character character, Plate plate) {
+            if (character is Humanoid humanoid) {
                 bypassWard = plate.GetIgnoreWards();
                 door.Interact(humanoid, false, false);
                 bypassWard = false;
+            } else if (!door.m_keyItem && plate.GetIgnoreWards()) {
+                Vector3 deltaDir = (character.transform.position - transform.position).normalized;
+                bool forward = Vector3.Dot(transform.forward, deltaDir) < 0.0f;
+                door.m_nview.InvokeRPC("UseDoor", forward);
             }
         }
 
-        public void Close(Humanoid humanoid, Plate plate) {
+        public void Open(Character character, Plate plate) {
+            if (!IsReallySpawned(out _)) return;
+
+            if (!IsOpen(plate)) {
+                CustomDoorInteract(character, plate);
+            }
+        }
+
+        public void Close(Character character, Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
             if (IsOpen(plate)) {
-                bypassWard = plate.GetIgnoreWards();
-                door.Interact(humanoid, false, false);
-                bypassWard = false;
+                CustomDoorInteract(character, plate);
             }
         }
 

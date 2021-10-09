@@ -23,8 +23,10 @@ namespace PressurePlate {
         [SerializeField] private InputField openRadiusVertical;
         [SerializeField] private InputField openTime;
         [SerializeField] private InputField triggerDelay;
+        [SerializeField] private Text allowMobsText;
         [SerializeField] private Toggle invert;
         [SerializeField] private Toggle ignoreWards;
+        [SerializeField] private Toggle allowMobs;
         [SerializeField] private Button copyButton;
         [SerializeField] private Button pasteButton;
         [SerializeField] private Button resetButton;
@@ -58,6 +60,10 @@ namespace PressurePlate {
             triggerDelay.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerDelay, i));
             invert.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyInvert, i));
             ignoreWards.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyIgnoreWards, i));
+            allowMobs.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyAllowMobs, i));
+
+            ignoreWards.onValueChanged.AddListener((_) => UpdateDeactivated());
+
             copyButton.onClick.AddListener(() => {
                 copyData ??= new PlateData();
                 copyData.GetData(target);
@@ -102,6 +108,14 @@ namespace PressurePlate {
             triggerDelay.text = target.GetTriggerDelay().ToString();
             invert.isOn = target.GetInvert();
             ignoreWards.isOn = target.GetIgnoreWards();
+            allowMobs.isOn = target.GetAllowMobs();
+
+            UpdateDeactivated();
+        }
+
+        void UpdateDeactivated() {
+            allowMobs.interactable = ignoreWards.isOn;
+            allowMobsText.color = ignoreWards.isOn ? Color.white : Color.grey;
         }
 
         private void SetGUIState(bool active) {

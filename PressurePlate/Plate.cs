@@ -10,7 +10,7 @@ namespace PressurePlate {
         public GameObject plate;
         public Piece piece;
         public bool isPressed;
-        public Player lastPlayer;
+        public Character lastCharacter;
         private float pressCooldown;
         private float pressTriggerDelay; // time before the plate is triggered
         public EffectList pressEffects = new EffectList();
@@ -26,6 +26,7 @@ namespace PressurePlate {
         public const string KeyTriggerDelay = "pressure_plate_trigger_delay";
         public const string KeyInvert = "pressure_plate_invert";
         public const string KeyIgnoreWards = "pressure_plate_is_public";
+        public const string KeyAllowMobs = "pressure_plate_allow_mobs";
 
         private void Awake() {
             zNetView = GetComponent<ZNetView>();
@@ -89,20 +90,20 @@ namespace PressurePlate {
                 }
             }
 
-            if (lastPlayer == null) return;
-            if (lastPlayer != Player.m_localPlayer) return;
+            // TODO: ownership
+            if (lastCharacter == null) return;
             if (!hasAccess) return;
             if (!stateChange && !isPressed) return;
 
             foreach (DoorPowerState door in doors) {
                 if (isPressed) {
                     // always open the door if the plate is pressed
-                    door.Open(lastPlayer, this);
+                    door.Open(lastCharacter, this);
                 } else {
                     // only close the door if this is the last plate powering it
                     if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
             
-                    door.Close(lastPlayer, this);
+                    door.Close(lastCharacter, this);
                 }
             }
         }
@@ -111,23 +112,35 @@ namespace PressurePlate {
             pressed = false;
 
             if (Player.m_localPlayer == null) {
-                lastPlayer = null;
+                lastCharacter = null;
                 hasAccess = false;
                 return;
             }
 
-            foreach (Player player in Player.GetAllPlayers()) {
-                if (InRange(player.transform.position, GetTriggerRadiusHorizontal(), GetTriggerRadiusVertical())) {
-                    lastPlayer = player;
-                    pressed = true;
-                    break;
+            if (GetAllowMobs()) {
+                foreach (Character character in Character.GetAllCharacters()) {
+                    if (InRange(character.transform.position)) {
+                        lastCharacter = character;
+                        pressed = true;
+                        break;
+                    }
+                }
+            } else {
+                foreach (Player player in Player.GetAllPlayers()) {
+                    if (InRange(player.transform.position)) {
+                        lastCharacter = player;
+                        pressed = true;
+                        break;
+                    }
                 }
             }
 
             hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || GetIgnoreWards();
         }
 
-        private bool InRange(Vector3 target, float rangeXZ, float rangeY) {
+        private bool InRange(Vector3 target) {
+            float rangeXZ = GetTriggerRadiusHorizontal();
+            float rangeY = GetTriggerRadiusVertical();
             Vector3 delta = transform.position - target;
             bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
             bool inY = Mathf.Abs(delta.y) <= rangeY;
@@ -189,6 +202,7 @@ namespace PressurePlate {
         public void SetTriggerDelay(float value) => zNetView.GetZDO().Set(KeyTriggerDelay, value);
         public void SetInvert(bool value) => zNetView.GetZDO().Set(KeyInvert, value);
         public void SetIgnoreWards(bool value) => zNetView.GetZDO().Set(KeyIgnoreWards, value);
+        public void SetAllowMobs(bool value) => zNetView.GetZDO().Set(KeyAllowMobs, value);
 
         public float GetTriggerRadiusHorizontal() => zNetView.GetZDO().GetFloat(KeyTriggerRadiusHorizontal, 1);
         public float GetTriggerRadiusVertical() => zNetView.GetZDO().GetFloat(KeyTriggerRadiusVertical, 1);
@@ -198,6 +212,7 @@ namespace PressurePlate {
         public float GetTriggerDelay() => zNetView.GetZDO().GetFloat(KeyTriggerDelay, 0);
         public bool GetInvert() => zNetView.GetZDO().GetBool(KeyInvert, false);
         public bool GetIgnoreWards() => zNetView.GetZDO().GetBool(KeyIgnoreWards, false);
+        public bool GetAllowMobs() => zNetView.GetZDO().GetBool(KeyAllowMobs, false);
 
         public void ResetValues() {
             SetTriggerRadiusHorizontal(1f);
@@ -208,6 +223,7 @@ namespace PressurePlate {
             SetTriggerDelay(0f);
             SetInvert(false);
             SetIgnoreWards(false);
+            SetAllowMobs(false);
         }
     }
 }

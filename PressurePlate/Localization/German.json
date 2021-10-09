@@ -10,6 +10,7 @@
   "pressure_plate_trigger_delay": "Auslöseverzögerung",
   "pressure_plate_invert": "Invertiere Türen",
   "pressure_plate_ignore_wards": "Ignoriere Wächtersteine",
+  "pressure_plate_allow_mobs": "Erlaube Monster auszulösen",
   "pressure_plate_copy": "Kopieren",
   "pressure_plate_paste": "Einfügen",
   "pressure_plate_reset": "Zurücksetzen"
