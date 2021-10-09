@@ -90,7 +90,7 @@ namespace PressurePlate {
                 }
             }
 
-            // TODO: ownership
+            if (!zNetView.IsOwner()) return;
             if (lastCharacter == null) return;
             if (!hasAccess) return;
             if (!stateChange && !isPressed) return;
