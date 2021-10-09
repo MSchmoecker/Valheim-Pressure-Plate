@@ -84,5 +84,13 @@
       <None Remove="Localization\Deutsch.json" />
       <EmbeddedResource Include="Localization\German.json" />
     </ItemGroup>
+    <ItemGroup>
+      <Content Include="..\deploy.sh">
+        <Link>deploy.sh</Link>
+      </Content>
+      <Content Include="..\README.md">
+        <Link>README.md</Link>
+      </Content>
+    </ItemGroup>
     <Import Project="../Environment.props" />
 </Project>

@@ -36,6 +36,7 @@ If you use r2modman you can set the path too, but this is optional.
         <VALHEIM_INSTALL>E:\Programme\Steam\steamapps\common\Valheim</VALHEIM_INSTALL>
         <!-- Optional, needs to be the path to a r2modmanPlus profile folder -->
         <R2MODMAN_INSTALL>C:\Users\[user]\AppData\Roaming\r2modmanPlus-local\Valheim\profiles\Develop</R2MODMAN_INSTALL>
+        <USE_R2MODMAN_AS_DEPLOY_FOLDER>false</USE_R2MODMAN_AS_DEPLOY_FOLDER>
     </PropertyGroup>
 </Project>
 ````
