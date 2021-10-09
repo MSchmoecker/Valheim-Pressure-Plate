@@ -88,6 +88,10 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.5.0
+- Added an option to allow mobs to trigger a plate
+- Improved networking code
+
 0.4.3
 - Fixed incompatibility with H&H update
 
