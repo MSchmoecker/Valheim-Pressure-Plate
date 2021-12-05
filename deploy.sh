@@ -34,7 +34,9 @@ mkdir -p "$ModDir"
 
 # copy files to mod dir
 cp "./PressurePlate/bin/Debug/net472/PressurePlate.dll" "$ModDir/PressurePlate.dll"
-cp "./README.md"  "$ModDir/README.md"
+cp "./README.md"  "$ModDir"
+cp "./icon.png"  "$ModDir"
+cp "./manifest.json"  "$ModDir"
 
 # copy files to unity
 cp "PressurePlate/bin/Debug/net472/PressurePlate.dll" "UnityAssets/Assets/Assemblies/PressurePlate.dll"

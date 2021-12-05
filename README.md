@@ -88,6 +88,10 @@ Here is a quick instruction:
     ```
 
 ## Changelog
+0.5.1
+ - Fixed MoreGates drawbridge open/close
+ - removed min. open time of doors
+
 0.5.0
 - Added an option to allow mobs to trigger a plate
 - Improved networking code
