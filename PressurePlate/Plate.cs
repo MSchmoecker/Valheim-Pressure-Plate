@@ -52,8 +52,7 @@ namespace PressurePlate {
                     pressTriggerDelay = TriggerDelay;
                     isPressed = true;
 
-                    float? maxTime = doors.Max(i => i.GetDoorConfig()?.openTime);
-                    pressCooldown = maxTime ?? OpenTime;
+                    pressCooldown = Mathf.Max(OpenTime);
                 } else {
                     pressTriggerDelay -= Time.fixedDeltaTime;
                 }

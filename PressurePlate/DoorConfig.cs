@@ -1,17 +1,17 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 namespace PressurePlate {
     public class DoorConfig {
         public bool openClosedInverted;
-        public float openTime;
+        [Obsolete] public float openTime;
 
         private static readonly Dictionary<int, DoorConfig> specificDoors = new Dictionary<int, DoorConfig>();
 
         public DoorConfig(bool openClosedInverted = false, float openTime = 1) {
             this.openClosedInverted = openClosedInverted;
-            this.openTime = openTime;
         }
 
         public static bool AddDoorConfig(Door door, DoorConfig doorConfig) {
