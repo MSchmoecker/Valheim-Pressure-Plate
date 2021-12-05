@@ -39,6 +39,9 @@ namespace PressurePlate {
             Items.Init(assetBundle);
 
             GUIManager.OnCustomGUIAvailable += () => PressurePlateUI.Init(assetBundle);
+
+            DoorConfig.AddDoorConfig("h_drawbridge01", new DoorConfig { openClosedInverted = true });
+            DoorConfig.AddDoorConfig("h_drawbridge02", new DoorConfig { openClosedInverted = true });
         }
 
         private void OnDestroy() {
