@@ -32,6 +32,9 @@ namespace PressurePlate {
             zNetView = GetComponent<ZNetView>();
             piece = GetComponent<Piece>();
 
+            Plugin.Instance.plateVolume.SettingChanged += SetPlateVolume;
+            SetPlateVolume(null, null);
+
             if (zNetView.IsValid()) {
                 CheckPlayerPress(out isPressed, out _);
                 pressTriggerDelay = TriggerDelay;
@@ -149,6 +152,24 @@ namespace PressurePlate {
         private bool InsidePrivateArea() {
             // only show interaction when inside active ward
             return zNetView.IsValid() && PrivateArea.CheckInPrivateArea(transform.position);
+        }
+
+        private void SetPlateVolume(object sender, EventArgs args) {
+            foreach (EffectList.EffectData effectData in pressEffects.m_effectPrefabs) {
+                if (effectData.m_prefab.TryGetComponent(out ZSFX zsfx)) {
+                    float volume = 0.8f * (Plugin.Instance.plateVolume.Value / 100f);
+                    zsfx.m_minVol = volume;
+                    zsfx.m_maxVol = volume;
+                }
+            }
+
+            foreach (EffectList.EffectData effectData in releaseEffects.m_effectPrefabs) {
+                if (effectData.m_prefab.TryGetComponent(out ZSFX zsfx)) {
+                    float volume = 0.9f * (Plugin.Instance.plateVolume.Value / 100f);
+                    zsfx.m_minVol = volume;
+                    zsfx.m_maxVol = volume;
+                }
+            }
         }
 
         public string GetHoverText() {
@@ -278,6 +299,10 @@ namespace PressurePlate {
             zNetView.GetZDO().ReleaseStrings();
 
             zNetView.GetZDO().IncreseDataRevision();
+        }
+
+        private void OnDestroy() {
+            Plugin.Instance.plateVolume.SettingChanged -= SetPlateVolume;
         }
     }
 }
