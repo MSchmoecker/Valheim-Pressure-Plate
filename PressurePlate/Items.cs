@@ -12,6 +12,7 @@ namespace PressurePlate {
         public static void Init(AssetBundle assetBundle) {
             AddWoodPressurePlate(assetBundle);
             AddStonePressurePlate(assetBundle);
+            AddCrystalPressurePlate(assetBundle);
         }
 
         private static void AddWoodPressurePlate(AssetBundle assetBundle) {
@@ -79,6 +80,42 @@ namespace PressurePlate {
                 stoneMaterial.SetTextureScale("_MainTex", new Vector2(0.14f, 0.14f));
                 stoneMaterial.SetTextureOffset("_MainTex", new Vector2(0.28f, 0.08f));
                 wearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] { stoneMaterial };
+            }
+
+            PieceManager.Instance.AddPiece(customPiece);
+        }
+
+        private static void AddCrystalPressurePlate(AssetBundle assetBundle) {
+            GameObject basePlate = assetBundle.LoadAsset<GameObject>("pressure_plate Crystal.prefab");
+            GameObject plate = PrefabManager.Instance.CreateClonedPrefab("CrystalPressurePlate", basePlate);
+            Sprite icon = assetBundle.LoadAsset<Sprite>("pressure_plate_crystal_icon.png");
+
+            PieceConfig pieceConfig = new PieceConfig() {
+                CraftingStation = "piece_workbench",
+                Requirements = new RequirementConfig[] {
+                    new RequirementConfig() { Item = "Crystal", Amount = 1, Recover = true },
+                    new RequirementConfig() { Item = "SurtlingCore", Amount = 1, Recover = true },
+                },
+                PieceTable = "Hammer",
+                Icon = icon,
+                Category = Piece.PieceCategory.Building.ToString(),
+                Name = "$pressure_plate_crystal"
+            };
+
+            CustomPiece customPiece = new CustomPiece(plate, true, pieceConfig);
+
+            GameObject prefab = customPiece.PiecePrefab;
+            WearNTear wearNTear = prefab.GetComponent<WearNTear>();
+
+            PrefabManager.OnPrefabsRegistered += ApplyEffects;
+
+            void ApplyEffects() {
+                PrefabManager.OnPrefabsRegistered -= ApplyEffects;
+                Material material = PrefabManager.Cache.GetPrefab<Material>("crystal_window");
+
+                material = new Material(material);
+                material.SetTextureScale("_MainTex", new Vector2(1.5f, 1.5f));
+                wearNTear.m_new.GetComponent<MeshRenderer>().materials = new[] { material };
             }
 
             PieceManager.Instance.AddPiece(customPiece);
