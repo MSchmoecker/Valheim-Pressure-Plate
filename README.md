@@ -105,9 +105,14 @@ Here is a quick instruction:
 
 
 ## Changelog
+0.6.0
+- Added crystal pressure plate
+- Added an option inside the config to set the volume of plate sounds
+- All plates only require a workbench to be build
+
 0.5.1
- - Fixed MoreGates drawbridge open/close
- - removed min. open time of doors
+- Fixed MoreGates drawbridge open/close
+- removed min. open time of doors
 
 0.5.0
 - Added an option to allow mobs to trigger a plate
