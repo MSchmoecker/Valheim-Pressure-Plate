@@ -1,13 +1,18 @@
 # Pressure-Plate
+
 ## About
-Adds a pressure plate, which opens and closes doors within a range if a player stands on it.
+Adds multiple variation of pressure plates which open and close doors.
 - Wooden pressure plate: 3 wood, 1 surtling core with the hammer. Requires a workbench in range
-- Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a stonecutter in range
+- Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a workbench in range
+- Crystal pressure plate, 1 crystal, 1 surtling core with the hammer. Requires a workbench in range
 
 ![showcase](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/Showcase.gif)
 
+
 ## Ingame settings
 
+
+### Plate settings
 ![config](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/ExampleGUI.png)
 - Trigger Radius: if a player is inside this range, the plate is pressed
 - Door Radius: all doors inside this radius are opened/closed
@@ -15,13 +20,22 @@ Adds a pressure plate, which opens and closes doors within a range if a player s
 - Trigger Delay: duration it takes before the plate is pressed
 - Invert Doors: inverts open/closed state
 - Ignore wards: allows other players to open doors even they have no access
+- Allow Mobs: monster and creatures can also press the plate. Requires Ignore wards to be on
+
+### Global settings
+
+Config file at `BepInEx/config/com.maxsch.valheim.pressure_plate.cfg`
+- Plate Volume: set the volume level of all plates. Can be changed while ingame
+
 
 ## Installation
-Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
+Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.\
+Install [Jötunn, the Valheim Library](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/) and its dependencies
 
 
 ## Development
 Inside the repo are two folders, `PressurePlate` for the mod and `UnityAssets` for the Unity files.
+
 
 ### Mod Setup
 Create a file called `Environment.props` inside the project root.
@@ -43,6 +57,7 @@ If you use r2modman you can set the path too, but this is optional.
 
 This requires the publicized Valheim dlls. See here for example: https://github.com/CabbageCrow/AssemblyPublicizer
 
+
 ### Unity Setup
 This step is only needed if you want to compile the AssetBundle.
 
@@ -50,6 +65,7 @@ Place all needed Unity, Valheim and dependencies assemblies in the `UnityAssets/
 See `PressurePlate/PressurePlate.csproj` for reference. If some are still missing, Unity prints the name of a missing dependencies to the console.
 
 Build the AssetBundle with the Unity toolbar "Assets/Build AssetBundles" to automatically copy the resulting file to the mod folder.
+
 
 ### Adding custom door config
 Custom door settings can be applied for every door type. This can only be done with code and is an optional for other mods. Vanilla items are configurable, too.
@@ -76,7 +92,7 @@ Here is a quick instruction:
 
     This may requires `using PressurePlate;`
 
-4. Add the config to the gameobject:
+4. Add the config to the GameObject:
     ```
     const prefabName = "your_door_piece_name";
     DoorConfig.AddDoorConfig(prefabName, config);
@@ -86,6 +102,7 @@ Here is a quick instruction:
     GameObject door = myDoorPrefab;
     DoorConfig.AddDoorConfig(door.GetComponent<Door>(), config);
     ```
+
 
 ## Changelog
 0.5.1
@@ -161,12 +178,14 @@ Here is a quick instruction:
 0.0.1
 - Release
 
+
 ## Links
 Nexusmods: https://www.nexusmods.com/valheim/mods/498
 
 Thunderstore: https://valheim.thunderstore.io/package/MSchmoecker/PressurePlate/
 
 Github: https://github.com/MSchmoecker/Valheim-Pressure-Plate
+
 
 ## Credits
 - Sound effects: http://www.freesfx.co.uk
