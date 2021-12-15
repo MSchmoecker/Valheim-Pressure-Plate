@@ -51,10 +51,6 @@ namespace PressurePlate {
             DoorConfig.AddDoorConfig("h_drawbridge02", new DoorConfig { openClosedInverted = true });
         }
 
-        private void OnDestroy() {
-            harmony?.UnpatchAll(ModGuid);
-        }
-
         public static AssetBundle GetAssetBundleFromResources(string fileName) {
             Assembly execAssembly = Assembly.GetExecutingAssembly();
             string resourceName = execAssembly.GetManifestResourceNames().Single(str => str.EndsWith(fileName));
