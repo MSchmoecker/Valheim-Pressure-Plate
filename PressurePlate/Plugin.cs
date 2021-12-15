@@ -23,7 +23,6 @@ namespace PressurePlate {
 
         private void Awake() {
             Instance = this;
-            Log.Init(Logger);
 
             Config.Clear();
 
