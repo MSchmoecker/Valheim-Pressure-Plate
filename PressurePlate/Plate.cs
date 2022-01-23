@@ -18,15 +18,39 @@ namespace PressurePlate {
         public ZNetView zNetView;
         public string showName = "$pressure_plate";
 
-        public const string KeyTriggerRadiusHorizontal = "pressure_plate_trigger_radius_horizontal";
-        public const string KeyTriggerRadiusVertical = "pressure_plate_trigger_radius_vertical";
-        public const string KeyOpenRadiusHorizontal = "pressure_plate_open_radius_horizontal";
-        public const string KeyOpenRadiusVertical = "pressure_plate_open_radius_vertical";
-        public const string KeyOpenTime = "pressure_plate_open_time";
-        public const string KeyTriggerDelay = "pressure_plate_trigger_delay";
-        public const string KeyInvert = "pressure_plate_invert";
-        public const string KeyIgnoreWards = "pressure_plate_is_public";
-        public const string KeyAllowMobs = "pressure_plate_allow_mobs";
+        public FloatZNetProperty TriggerRadiusHorizontal { get; private set; }
+        public FloatZNetProperty TriggerRadiusVertical { get; private set; }
+        public FloatZNetProperty OpenRadiusHorizontal { get; private set; }
+        public FloatZNetProperty OpenRadiusVertical { get; private set; }
+        public FloatZNetProperty OpenTime { get; private set; }
+        public FloatZNetProperty TriggerDelay { get; private set; }
+        public BoolZNetProperty Invert { get; private set; }
+        public BoolZNetProperty IgnoreWards { get; private set; }
+        public BoolZNetProperty AllowMobs { get; private set; }
+
+        private void InitProperties() {
+            TriggerRadiusHorizontal = new FloatZNetProperty("pressure_plate_trigger_radius_horizontal", zNetView, 1f);
+            TriggerRadiusVertical = new FloatZNetProperty("pressure_plate_trigger_radius_vertical", zNetView, 1f);
+            OpenRadiusHorizontal = new FloatZNetProperty("pressure_plate_open_radius_horizontal", zNetView, 3f);
+            OpenRadiusVertical = new FloatZNetProperty("pressure_plate_open_radius_vertical", zNetView, 3f);
+            OpenTime = new FloatZNetProperty("pressure_plate_open_time", zNetView, 1f);
+            TriggerDelay = new FloatZNetProperty("pressure_plate_trigger_delay", zNetView, 0f);
+            Invert = new BoolZNetProperty("pressure_plate_invert", zNetView, false);
+            IgnoreWards = new BoolZNetProperty("pressure_plate_is_public", zNetView, false);
+            AllowMobs = new BoolZNetProperty("pressure_plate_allow_mobs", zNetView, false);
+        }
+
+        public void PasteData(Plate copy) {
+            TriggerRadiusHorizontal.ForceSet(copy.TriggerRadiusHorizontal.Get());
+            TriggerRadiusVertical.ForceSet(copy.TriggerRadiusVertical.Get());
+            OpenRadiusHorizontal.ForceSet(copy.OpenRadiusHorizontal.Get());
+            OpenRadiusVertical.ForceSet(copy.OpenRadiusVertical.Get());
+            OpenTime.ForceSet(copy.OpenTime.Get());
+            TriggerDelay.ForceSet(copy.TriggerDelay.Get());
+            Invert.ForceSet(copy.Invert.Get());
+            IgnoreWards.ForceSet(copy.IgnoreWards.Get());
+            AllowMobs.ForceSet(copy.AllowMobs.Get());
+        }
 
         private void Awake() {
             zNetView = GetComponent<ZNetView>();
@@ -36,8 +60,9 @@ namespace PressurePlate {
             SetPlateVolume(null, null);
 
             if (zNetView.IsValid()) {
+                InitProperties();
                 CheckPlayerPress(out isPressed, out _);
-                pressTriggerDelay = TriggerDelay;
+                pressTriggerDelay = TriggerDelay.Get();
             }
         }
 
@@ -52,10 +77,10 @@ namespace PressurePlate {
 
             if (newPressed) {
                 if (pressTriggerDelay <= 0) {
-                    pressTriggerDelay = TriggerDelay;
+                    pressTriggerDelay = TriggerDelay.Get();
                     isPressed = true;
 
-                    pressCooldown = Mathf.Max(OpenTime);
+                    pressCooldown = Mathf.Max(OpenTime.Get());
                 } else {
                     pressTriggerDelay -= Time.fixedDeltaTime;
                 }
@@ -65,7 +90,7 @@ namespace PressurePlate {
                     isPressed = true;
                 } else {
                     isPressed = false;
-                    pressTriggerDelay = TriggerDelay;
+                    pressTriggerDelay = TriggerDelay.Get();
                 }
             }
 
@@ -119,7 +144,7 @@ namespace PressurePlate {
                 return;
             }
 
-            if (AllowMobs) {
+            if (AllowMobs.Get()) {
                 foreach (Character character in Character.GetAllCharacters()) {
                     if (InRange(character.transform.position)) {
                         lastCharacter = character;
@@ -137,12 +162,12 @@ namespace PressurePlate {
                 }
             }
 
-            hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || IgnoreWards;
+            hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || IgnoreWards.Get();
         }
 
         private bool InRange(Vector3 target) {
-            float rangeXZ = TriggerRadiusHorizontal;
-            float rangeY = TriggerRadiusVertical;
+            float rangeXZ = TriggerRadiusHorizontal.Get();
+            float rangeY = TriggerRadiusVertical.Get();
             Vector3 delta = transform.position - target;
             bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
             bool inY = Mathf.Abs(delta.y) <= rangeY;
@@ -212,78 +237,6 @@ namespace PressurePlate {
 
         public bool UseItem(Humanoid user, ItemDrop.ItemData item) {
             return false;
-        }
-
-        public float TriggerRadiusHorizontal {
-            get => zNetView.GetZDO().GetFloat(KeyTriggerRadiusHorizontal, 1f);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyTriggerRadiusHorizontal, value);
-            }
-        }
-
-        public float TriggerRadiusVertical {
-            get => zNetView.GetZDO().GetFloat(KeyTriggerRadiusVertical, 1f);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyTriggerRadiusVertical, value);
-            }
-        }
-
-        public float OpenRadiusHorizontal {
-            get => zNetView.GetZDO().GetFloat(KeyOpenRadiusHorizontal, 3f);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyOpenRadiusHorizontal, value);
-            }
-        }
-
-        public float OpenRadiusVertical {
-            get => zNetView.GetZDO().GetFloat(KeyOpenRadiusVertical, 3f);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyOpenRadiusVertical, value);
-            }
-        }
-
-        public float OpenTime {
-            get => zNetView.GetZDO().GetFloat(KeyOpenTime, 1f);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyOpenTime, value);
-            }
-        }
-
-        public float TriggerDelay {
-            get => zNetView.GetZDO().GetFloat(KeyTriggerDelay, 0f);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyTriggerDelay, value);
-            }
-        }
-
-        public bool Invert {
-            get => zNetView.GetZDO().GetBool(KeyInvert, false);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyInvert, value);
-            }
-        }
-
-        public bool IgnoreWards {
-            get => zNetView.GetZDO().GetBool(KeyIgnoreWards, false);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyIgnoreWards, value);
-            }
-        }
-
-        public bool AllowMobs {
-            get => zNetView.GetZDO().GetBool(KeyAllowMobs, false);
-            set {
-                if (!zNetView.IsOwner()) zNetView.ClaimOwnership();
-                zNetView.GetZDO().Set(KeyAllowMobs, value);
-            }
         }
 
         public void ResetValues() {

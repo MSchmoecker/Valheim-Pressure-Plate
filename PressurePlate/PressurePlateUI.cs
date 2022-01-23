@@ -34,7 +34,7 @@ namespace PressurePlate {
 
         private static GameObject uiRoot;
         private Plate target;
-        private PlateData copyData;
+        private Plate copy;
 
         public static void Init(AssetBundle assetBundle) {
             GameObject prefab = assetBundle.LoadAsset<GameObject>("PressurePlateUI");
@@ -52,24 +52,23 @@ namespace PressurePlate {
         private void Awake() {
             instance = this;
 
-            triggerRadiusHorizontal.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerRadiusHorizontal, i));
-            triggerRadiusVertical.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerRadiusVertical, i));
-            openRadiusHorizontal.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyOpenRadiusHorizontal, i));
-            openRadiusVertical.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyOpenRadiusVertical, i));
-            openTime.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyOpenTime, i));
-            triggerDelay.onValueChanged.AddListener(i => SetSettingFloat(Plate.KeyTriggerDelay, i));
-            invert.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyInvert, i));
-            ignoreWards.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyIgnoreWards, i));
-            allowMobs.onValueChanged.AddListener(i => SetSettingBool(Plate.KeyAllowMobs, i));
+            triggerRadiusHorizontal.onValueChanged.AddListener(i => target.TriggerRadiusHorizontal.ForceSet(i));
+            triggerRadiusVertical.onValueChanged.AddListener(i => target.TriggerRadiusVertical.ForceSet(i));
+            openRadiusHorizontal.onValueChanged.AddListener(i => target.OpenRadiusHorizontal.ForceSet(i));
+            openRadiusVertical.onValueChanged.AddListener(i => target.OpenRadiusVertical.ForceSet(i));
+            openTime.onValueChanged.AddListener(i => target.OpenTime.ForceSet(i));
+            triggerDelay.onValueChanged.AddListener(i => target.TriggerDelay.ForceSet(i));
+            invert.onValueChanged.AddListener(i => target.Invert.ForceSet(i));
+            ignoreWards.onValueChanged.AddListener(i => target.IgnoreWards.ForceSet(i));
+            allowMobs.onValueChanged.AddListener(i => target.AllowMobs.ForceSet(i));
 
             ignoreWards.onValueChanged.AddListener((_) => UpdateDeactivated());
 
             copyButton.onClick.AddListener(() => {
-                copyData ??= new PlateData();
-                copyData.GetData(target);
+                copy = target;
             });
             pasteButton.onClick.AddListener(() => {
-                copyData.SetData(target);
+                target.PasteData(copy);
                 UpdateText();
             });
             resetButton.onClick.AddListener(() => {
@@ -89,7 +88,7 @@ namespace PressurePlate {
                 SetGUIState(false);
             }
 
-            pasteButton.interactable = copyData != null;
+            pasteButton.interactable = copy != null;
         }
 
         public void OpenUI(Plate plate) {
@@ -100,15 +99,15 @@ namespace PressurePlate {
 
         private void UpdateText() {
             title.text = Localization.instance.Localize(target.piece.m_name);
-            triggerRadiusHorizontal.text = target.TriggerRadiusHorizontal.ToString();
-            triggerRadiusVertical.text = target.TriggerRadiusVertical.ToString();
-            openRadiusHorizontal.text = target.OpenRadiusHorizontal.ToString();
-            openRadiusVertical.text = target.OpenRadiusVertical.ToString();
-            openTime.text = target.OpenTime.ToString();
-            triggerDelay.text = target.TriggerDelay.ToString();
-            invert.isOn = target.Invert;
-            ignoreWards.isOn = target.IgnoreWards;
-            allowMobs.isOn = target.AllowMobs;
+            triggerRadiusHorizontal.text = target.TriggerRadiusHorizontal.Get().ToString();
+            triggerRadiusVertical.text = target.TriggerRadiusVertical.Get().ToString();
+            openRadiusHorizontal.text = target.OpenRadiusHorizontal.Get().ToString();
+            openRadiusVertical.text = target.OpenRadiusVertical.Get().ToString();
+            openTime.text = target.OpenTime.Get().ToString();
+            triggerDelay.text = target.TriggerDelay.Get().ToString();
+            invert.isOn = target.Invert.Get();
+            ignoreWards.isOn = target.IgnoreWards.Get();
+            allowMobs.isOn = target.AllowMobs.Get();
 
             UpdateDeactivated();
         }
