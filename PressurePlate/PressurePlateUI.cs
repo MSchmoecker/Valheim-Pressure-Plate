@@ -27,6 +27,7 @@ namespace PressurePlate {
         [SerializeField] private Toggle invert;
         [SerializeField] private Toggle ignoreWards;
         [SerializeField] private Toggle allowMobs;
+        [SerializeField] private Toggle isInvisible;
         [SerializeField] private Button copyButton;
         [SerializeField] private Button pasteButton;
         [SerializeField] private Button resetButton;
@@ -61,6 +62,7 @@ namespace PressurePlate {
             invert.onValueChanged.AddListener(i => target.Invert.ForceSet(i));
             ignoreWards.onValueChanged.AddListener(i => target.IgnoreWards.ForceSet(i));
             allowMobs.onValueChanged.AddListener(i => target.AllowMobs.ForceSet(i));
+            isInvisible.onValueChanged.AddListener(i => target.IsInvisible.ForceSet(i));
 
             ignoreWards.onValueChanged.AddListener((_) => UpdateDeactivated());
 
@@ -108,6 +110,7 @@ namespace PressurePlate {
             invert.isOn = target.Invert.Get();
             ignoreWards.isOn = target.IgnoreWards.Get();
             allowMobs.isOn = target.AllowMobs.Get();
+            isInvisible.isOn = target.IsInvisible.Get();
 
             UpdateDeactivated();
         }

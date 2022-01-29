@@ -27,6 +27,7 @@ namespace PressurePlate {
         public BoolZNetProperty Invert { get; private set; }
         public BoolZNetProperty IgnoreWards { get; private set; }
         public BoolZNetProperty AllowMobs { get; private set; }
+        public BoolZNetProperty IsInvisible { get; private set; }
 
         private void InitProperties() {
             TriggerRadiusHorizontal = new FloatZNetProperty("pressure_plate_trigger_radius_horizontal", zNetView, 1f);
@@ -38,6 +39,7 @@ namespace PressurePlate {
             Invert = new BoolZNetProperty("pressure_plate_invert", zNetView, false);
             IgnoreWards = new BoolZNetProperty("pressure_plate_is_public", zNetView, false);
             AllowMobs = new BoolZNetProperty("pressure_plate_allow_mobs", zNetView, false);
+            IsInvisible = new BoolZNetProperty("pressure_plate_invisible", zNetView, false);
         }
 
         public void PasteData(Plate copy) {
@@ -50,6 +52,7 @@ namespace PressurePlate {
             Invert.ForceSet(copy.Invert.Get());
             IgnoreWards.ForceSet(copy.IgnoreWards.Get());
             AllowMobs.ForceSet(copy.AllowMobs.Get());
+            IsInvisible.ForceSet(copy.IsInvisible.Get());
         }
 
         private void Awake() {
@@ -63,7 +66,14 @@ namespace PressurePlate {
                 InitProperties();
                 CheckPlayerPress(out isPressed, out _);
                 pressTriggerDelay = TriggerDelay.Get();
+
+                IsInvisible.OnChange += UpdateVisibility;
+                UpdateVisibility();
             }
+        }
+
+        private void UpdateVisibility() {
+            plate.GetComponent<MeshRenderer>().enabled = !IsInvisible.Get();
         }
 
         private void FixedUpdate() {

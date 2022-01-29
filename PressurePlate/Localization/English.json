@@ -12,6 +12,7 @@
   "pressure_plate_invert": "Invert Doors",
   "pressure_plate_ignore_wards": "Ignore Wards",
   "pressure_plate_allow_mobs": "Allow creatures to trigger",
+  "pressure_plate_is_invisible": "Invisible",
   "pressure_plate_copy": "Copy",
   "pressure_plate_paste": "Paste",
   "pressure_plate_reset": "Reset"

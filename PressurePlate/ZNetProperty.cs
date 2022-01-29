@@ -1,8 +1,11 @@
-﻿namespace PressurePlate {
+﻿using System;
+
+namespace PressurePlate {
     public abstract class ZNetProperty<T> {
         public string Key { get; private set; }
         public T DefaultValue { get; private set; }
         protected readonly ZNetView zNetView;
+        public event Action OnChange;
 
         protected ZNetProperty(string key, ZNetView zNetView, T defaultValue) {
             Key = key;
@@ -21,8 +24,14 @@
             Set(value);
         }
 
+        public void Set(T value) {
+            SetValue(value);
+            OnChange?.Invoke();
+        }
+
         public abstract T Get();
-        public abstract void Set(T value);
+
+        protected abstract void SetValue(T value);
     }
 
     public class BoolZNetProperty : ZNetProperty<bool> {
@@ -33,7 +42,7 @@
             return zNetView.GetZDO().GetBool(Key, DefaultValue);
         }
 
-        public override void Set(bool value) {
+        protected override void SetValue(bool value) {
             zNetView.GetZDO().Set(Key, value);
         }
     }
@@ -46,7 +55,7 @@
             return zNetView.GetZDO().GetFloat(Key, DefaultValue);
         }
 
-        public override void Set(float value) {
+        protected override void SetValue(float value) {
             zNetView.GetZDO().Set(Key, value);
         }
 
