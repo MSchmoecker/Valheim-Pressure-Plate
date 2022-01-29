@@ -126,18 +126,6 @@ namespace PressurePlate {
             GUIManager.BlockInput(active);
         }
 
-        private void SetSettingFloat(string key, string input) {
-            ZDO zdo = target.zNetView.GetZDO();
-            if (float.TryParse(input, out float value)) {
-                zdo.Set(key, value);
-            }
-        }
-
-        private void SetSettingBool(string key, bool input) {
-            ZDO zdo = target.zNetView.GetZDO();
-            zdo.Set(key, input);
-        }
-
         public static void ApplyWoodpanel(Image image) {
             image.sprite = GUIManager.Instance.GetSprite("woodpanel_trophys");
         }
