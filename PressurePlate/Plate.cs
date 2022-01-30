@@ -11,7 +11,6 @@ namespace PressurePlate {
         public Piece piece;
         private MeshRenderer pieceMesh;
         public bool isPressed;
-        public Character lastCharacter;
         private float pressCooldown;
         private float pressTriggerDelay; // time before the plate is triggered
         private float lastTime;
@@ -67,7 +66,7 @@ namespace PressurePlate {
 
             if (zNetView.IsValid()) {
                 InitProperties();
-                CheckPlayerPress(out isPressed, out _);
+                isPressed = CheckPress();
                 pressTriggerDelay = TriggerDelay.Get();
                 lastTime = Time.time;
                 FixedUpdate();
@@ -89,7 +88,7 @@ namespace PressurePlate {
             lastTime = Time.time;
 
             bool wasPressed = isPressed;
-            CheckPlayerPress(out bool newPressed, out bool hasAccess);
+            bool newPressed = CheckPress();
             List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(this, transform.position);
 
             if (newPressed) {
@@ -123,63 +122,77 @@ namespace PressurePlate {
                     releaseEffects.Create(transform.position, Quaternion.identity);
                 }
 
-                if (hasAccess) {
-                    foreach (DoorPowerState door in doors) {
-                        if (isPressed) {
-                            door.AddPoweringPlate(this);
-                        } else {
-                            door.RemovePoweringPlate(this);
-                        }
+                foreach (DoorPowerState door in doors) {
+                    if (isPressed) {
+                        door.AddPoweringPlate(this);
+                    } else {
+                        door.RemovePoweringPlate(this);
                     }
                 }
             }
 
             if (!zNetView.IsOwner()) return;
-            if (lastCharacter == null) return;
-            if (!hasAccess) return;
             if (!stateChange && !isPressed) return;
 
             foreach (DoorPowerState door in doors) {
                 if (isPressed) {
                     // always open the door if the plate is pressed
-                    door.Open(lastCharacter, this);
+                    door.Open(this);
                 } else {
                     // only close the door if this is the last plate powering it
                     if (door.GetPoweringPlates().Count(i => i != this) > 0) continue;
 
-                    door.Close(lastCharacter, this);
+                    door.Close(this);
                 }
             }
         }
 
-        private void CheckPlayerPress(out bool pressed, out bool hasAccess) {
-            pressed = false;
-
-            if (!Player.m_localPlayer) {
-                lastCharacter = null;
-                hasAccess = false;
-                return;
+        private bool CheckPress() {
+            if (IgnoreWards.Get() && AllowMobs.Get()) {
+                return CheckMobPress();
             }
 
-            if (AllowMobs.Get()) {
-                foreach (Character character in Character.GetAllCharacters()) {
-                    if (InRange(character.transform.position)) {
-                        lastCharacter = character;
-                        pressed = true;
-                        break;
-                    }
+            return CheckPlayerPress();
+        }
+
+        private bool CheckPlayerPress() {
+            foreach (Player player in Player.GetAllPlayers()) {
+                if (!InRange(player.transform.position)) {
+                    continue;
                 }
-            } else {
-                foreach (Player player in Player.GetAllPlayers()) {
-                    if (InRange(player.transform.position)) {
-                        lastCharacter = player;
-                        pressed = true;
-                        break;
-                    }
+
+                if (IgnoreWards.Get() || PlayerHasAccess(player)) {
+                    return true;
                 }
             }
 
-            hasAccess = PrivateArea.CheckAccess(transform.position, 0.0f, false) || IgnoreWards.Get();
+            return false;
+        }
+
+        private bool CheckMobPress() {
+            foreach (Character character in Character.GetAllCharacters()) {
+                if (!InRange(character.transform.position)) {
+                    continue;
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        private static bool PlayerHasAccess(Player player) {
+            foreach (PrivateArea allArea in PrivateArea.m_allAreas) {
+                bool areaEnabled = allArea.IsEnabled();
+                bool playerInside = allArea.IsInside(player.transform.position, 0.0f);
+                bool playerPermitted = allArea.m_piece.GetCreator() == player.GetPlayerID() || allArea.IsPermitted(player.GetPlayerID());
+
+                if (areaEnabled && playerInside && !playerPermitted) {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool InRange(Vector3 target) {

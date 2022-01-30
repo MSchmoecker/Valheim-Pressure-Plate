@@ -15,60 +15,10 @@ namespace PressurePlate {
                 __instance.gameObject.AddComponent<DoorPowerState>();
             }
         }
-
-        private static readonly MethodInfo CheckAccessCall =
-            AccessTools.GetDeclaredMethods(typeof(PrivateArea)).First(m => m.Name == "CheckAccess");
-
-        private static readonly MethodInfo GetComponentDoorPowerState =
-            AccessTools.Method(typeof(Component), "GetComponent", new Type[0], new[] { typeof(DoorPowerState) });
-
-        private static readonly FieldInfo GetPlateBypassWard =
-            AccessTools.Field(typeof(DoorPowerState), nameof(DoorPowerState.bypassWard));
-
-        [HarmonyPatch(typeof(Door), "Interact"), HarmonyTranspiler]
-        public static IEnumerable<CodeInstruction> DoorInteract(IEnumerable<CodeInstruction> instructions) {
-            List<CodeInstruction> code = new List<CodeInstruction>(instructions);
-
-            int checkAccessCallIndex = -1;
-            Label afterReturnLabel = new Label();
-
-            for (int i = 0; i < code.Count; i++) {
-                CodeInstruction instruction = code[i];
-
-                if (instruction.Is(OpCodes.Call, CheckAccessCall)) {
-                    checkAccessCallIndex = i;
-                }
-
-                if (checkAccessCallIndex > -1 && i == checkAccessCallIndex + 1) {
-                    afterReturnLabel = (Label) instruction.operand;
-                }
-            }
-
-            if (checkAccessCallIndex > -1) {
-                Label privateAreaReturnLabel = new Label();
-                code[checkAccessCallIndex + 2].WithLabels(privateAreaReturnLabel);
-
-                CodeInstruction[] bypassWard = {
-                    // check if ward should be bypassed
-                    new CodeInstruction(OpCodes.Ldarg_0),
-                    new CodeInstruction(OpCodes.Call, GetComponentDoorPowerState),
-                    new CodeInstruction(OpCodes.Ldfld, GetPlateBypassWard),
-                    new CodeInstruction(OpCodes.Brtrue, afterReturnLabel), // skip the return and continue method
-                };
-
-                code[checkAccessCallIndex - 6].MoveLabelsTo(bypassWard[0]);
-
-                // bevore CheckAccess is called
-                code.InsertRange(checkAccessCallIndex - 6, bypassWard);
-            }
-
-            return code.AsEnumerable();
-        }
     }
 
     public class DoorPowerState : MonoBehaviour {
         public static readonly List<DoorPowerState> AllStates = new List<DoorPowerState>();
-        public bool bypassWard;
 
         private List<Plate> poweringPlates = new List<Plate>();
         private Door door;
@@ -105,34 +55,32 @@ namespace PressurePlate {
         public bool IsReallySpawned(out ZNetView zNetView) {
             // If the player places a new door prefab, the door exists but no ZNetView
             zNetView = GetComponent<ZNetView>();
-            return zNetView != null && zNetView.IsValid();
+            return zNetView != null && (bool) zNetView && zNetView.IsValid();
         }
 
-        private void CustomDoorInteract(Character character, Plate plate) {
-            if (character is Humanoid humanoid) {
-                bypassWard = plate.IgnoreWards.Get();
-                door.Interact(humanoid, false, false);
-                bypassWard = false;
-            } else if (!door.m_keyItem && plate.IgnoreWards.Get()) {
-                Vector3 deltaDir = (character.transform.position - transform.position).normalized;
-                bool forward = Vector3.Dot(transform.forward, deltaDir) < 0.0f;
-                door.m_nview.InvokeRPC("UseDoor", forward);
+        private void CustomDoorInteract(Plate plate) {
+            if (door.m_keyItem) {
+                return;
             }
+
+            Vector3 deltaDir = (plate.transform.position - transform.position).normalized;
+            bool forward = Vector3.Dot(transform.forward, deltaDir) < 0.0f;
+            door.m_nview.InvokeRPC("UseDoor", forward);
         }
 
-        public void Open(Character character, Plate plate) {
+        public void Open(Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
             if (!IsOpen(plate)) {
-                CustomDoorInteract(character, plate);
+                CustomDoorInteract(plate);
             }
         }
 
-        public void Close(Character character, Plate plate) {
+        public void Close(Plate plate) {
             if (!IsReallySpawned(out _)) return;
 
             if (IsOpen(plate)) {
-                CustomDoorInteract(character, plate);
+                CustomDoorInteract(plate);
             }
         }
 
