@@ -9,10 +9,12 @@ namespace PressurePlate {
     public class Plate : MonoBehaviour, Hoverable, Interactable {
         public GameObject plate;
         public Piece piece;
+        private MeshRenderer pieceMesh;
         public bool isPressed;
         public Character lastCharacter;
         private float pressCooldown;
         private float pressTriggerDelay; // time before the plate is triggered
+        private float lastTime;
         public EffectList pressEffects = new EffectList();
         public EffectList releaseEffects = new EffectList();
         public ZNetView zNetView;
@@ -58,6 +60,7 @@ namespace PressurePlate {
         private void Awake() {
             zNetView = GetComponent<ZNetView>();
             piece = GetComponent<Piece>();
+            pieceMesh = plate.GetComponent<MeshRenderer>();
 
             Plugin.Instance.plateVolume.SettingChanged += SetPlateVolume;
             SetPlateVolume(null, null);
@@ -66,9 +69,8 @@ namespace PressurePlate {
                 InitProperties();
                 CheckPlayerPress(out isPressed, out _);
                 pressTriggerDelay = TriggerDelay.Get();
-
-                IsInvisible.OnChange += UpdateVisibility;
-                UpdateVisibility();
+                lastTime = Time.time;
+                FixedUpdate();
             }
         }
 
@@ -81,6 +83,11 @@ namespace PressurePlate {
                 return; //wait for network spawn
             }
 
+            UpdateVisibility();
+
+            float timeDelta = Time.time - lastTime;
+            lastTime = Time.time;
+
             bool wasPressed = isPressed;
             CheckPlayerPress(out bool newPressed, out bool hasAccess);
             List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(this, transform.position);
@@ -92,11 +99,11 @@ namespace PressurePlate {
 
                     pressCooldown = Mathf.Max(OpenTime.Get());
                 } else {
-                    pressTriggerDelay -= Time.fixedDeltaTime;
+                    pressTriggerDelay -= timeDelta;
                 }
             } else {
                 if (pressCooldown > 0) {
-                    pressCooldown -= Time.fixedDeltaTime;
+                    pressCooldown -= timeDelta;
                     isPressed = true;
                 } else {
                     isPressed = false;
@@ -148,7 +155,7 @@ namespace PressurePlate {
         private void CheckPlayerPress(out bool pressed, out bool hasAccess) {
             pressed = false;
 
-            if (Player.m_localPlayer == null) {
+            if (!Player.m_localPlayer) {
                 lastCharacter = null;
                 hasAccess = false;
                 return;

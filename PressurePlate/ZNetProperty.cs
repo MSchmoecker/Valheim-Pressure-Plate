@@ -5,7 +5,6 @@ namespace PressurePlate {
         public string Key { get; private set; }
         public T DefaultValue { get; private set; }
         protected readonly ZNetView zNetView;
-        public event Action OnChange;
 
         protected ZNetProperty(string key, ZNetView zNetView, T defaultValue) {
             Key = key;
@@ -26,7 +25,6 @@ namespace PressurePlate {
 
         public void Set(T value) {
             SetValue(value);
-            OnChange?.Invoke();
         }
 
         public abstract T Get();
