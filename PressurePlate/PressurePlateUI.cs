@@ -24,10 +24,12 @@ namespace PressurePlate {
         [SerializeField] private InputField openTime;
         [SerializeField] private InputField triggerDelay;
         [SerializeField] private Text allowMobsText;
+        [SerializeField] private Text onlyOpenNotPermittedText;
         [SerializeField] private Toggle invert;
         [SerializeField] private Toggle ignoreWards;
         [SerializeField] private Toggle allowMobs;
         [SerializeField] private Toggle isInvisible;
+        [SerializeField] private Toggle onlyOpenNotPermitted;
         [SerializeField] private Button copyButton;
         [SerializeField] private Button pasteButton;
         [SerializeField] private Button resetButton;
@@ -63,6 +65,7 @@ namespace PressurePlate {
             ignoreWards.onValueChanged.AddListener(i => target.IgnoreWards.ForceSet(i));
             allowMobs.onValueChanged.AddListener(i => target.AllowMobs.ForceSet(i));
             isInvisible.onValueChanged.AddListener(i => target.IsInvisible.ForceSet(i));
+            onlyOpenNotPermitted.onValueChanged.AddListener(i => target.OnlyOpenNotPermitted.ForceSet(i));
 
             ignoreWards.onValueChanged.AddListener((_) => UpdateDeactivated());
 
@@ -111,6 +114,7 @@ namespace PressurePlate {
             ignoreWards.isOn = target.IgnoreWards.Get();
             allowMobs.isOn = target.AllowMobs.Get();
             isInvisible.isOn = target.IsInvisible.Get();
+            onlyOpenNotPermitted.isOn = target.OnlyOpenNotPermitted.Get();
 
             UpdateDeactivated();
         }
@@ -118,6 +122,8 @@ namespace PressurePlate {
         void UpdateDeactivated() {
             allowMobs.interactable = ignoreWards.isOn;
             allowMobsText.color = ignoreWards.isOn ? Color.white : Color.grey;
+            onlyOpenNotPermitted.interactable = ignoreWards.isOn;
+            onlyOpenNotPermittedText.color = ignoreWards.isOn ? Color.white : Color.grey;
         }
 
         private void SetGUIState(bool active) {

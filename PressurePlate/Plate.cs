@@ -29,6 +29,7 @@ namespace PressurePlate {
         public BoolZNetProperty IgnoreWards { get; private set; }
         public BoolZNetProperty AllowMobs { get; private set; }
         public BoolZNetProperty IsInvisible { get; private set; }
+        public BoolZNetProperty OnlyOpenNotPermitted { get; private set; }
 
         private void InitProperties() {
             TriggerRadiusHorizontal = new FloatZNetProperty("pressure_plate_trigger_radius_horizontal", zNetView, 1f);
@@ -41,6 +42,7 @@ namespace PressurePlate {
             IgnoreWards = new BoolZNetProperty("pressure_plate_is_public", zNetView, false);
             AllowMobs = new BoolZNetProperty("pressure_plate_allow_mobs", zNetView, false);
             IsInvisible = new BoolZNetProperty("pressure_plate_invisible", zNetView, false);
+            OnlyOpenNotPermitted = new BoolZNetProperty("pressure_plate_only_open_not_permitted", zNetView, false);
         }
 
         public void PasteData(Plate copy) {
@@ -54,6 +56,7 @@ namespace PressurePlate {
             IgnoreWards.ForceSet(copy.IgnoreWards.Get());
             AllowMobs.ForceSet(copy.AllowMobs.Get());
             IsInvisible.ForceSet(copy.IsInvisible.Get());
+            OnlyOpenNotPermitted.ForceSet(copy.OnlyOpenNotPermitted.Get());
         }
 
         private void Awake() {
@@ -161,6 +164,10 @@ namespace PressurePlate {
                     continue;
                 }
 
+                if (NotOpenBecauseIsPermitted(player)) {
+                    continue;
+                }
+
                 if (IgnoreWards.Get() || PlayerHasAccess(player)) {
                     return true;
                 }
@@ -169,9 +176,17 @@ namespace PressurePlate {
             return false;
         }
 
+        private bool NotOpenBecauseIsPermitted(Player player) {
+            return IgnoreWards.Get() && OnlyOpenNotPermitted.Get() && PlayerHasAccess(player);
+        }
+
         private bool CheckMobPress() {
             foreach (Character character in Character.GetAllCharacters()) {
                 if (!InRange(character.transform.position)) {
+                    continue;
+                }
+
+                if (character is Player player && NotOpenBecauseIsPermitted(player)) {
                     continue;
                 }
 
