@@ -105,6 +105,11 @@ Here is a quick instruction:
 
 
 ## Changelog
+0.6.1
+- Added option to make a plate invisible
+- Added option to allow only not permitted players
+- Fixed doors could sometimes be opened even if a player has no access (and ignore wards was set to false)
+
 0.6.0
 - Added crystal pressure plate
 - Added an option inside the config to set the volume of plate sounds
