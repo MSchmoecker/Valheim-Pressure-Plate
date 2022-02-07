@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using PressurePlate.Compatibility.WardIsLove;
 using UnityEngine;
 
 namespace PressurePlate {
@@ -197,6 +198,10 @@ namespace PressurePlate {
         }
 
         private static bool PlayerHasAccess(Player player) {
+            if (WardIsLovePlugin.IsLoaded() && DoorInteract.InsideWard(player.transform.position)) {
+                return DoorInteract.CanInteract(player);
+            }
+
             foreach (PrivateArea allArea in PrivateArea.m_allAreas) {
                 bool areaEnabled = allArea.IsEnabled();
                 bool playerInside = allArea.IsInside(player.transform.position, 0.0f);
@@ -217,11 +222,6 @@ namespace PressurePlate {
             bool inXZ = new Vector3(delta.x, 0, delta.z).sqrMagnitude <= rangeXZ * rangeXZ;
             bool inY = Mathf.Abs(delta.y) <= rangeY;
             return inXZ && inY;
-        }
-
-        private bool InsidePrivateArea() {
-            // only show interaction when inside active ward
-            return zNetView.IsValid() && PrivateArea.CheckInPrivateArea(transform.position);
         }
 
         private void SetPlateVolume(object sender, EventArgs args) {
@@ -247,13 +247,9 @@ namespace PressurePlate {
 
             text += piece.m_name + "\n";
 
-            if (InsidePrivateArea()) {
-                bool hasAccess = PrivateArea.CheckAccess(transform.position, 0f, false);
-
-                if (!hasAccess) {
-                    text += "$piece_noaccess";
-                    return Localization.instance.Localize(text);
-                }
+            if (!PlayerHasAccess(Player.m_localPlayer)) {
+                text += "$piece_noaccess";
+                return Localization.instance.Localize(text);
             }
 
             text += "[<color=yellow><b>$KEY_Use</b></color>] $piece_use";
@@ -269,7 +265,7 @@ namespace PressurePlate {
                 return false;
             }
 
-            if (!PrivateArea.CheckAccess(transform.position)) {
+            if (!PlayerHasAccess(Player.m_localPlayer)) {
                 return true;
             }
 
