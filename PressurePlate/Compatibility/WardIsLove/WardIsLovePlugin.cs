@@ -3,7 +3,7 @@ using BepInEx.Bootstrap;
 using BepInEx.Configuration;
 
 namespace PressurePlate.Compatibility.WardIsLove {
-    public class WardIsLovePlugin {
+    public class WardIsLovePlugin : ModCompat {
         private const string GUID = "azumatt.WardIsLove";
         private static readonly System.Version MinVersion = new System.Version(2, 3, 3);
 
@@ -16,7 +16,7 @@ namespace PressurePlate.Compatibility.WardIsLove {
         }
 
         public static ConfigEntry<bool> WardEnabled() {
-            return ModCompat.GetField<ConfigEntry<bool>>(ClassType(), null, "_wardEnabled");
+            return GetField<ConfigEntry<bool>>(ClassType(), null, "_wardEnabled");
         }
     }
 }

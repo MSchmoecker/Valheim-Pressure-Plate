@@ -2,7 +2,7 @@
 using BepInEx.Bootstrap;
 
 namespace PressurePlate.Compatibility {
-    public static class ModCompat {
+    public class ModCompat {
         public static T InvokeMethod<T>(Type type, object instance, string methodName, object[] parameter) {
             return (T)type.GetMethod(methodName)?.Invoke(instance, parameter);
         }

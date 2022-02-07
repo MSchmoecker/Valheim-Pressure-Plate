@@ -2,7 +2,7 @@
 using UnityEngine;
 
 namespace PressurePlate.Compatibility.WardIsLove {
-    public class WardMonoscript {
+    public class WardMonoscript : ModCompat {
         public object targetScript;
 
         public static Type ClassType() {
@@ -14,7 +14,7 @@ namespace PressurePlate.Compatibility.WardIsLove {
         }
 
         public static bool CheckInWardMonoscript(Vector3 point, bool flash = false) {
-            return ModCompat.InvokeMethod<bool>(ClassType(), null, "CheckInWardMonoscript", new object[] { point, flash });
+            return InvokeMethod<bool>(ClassType(), null, "CheckInWardMonoscript", new object[] { point, flash });
         }
 
         public ZNetView GetZNetView() {
@@ -22,7 +22,7 @@ namespace PressurePlate.Compatibility.WardIsLove {
                 return null;
             }
 
-            return ModCompat.GetField<ZNetView>(ClassType(), targetScript, "m_nview");
+            return GetField<ZNetView>(ClassType(), targetScript, "m_nview");
         }
 
         public ZDO GetZDO() {

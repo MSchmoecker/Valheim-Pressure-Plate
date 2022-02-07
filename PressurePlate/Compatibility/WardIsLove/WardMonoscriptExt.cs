@@ -13,7 +13,7 @@ namespace PressurePlate.Compatibility.WardIsLove {
         }
 
         public static bool GetDoorInteractOn(this WardMonoscript wrapper) {
-            return ModCompat.InvokeMethod<bool>(ClassType(), null, "GetDoorInteractOn", new object[] { wrapper.targetScript });
+            return ModCompat.InvokeMethod<bool>(ClassType(), null, "GetDoorInteractOn", new[] { wrapper.targetScript });
         }
     }
 }
