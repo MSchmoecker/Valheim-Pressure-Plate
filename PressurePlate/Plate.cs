@@ -70,7 +70,7 @@ namespace PressurePlate {
 
             if (zNetView.IsValid()) {
                 InitProperties();
-                isPressed = CheckPress();
+                isPressed = CheckPress(out _);
                 pressTriggerDelay = TriggerDelay.Get();
                 lastTime = Time.time;
                 FixedUpdate();
@@ -92,7 +92,8 @@ namespace PressurePlate {
             lastTime = Time.time;
 
             bool wasPressed = isPressed;
-            bool newPressed = CheckPress();
+            bool newPressed = CheckPress(out Player activator);
+            ZDO targetArea = GetArea(transform.position);
             List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(this, transform.position);
 
             if (newPressed) {
@@ -127,6 +128,10 @@ namespace PressurePlate {
                 }
 
                 foreach (DoorPowerState door in doors) {
+                    if (!CanInteractWithDoor(activator, door, targetArea)) {
+                        continue;
+                    }
+
                     if (isPressed) {
                         door.AddPoweringPlate(this);
                     } else {
@@ -139,6 +144,10 @@ namespace PressurePlate {
             if (!stateChange && !isPressed) return;
 
             foreach (DoorPowerState door in doors) {
+                if (!CanInteractWithDoor(activator, door, targetArea)) {
+                    continue;
+                }
+
                 if (isPressed) {
                     // always open the door if the plate is pressed
                     door.Open(this);
@@ -151,15 +160,25 @@ namespace PressurePlate {
             }
         }
 
-        private bool CheckPress() {
+        private static bool CanInteractWithDoor(Player activator, DoorPowerState door, ZDO targetArea) {
+            if (activator != null && PlayerHasAccess(activator, door.transform.position)) {
+                return true;
+            }
+
+            return targetArea == GetArea(door.transform.position);
+        }
+
+        private bool CheckPress(out Player activator) {
             if (IgnoreWards.Get() && AllowMobs.Get()) {
+                activator = null;
                 return CheckMobPress();
             }
 
-            return CheckPlayerPress();
+            activator = CheckPlayerPress();
+            return activator != null;
         }
 
-        private bool CheckPlayerPress() {
+        private Player CheckPlayerPress() {
             foreach (Player player in Player.GetAllPlayers()) {
                 if (!InRange(player.transform.position)) {
                     continue;
@@ -169,16 +188,16 @@ namespace PressurePlate {
                     continue;
                 }
 
-                if (IgnoreWards.Get() || PlayerHasAccess(player)) {
-                    return true;
+                if (IgnoreWards.Get() || PlayerHasAccess(player, player.transform.position)) {
+                    return player;
                 }
             }
 
-            return false;
+            return null;
         }
 
         private bool NotOpenBecauseIsPermitted(Player player) {
-            return IgnoreWards.Get() && OnlyOpenNotPermitted.Get() && PlayerHasAccess(player);
+            return IgnoreWards.Get() && OnlyOpenNotPermitted.Get() && PlayerHasAccess(player, player.transform.position);
         }
 
         private bool CheckMobPress() {
@@ -197,22 +216,36 @@ namespace PressurePlate {
             return false;
         }
 
-        private static bool PlayerHasAccess(Player player) {
-            if (WardIsLovePlugin.IsLoaded() && DoorInteract.InsideWard(player.transform.position)) {
-                return DoorInteract.CanInteract(player);
+        private static bool PlayerHasAccess(Player player, Vector3 pos) {
+            if (WardIsLovePlugin.IsLoaded() && DoorInteract.InsideWard(pos)) {
+                return DoorInteract.CanInteract(player, pos);
             }
 
             foreach (PrivateArea allArea in PrivateArea.m_allAreas) {
                 bool areaEnabled = allArea.IsEnabled();
-                bool playerInside = allArea.IsInside(player.transform.position, 0.0f);
+                bool inside = allArea.IsInside(pos, 0.0f);
                 bool playerPermitted = allArea.m_piece.GetCreator() == player.GetPlayerID() || allArea.IsPermitted(player.GetPlayerID());
 
-                if (areaEnabled && playerInside && !playerPermitted) {
+                if (areaEnabled && inside && !playerPermitted) {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        private static ZDO GetArea(Vector3 pos) {
+            if (WardIsLovePlugin.IsLoaded() && DoorInteract.InsideWard(pos)) {
+                return WardMonoscriptExt.GetWardMonoscript(pos).GetZDO();
+            }
+
+            foreach (PrivateArea allArea in PrivateArea.m_allAreas) {
+                if (allArea.IsEnabled() && allArea.IsInside(pos, 0.0f)) {
+                    return allArea.m_nview.GetZDO();
+                }
+            }
+
+            return null;
         }
 
         private bool InRange(Vector3 target) {
@@ -247,7 +280,7 @@ namespace PressurePlate {
 
             text += piece.m_name + "\n";
 
-            if (!PlayerHasAccess(Player.m_localPlayer)) {
+            if (!PlayerHasAccess(Player.m_localPlayer, Player.m_localPlayer.transform.position)) {
                 text += "$piece_noaccess";
                 return Localization.instance.Localize(text);
             }
@@ -265,7 +298,7 @@ namespace PressurePlate {
                 return false;
             }
 
-            if (!PlayerHasAccess(Player.m_localPlayer)) {
+            if (!PlayerHasAccess(Player.m_localPlayer, Player.m_localPlayer.transform.position)) {
                 return true;
             }
 
