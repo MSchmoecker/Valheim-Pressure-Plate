@@ -78,7 +78,7 @@ namespace PressurePlate {
         }
 
         private void UpdateVisibility() {
-            plate.GetComponent<MeshRenderer>().enabled = !IsInvisible.Get();
+            pieceMesh.enabled = !IsInvisible.Get();
         }
 
         private void FixedUpdate() {
