@@ -105,6 +105,9 @@ Here is a quick instruction:
 
 
 ## Changelog
+0.6.2
+- Added compatibility with WardIsLove, only active with WardIsLove-2.3.3 or greater
+
 0.6.1
 - Added option to make a plate invisible
 - Added option to allow only not permitted players
