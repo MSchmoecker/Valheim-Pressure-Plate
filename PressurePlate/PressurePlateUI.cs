@@ -83,10 +83,9 @@ namespace PressurePlate {
         }
 
         private void Update() {
-            Enum.TryParse(ZInput.instance.GetBoundKeyString("Use"), out KeyCode useKey);
             IsFrameBlocked = false;
 
-            if (IsOpen() && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(useKey) || ZInput.GetButtonDown("Inventory"))) {
+            if (IsOpen() && (Input.GetKeyDown(KeyCode.Escape) || ZInput.GetButtonDown("Use") || ZInput.GetButtonDown("Inventory"))) {
                 IsFrameBlocked = true;
 
                 target = null;
