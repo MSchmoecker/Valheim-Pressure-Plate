@@ -105,6 +105,9 @@ Here is a quick instruction:
 
 
 ## Changelog
+0.6.3
+- Fixed an issue with the current beta, it's still compatible with the stable Valheim version
+
 0.6.2
 - Added compatibility with WardIsLove, only active with WardIsLove-2.3.3 or greater
 
