@@ -28,7 +28,6 @@ namespace PressurePlate {
 
             harmony = new Harmony(ModGuid);
             harmony.PatchAll(typeof(DoorPatches));
-            harmony.PatchAll(typeof(MenuPatches));
 
             CustomLocalization localization = new CustomLocalization();
             localization.AddJsonFile("English", GetTextFileFromResources("Localization.English.json"));
