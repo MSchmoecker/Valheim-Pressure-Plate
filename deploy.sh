@@ -54,13 +54,6 @@ cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_sunshafts.dll" "UnityAssets/A
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_guiutils.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_steamworks.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_googleanalytics.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_valheim.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_utils.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_postprocessing.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_sunshafts.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_guiutils.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_steamworks.dll" "UnityAssets/Assets/Assemblies"
-cp "$BEPINEX_INSTALL/plugins/MMHOOK/MMHOOK_assembly_googleanalytics.dll" "UnityAssets/Assets/Assemblies"
 
 # cp "./PressurePlate/bin/Debug/net472/PressurePlate.dll" "D:/Nextcloud/Dokumente/Valheim"
 
