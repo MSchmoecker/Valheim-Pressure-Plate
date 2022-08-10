@@ -105,6 +105,10 @@ Here is a quick instruction:
 
 
 ## Changelog
+0.6.4
+- Fixed compatibility with WardIsLove 3.0.1
+- Removed own menu patch for blocking the game menu after closing the UI with Escape, this is handled by Jotunn now
+
 0.6.3
 - Fixed an issue with the current beta, it's still compatible with the stable Valheim version
 
