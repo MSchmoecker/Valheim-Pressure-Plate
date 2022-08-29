@@ -83,6 +83,8 @@
       <EmbeddedResource Include="Localization\English.json" />
       <None Remove="Localization\Deutsch.json" />
       <EmbeddedResource Include="Localization\German.json" />
+      <None Remove="Localization\Spanish.json" />
+      <EmbeddedResource Include="Localization\Spanish.json" />
     </ItemGroup>
     <ItemGroup>
       <Content Include="..\deploy.sh">

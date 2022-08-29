@@ -1,0 +1,20 @@
+{
+  "pressure_plate": "Placa de presión",
+  "pressure_plate_wood": "Placa de presión de madera",
+  "pressure_plate_stone": "Placa de presión de piedra",
+  "pressure_plate_crystal": "Placa de presión de cristal",
+  "pressure_plate_trigger_radius_horizontal": "Radio de rango horizontal",
+  "pressure_plate_trigger_radius_vertical": "Radio de rango vertical",
+  "pressure_plate_open_radius_horizontal": "Radio de puerta horizontal",
+  "pressure_plate_open_radius_vertical": "Radio de puerta vertical",
+  "pressure_plate_open_time": "Tiempo de activacion",
+  "pressure_plate_trigger_delay": "Tiempo de retardo",
+  "pressure_plate_invert": "Invertir puertas",
+  "pressure_plate_ignore_wards": "Ignorar Piedra Guardiana",
+  "pressure_plate_allow_mobs": "Permitir a las criaturas activar",
+  "pressure_plate_is_invisible": "Invisible",
+  "pressure_plate_only_open_not_permitted": "Sólo se abre si no está permitido",
+  "pressure_plate_copy": "Copiar",
+  "pressure_plate_paste": "Pegar",
+  "pressure_plate_reset": "Reiniciar"
+}
