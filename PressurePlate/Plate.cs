@@ -29,6 +29,7 @@ namespace PressurePlate {
         public BoolZNetProperty Invert { get; private set; }
         public BoolZNetProperty IgnoreWards { get; private set; }
         public BoolZNetProperty AllowMobs { get; private set; }
+        public IntZNetProperty MobTameInteraction { get; private set; }
         public BoolZNetProperty IsInvisible { get; private set; }
         public BoolZNetProperty OnlyOpenNotPermitted { get; private set; }
 
@@ -42,6 +43,7 @@ namespace PressurePlate {
             Invert = new BoolZNetProperty("pressure_plate_invert", zNetView, false);
             IgnoreWards = new BoolZNetProperty("pressure_plate_is_public", zNetView, false);
             AllowMobs = new BoolZNetProperty("pressure_plate_allow_mobs", zNetView, false);
+            MobTameInteraction = new IntZNetProperty("pressure_plate_tame_interaction", zNetView, (int)TameInteraction.All);
             IsInvisible = new BoolZNetProperty("pressure_plate_invisible", zNetView, false);
             OnlyOpenNotPermitted = new BoolZNetProperty("pressure_plate_only_open_not_permitted", zNetView, false);
         }
@@ -56,6 +58,7 @@ namespace PressurePlate {
             Invert.ForceSet(copy.Invert.Get());
             IgnoreWards.ForceSet(copy.IgnoreWards.Get());
             AllowMobs.ForceSet(copy.AllowMobs.Get());
+            MobTameInteraction.ForceSet(copy.MobTameInteraction.Get());
             IsInvisible.ForceSet(copy.IsInvisible.Get());
             OnlyOpenNotPermitted.ForceSet(copy.OnlyOpenNotPermitted.Get());
         }
@@ -208,6 +211,28 @@ namespace PressurePlate {
 
                 if (character is Player player && NotOpenBecauseIsPermitted(player)) {
                     continue;
+                }
+
+                switch (MobTameInteraction.Get()) {
+                    case (int)TameInteraction.All: {
+                        return true;
+                    }
+
+                    case (int)TameInteraction.OnlyTames: {
+                        if (character.IsTamed()) {
+                            return true;
+                        }
+
+                        continue;
+                    }
+
+                    case (int)TameInteraction.OnlyNonTames: {
+                        if (!character.IsTamed()) {
+                            return true;
+                        }
+
+                        continue;
+                    }
                 }
 
                 return true;

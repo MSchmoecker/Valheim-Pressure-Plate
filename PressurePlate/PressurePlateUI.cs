@@ -28,6 +28,8 @@ namespace PressurePlate {
         [SerializeField] private Toggle invert;
         [SerializeField] private Toggle ignoreWards;
         [SerializeField] private Toggle allowMobs;
+        [SerializeField] private Dropdown mobTameInteraction;
+        [SerializeField] private Text mobTameInteractionText;
         [SerializeField] private Toggle isInvisible;
         [SerializeField] private Toggle onlyOpenNotPermitted;
         [SerializeField] private Button copyButton;
@@ -64,14 +66,20 @@ namespace PressurePlate {
             invert.onValueChanged.AddListener(i => target.Invert.ForceSet(i));
             ignoreWards.onValueChanged.AddListener(i => target.IgnoreWards.ForceSet(i));
             allowMobs.onValueChanged.AddListener(i => target.AllowMobs.ForceSet(i));
+            mobTameInteraction.onValueChanged.AddListener(i => target.MobTameInteraction.ForceSet(i));
             isInvisible.onValueChanged.AddListener(i => target.IsInvisible.ForceSet(i));
             onlyOpenNotPermitted.onValueChanged.AddListener(i => target.OnlyOpenNotPermitted.ForceSet(i));
 
             ignoreWards.onValueChanged.AddListener((_) => UpdateDeactivated());
+            allowMobs.onValueChanged.AddListener((_) => UpdateDeactivated());
 
-            copyButton.onClick.AddListener(() => {
-                copy = target;
-            });
+            mobTameInteraction.options = new List<Dropdown.OptionData>() {
+                new Dropdown.OptionData(Localization.instance.Localize("$pressure_plate_tame_interaction_all")),
+                new Dropdown.OptionData(Localization.instance.Localize("$pressure_plate_tame_interaction_only_tame")),
+                new Dropdown.OptionData(Localization.instance.Localize("$pressure_plate_tame_interaction_only_not_tame"))
+            };
+
+            copyButton.onClick.AddListener(() => { copy = target; });
             pasteButton.onClick.AddListener(() => {
                 target.PasteData(copy);
                 UpdateText();
@@ -112,17 +120,21 @@ namespace PressurePlate {
             invert.isOn = target.Invert.Get();
             ignoreWards.isOn = target.IgnoreWards.Get();
             allowMobs.isOn = target.AllowMobs.Get();
+            mobTameInteraction.value = target.MobTameInteraction.Get();
             isInvisible.isOn = target.IsInvisible.Get();
             onlyOpenNotPermitted.isOn = target.OnlyOpenNotPermitted.Get();
 
             UpdateDeactivated();
         }
 
-        void UpdateDeactivated() {
+        private void UpdateDeactivated() {
             allowMobs.interactable = ignoreWards.isOn;
             allowMobsText.color = ignoreWards.isOn ? Color.white : Color.grey;
             onlyOpenNotPermitted.interactable = ignoreWards.isOn;
             onlyOpenNotPermittedText.color = ignoreWards.isOn ? Color.white : Color.grey;
+            mobTameInteraction.interactable = ignoreWards.isOn && allowMobs.isOn;
+            mobTameInteractionText.color = mobTameInteraction.interactable ? Color.white : Color.grey;
+            mobTameInteraction.captionText.color = mobTameInteraction.interactable ? Color.white : Color.grey;
         }
 
         private void SetGUIState(bool active) {
@@ -175,6 +187,10 @@ namespace PressurePlate {
 
             foreach (Button button in root.GetComponentsInChildren<Button>()) {
                 GUIManager.Instance.ApplyButtonStyle(button);
+            }
+
+            foreach (Dropdown dropdown in root.GetComponentsInChildren<Dropdown>()) {
+                GUIManager.Instance.ApplyDropdownStyle(dropdown);
             }
 
             ApplyAllDarken(root);

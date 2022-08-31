@@ -16,5 +16,9 @@
   "pressure_plate_only_open_not_permitted": "Sólo se abre si no está permitido",
   "pressure_plate_copy": "Copiar",
   "pressure_plate_paste": "Pegar",
-  "pressure_plate_reset": "Reiniciar"
+  "pressure_plate_reset": "Reiniciar",
+  "pression_plate_tame_interaction": "Interaccíon del domaje ",
+  "pression_plate_tame_interaction_all": "Todas las criaturas",
+  "pression_plate_tame_interaction_only_tame": "Solo criaturas domesticadas",
+  "pression_plate_tame_interaction_only_not_tame": "Solo criaturas no domesticadas"
 }

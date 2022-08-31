@@ -67,4 +67,17 @@ namespace PressurePlate {
             }
         }
     }
+
+    public class IntZNetProperty : ZNetProperty<int> {
+        public IntZNetProperty(string key, ZNetView zNetView, int defaultValue) : base(key, zNetView, defaultValue) {
+        }
+
+        public override int Get() {
+            return zNetView.GetZDO().GetInt(Key, DefaultValue);
+        }
+
+        protected override void SetValue(int value) {
+            zNetView.GetZDO().Set(Key, value);
+        }
+    }
 }

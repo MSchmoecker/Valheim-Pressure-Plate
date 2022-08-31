@@ -16,5 +16,9 @@
   "pressure_plate_only_open_not_permitted": "Only open if not permitted",
   "pressure_plate_copy": "Copy",
   "pressure_plate_paste": "Paste",
-  "pressure_plate_reset": "Reset"
+  "pressure_plate_reset": "Reset",
+  "pressure_plate_tame_interaction": "Tame interaction",
+  "pressure_plate_tame_interaction_all": "All creatures",
+  "pressure_plate_tame_interaction_only_tame": "Only tamed creatures",
+  "pressure_plate_tame_interaction_only_not_tame": "Only not tame creatures"
 }

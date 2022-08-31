@@ -16,5 +16,9 @@
   "pressure_plate_only_open_not_permitted": "Öffne nur für nicht Berechtigte",
   "pressure_plate_copy": "Kopieren",
   "pressure_plate_paste": "Einfügen",
-  "pressure_plate_reset": "Zurücksetzen"
+  "pressure_plate_reset": "Zurücksetzen",
+  "pressure_plate_tame_interaction": "Zähmungs Interaktion",
+  "pressure_plate_tame_interaction_all": "Alle Monster",
+  "pressure_plate_tame_interaction_only_tame": "Nur gezähmte Monster",
+  "pressure_plate_tame_interaction_only_not_tame": "Nur nicht gezähmte Monster"
 }
