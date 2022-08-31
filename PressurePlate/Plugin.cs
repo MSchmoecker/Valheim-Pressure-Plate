@@ -1,7 +1,4 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using HarmonyLib;
@@ -13,6 +10,7 @@ using UnityEngine;
 namespace PressurePlate {
     [BepInPlugin(ModGuid, ModName, ModVersion)]
     [BepInDependency(Jotunn.Main.ModGuid)]
+    [NetworkCompatibility(CompatibilityLevel.ClientMustHaveMod, VersionStrictness.Minor)]
     public class Plugin : BaseUnityPlugin {
         public const string ModName = "Pressure-Plate";
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
