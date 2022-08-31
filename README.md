@@ -31,15 +31,21 @@ Config file at `BepInEx/config/com.maxsch.valheim.pressure_plate.cfg`
 
 
 ## Manual Installation
-Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.\
-Install [Jötunn, the Valheim Library](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/) and its dependencies
+1. Install [BepInEx](https://valheim.thunderstore.io/package/denikson/BepInExPack_Valheim/) and [Jötunn, the Valheim Library](https://valheim.thunderstore.io/package/ValheimModding/Jotunn/)
+2. Extract the content of `Pressure-Plate` into the `BepInEx/plugins` folder.
 
+The mod can be installed at a server to enforce the installation on all clients.
 
 ## Development
 See [contributing](https://github.com/MSchmoecker/Valheim-Pressure-Plate/blob/master/CONTRIBUTING.md).
 
 
 ## Changelog
+0.7.0
+- Added Spanish translation (thanks ErDu!)
+- Added the option to specify the tame interaction when the plate allows creatures
+- Added enforcement of mod version if the mod is installed on the server
+
 0.6.4
 - Fixed compatibility with WardIsLove 3.0.1
 - Removed own menu patch for blocking the game menu after closing the UI with Escape, this is handled by Jotunn now
@@ -140,6 +146,8 @@ Nexusmods: https://www.nexusmods.com/valheim/mods/498
 Thunderstore: https://valheim.thunderstore.io/package/MSchmoecker/PressurePlate/
 
 Github: https://github.com/MSchmoecker/Valheim-Pressure-Plate
+
+Discord: Margmas#9562
 
 
 ## Credits
