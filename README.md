@@ -20,7 +20,9 @@ Adds multiple variation of pressure plates which open and close doors.
 - Trigger Delay: duration it takes before the plate is pressed
 - Invert Doors: inverts open/closed state
 - Ignore wards: allows other players to open doors even they have no access
-- Allow Mobs: monster and creatures can also press the plate. Requires Ignore wards to be on
+- Only open if not permitted: The plate only interacts with players that don't have permission inside the ward area. Requires 'Ignore wards' to be active
+- Allow creatures to trigger: monster and creatures can also press the plate. Requires 'Ignore wards' to be active
+- Tame interaction: decides what certain tame status is needed in order to interact with the plate. Requires both 'Ignore wards' and 'Allow creatures to trigger' to be active
 
 ### Global settings
 
