@@ -117,12 +117,28 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_prefab
+      value: 
+      objectReference: {fileID: 2546187766829565192, guid: 03ebe33c5211c7146839cd051cb49f93,
+        type: 3}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[0].m_enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[0].m_variant
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_variant
       value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

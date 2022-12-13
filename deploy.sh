@@ -54,8 +54,8 @@ cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_sunshafts.dll" "UnityAssets/A
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_guiutils.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_steamworks.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_googleanalytics.dll" "UnityAssets/Assets/Assemblies"
-
-# cp "./PressurePlate/bin/Debug/net472/PressurePlate.dll" "D:/Nextcloud/Dokumente/Valheim"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlayFab.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlayFabParty.dll" "UnityAssets/Assets/Assemblies"
 
 # make zip files
 cd "$ModDir" || exit

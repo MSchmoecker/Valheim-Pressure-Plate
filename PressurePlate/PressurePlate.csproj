@@ -32,10 +32,6 @@
         <HintPath>$(VALHEIM_INSTALL)\BepInEx\core\BepInEx.dll</HintPath>
         <HintPath>$(R2MODMAN_INSTALL)\BepInEx\core\BepInEx.dll</HintPath>
       </Reference>
-      <Reference Include="Jotunn, Culture=neutral, PublicKeyToken=null">
-        <HintPath>$(VALHEIM_INSTALL)\BepInEx\plugins\Jotunn\Jotunn.dll</HintPath>
-        <HintPath>$(R2MODMAN_INSTALL)\BepInEx\plugins\ValheimModding-Jotunn\Jotunn.dll</HintPath>
-      </Reference>
       <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>$(VALHEIM_INSTALL)\unstripped_corlib\UnityEngine.dll</HintPath>
       </Reference>
@@ -75,6 +71,7 @@
       <Reference Include="UnityEngine.UIModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
         <HintPath>$(VALHEIM_INSTALL)\unstripped_corlib\UnityEngine.UIModule.dll</HintPath>
       </Reference>
+      <PackageReference Include="JotunnLib" Version="2.10.0" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="pressure_plate" />

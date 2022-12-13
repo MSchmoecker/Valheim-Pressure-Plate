@@ -110,7 +110,7 @@ namespace PressurePlate {
         }
 
         private void UpdateText() {
-            title.text = Localization.instance.Localize(target.piece.m_name);
+            title.text = target.GetHoverName();
             triggerRadiusHorizontal.text = target.TriggerRadiusHorizontal.Get().ToString();
             triggerRadiusVertical.text = target.TriggerRadiusVertical.Get().ToString();
             openRadiusHorizontal.text = target.OpenRadiusHorizontal.Get().ToString();

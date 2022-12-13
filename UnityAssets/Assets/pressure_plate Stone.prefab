@@ -128,6 +128,12 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
+      propertyPath: m_hitEffect.m_effectPrefabs.Array.data[2].m_prefab
+      value: 
+      objectReference: {fileID: 4532512945958405319, guid: 0043e2bfb021ae941bbb5eb18c700206,
+        type: 3}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
       propertyPath: m_hitEffect.m_effectPrefabs.Array.data[0].m_enabled
       value: 1
       objectReference: {fileID: 0}
@@ -148,6 +154,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
+      propertyPath: m_hitEffect.m_effectPrefabs.Array.data[2].m_enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_hitEffect.m_effectPrefabs.Array.data[2].m_variant
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[0].m_prefab
       value: 
       objectReference: {fileID: 2272118892318137007, guid: 82eefe02a23c0144e90ddbc51aa8f283,
@@ -155,6 +171,12 @@ PrefabInstance:
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_prefab
+      value: 
+      objectReference: {fileID: 7867861745144869094, guid: 038e3838cfc625d479fe208d09e8b788,
+        type: 3}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[2].m_prefab
       value: 
       objectReference: {fileID: 7867861745144869094, guid: 038e3838cfc625d479fe208d09e8b788,
         type: 3}
@@ -176,6 +198,16 @@ PrefabInstance:
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_variant
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[2].m_enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[2].m_variant
       value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

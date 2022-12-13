@@ -1,24 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Reflection;
 using PressurePlate.Compatibility.WardIsLove;
 using UnityEngine;
 
 namespace PressurePlate {
     public class Plate : MonoBehaviour, Hoverable, Interactable {
-        public GameObject plate;
-        public Piece piece;
+        [SerializeField] private GameObject plate;
+        [SerializeField] private EffectList pressEffects = new EffectList();
+        [SerializeField] private EffectList releaseEffects = new EffectList();
+
+        private Piece piece;
         private MeshRenderer pieceMesh;
-        public bool isPressed;
+        private bool isPressed;
         private float pressCooldown;
         private float pressTriggerDelay; // time before the plate is triggered
         private float lastTime;
-        public EffectList pressEffects = new EffectList();
-        public EffectList releaseEffects = new EffectList();
-        public ZNetView zNetView;
-        public string showName = "$pressure_plate";
+        private ZNetView zNetView;
 
         public FloatZNetProperty TriggerRadiusHorizontal { get; private set; }
         public FloatZNetProperty TriggerRadiusVertical { get; private set; }
@@ -315,7 +313,7 @@ namespace PressurePlate {
         }
 
         public string GetHoverName() {
-            return Localization.instance.Localize(showName);
+            return Localization.instance.Localize(piece.m_name);
         }
 
         public bool Interact(Humanoid user, bool hold, bool alt) {

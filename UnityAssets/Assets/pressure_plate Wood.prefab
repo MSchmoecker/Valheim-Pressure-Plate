@@ -122,12 +122,28 @@ PrefabInstance:
         type: 3}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
+      propertyPath: m_hitEffect.m_effectPrefabs.Array.data[1].m_prefab
+      value: 
+      objectReference: {fileID: 5874342002010805798, guid: bb41945257d126c4fb1b6dc87ed2bccb,
+        type: 3}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
       propertyPath: m_hitEffect.m_effectPrefabs.Array.data[0].m_enabled
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
       propertyPath: m_hitEffect.m_effectPrefabs.Array.data[0].m_variant
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_hitEffect.m_effectPrefabs.Array.data[1].m_enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_hitEffect.m_effectPrefabs.Array.data[1].m_variant
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
@@ -139,6 +155,12 @@ PrefabInstance:
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_prefab
+      value: 
+      objectReference: {fileID: 5874342002010805798, guid: bb41945257d126c4fb1b6dc87ed2bccb,
+        type: 3}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[2].m_prefab
       value: 
       objectReference: {fileID: 5874342002010805798, guid: bb41945257d126c4fb1b6dc87ed2bccb,
         type: 3}
@@ -160,6 +182,16 @@ PrefabInstance:
     - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
         type: 3}
       propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[1].m_variant
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[2].m_enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8547922169484203406, guid: 324f6646102625a4fb4abf87be8b38d6,
+        type: 3}
+      propertyPath: m_destroyedEffect.m_effectPrefabs.Array.data[2].m_variant
       value: -1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
