@@ -44,6 +44,9 @@ See [contributing](https://github.com/MSchmoecker/Valheim-Pressure-Plate/blob/ma
 
 
 ## Changelog
+0.8.1
+- Moved the plate items to the Misc tab, since the Building tab got very crowded with Mistlands
+
 0.8.0
 - Added the option to toggle the behaviour of the pressure plate, so it needs one press to activate and another to deactivate
 - Added the current plate state (active/inactive) to the hover text and display the specific plate name

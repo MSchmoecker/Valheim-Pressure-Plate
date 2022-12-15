@@ -67,7 +67,7 @@ namespace PressurePlate {
                 Requirements = requirements,
                 PieceTable = "Hammer",
                 Icon = icon,
-                Category = Piece.PieceCategory.Building.ToString(),
+                Category = Piece.PieceCategory.Misc.ToString(),
                 Name = tokenName
             };
 
