@@ -1,7 +1,7 @@
 {
 	"name": "PressurePlate",
 	"description": "A pressure plate for opening and closing doors",
-	"version_number": "0.7.0",
+	"version_number": "0.8.0",
 	"website_url": "https://github.com/MSchmoecker/Valheim-Pressure-Plate",
 	"dependencies": [
 		"denikson-BepInExPack_Valheim-5.4.1901",

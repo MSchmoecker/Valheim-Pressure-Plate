@@ -44,6 +44,10 @@ See [contributing](https://github.com/MSchmoecker/Valheim-Pressure-Plate/blob/ma
 
 
 ## Changelog
+0.8.0
+- Added the option to toggle the behaviour of the pressure plate, so it needs one press to activate and another to deactivate
+- Added the current plate state (active/inactive) to the hover text and display the specific plate name
+
 0.7.0
 - Added Spanish translation (thanks ErDu!)
 - Added the option to specify the tame interaction when the plate allows creatures

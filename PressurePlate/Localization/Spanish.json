@@ -10,6 +10,8 @@
   "pressure_plate_open_time": "Tiempo de activacion",
   "pressure_plate_trigger_delay": "Tiempo de retardo",
   "pressure_plate_invert": "Invertir puertas",
+  "pressure_plate_powering_on": "Activo",
+  "pressure_plate_powering_off": "Inactivo",
   "pressure_plate_ignore_wards": "Ignorar Piedra Guardiana",
   "pressure_plate_allow_mobs": "Permitir a las criaturas activar",
   "pressure_plate_is_invisible": "Invisible",
