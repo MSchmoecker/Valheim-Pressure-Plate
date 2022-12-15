@@ -65,7 +65,7 @@ namespace PressurePlate {
             openTime.onValueChanged.AddListener(i => target.OpenTime.ForceSet(i));
             triggerDelay.onValueChanged.AddListener(i => target.TriggerDelay.ForceSet(i));
             invert.onValueChanged.AddListener(i => target.Invert.ForceSet(i));
-            toggleMode.onValueChanged.AddListener(i => target.ToggleMode.ForceSet(i));
+            toggleMode.onValueChanged.AddListener(i => target.ToggleModeOption.ForceSet(i));
             ignoreWards.onValueChanged.AddListener(i => target.IgnoreWards.ForceSet(i));
             allowMobs.onValueChanged.AddListener(i => target.AllowMobs.ForceSet(i));
             mobTameInteraction.onValueChanged.AddListener(i => target.MobTameInteraction.ForceSet(i));
@@ -120,7 +120,7 @@ namespace PressurePlate {
             openTime.text = target.OpenTime.Get().ToString();
             triggerDelay.text = target.TriggerDelay.Get().ToString();
             invert.isOn = target.Invert.Get();
-            toggleMode.isOn = target.ToggleMode.Get();
+            toggleMode.isOn = target.ToggleModeOption.Get();
             ignoreWards.isOn = target.IgnoreWards.Get();
             allowMobs.isOn = target.AllowMobs.Get();
             mobTameInteraction.value = target.MobTameInteraction.Get();

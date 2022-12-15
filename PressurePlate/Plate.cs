@@ -13,7 +13,6 @@ namespace PressurePlate {
         private Piece piece;
         private MeshRenderer pieceMesh;
         private bool isPressed;
-        private bool isToggleOn;
         private float pressCooldown;
         private float pressTriggerDelay; // time before the plate is triggered
         private float lastTime;
@@ -26,7 +25,8 @@ namespace PressurePlate {
         public FloatZNetProperty OpenTime { get; private set; }
         public FloatZNetProperty TriggerDelay { get; private set; }
         public BoolZNetProperty Invert { get; private set; }
-        public BoolZNetProperty ToggleMode { get; private set; }
+        public BoolZNetProperty ToggleModeOption { get; private set; }
+        public BoolZNetProperty IsToggledOn { get; private set; }
         public BoolZNetProperty IgnoreWards { get; private set; }
         public BoolZNetProperty AllowMobs { get; private set; }
         public IntZNetProperty MobTameInteraction { get; private set; }
@@ -41,7 +41,8 @@ namespace PressurePlate {
             OpenTime = new FloatZNetProperty("pressure_plate_open_time", zNetView, 1f);
             TriggerDelay = new FloatZNetProperty("pressure_plate_trigger_delay", zNetView, 0f);
             Invert = new BoolZNetProperty("pressure_plate_invert", zNetView, false);
-            ToggleMode = new BoolZNetProperty("pressure_plate_toggle_mode", zNetView, false);
+            ToggleModeOption = new BoolZNetProperty("pressure_plate_toggle_mode", zNetView, false);
+            IsToggledOn = new BoolZNetProperty("pressure_plate_is_toggled_on", zNetView, false);
             IgnoreWards = new BoolZNetProperty("pressure_plate_is_public", zNetView, false);
             AllowMobs = new BoolZNetProperty("pressure_plate_allow_mobs", zNetView, false);
             MobTameInteraction = new IntZNetProperty("pressure_plate_tame_interaction", zNetView, (int)TameInteraction.All);
@@ -57,7 +58,7 @@ namespace PressurePlate {
             OpenTime.ForceSet(copy.OpenTime.Get());
             TriggerDelay.ForceSet(copy.TriggerDelay.Get());
             Invert.ForceSet(copy.Invert.Get());
-            ToggleMode.ForceSet(copy.ToggleMode.Get());
+            ToggleModeOption.ForceSet(copy.ToggleModeOption.Get());
             IgnoreWards.ForceSet(copy.IgnoreWards.Get());
             AllowMobs.ForceSet(copy.AllowMobs.Get());
             MobTameInteraction.ForceSet(copy.MobTameInteraction.Get());
@@ -125,12 +126,14 @@ namespace PressurePlate {
             Vector3 pos = isPressed ? new Vector3(0f, -0.025f, 0f) : new Vector3(0f, 0.05f, 0f);
             plate.transform.localPosition = pos;
 
-            if (ToggleMode.Get()) {
-                if (stateChange && isPressed) {
-                    isToggleOn = !isToggleOn;
+            if (zNetView.IsOwner()) {
+                if (ToggleModeOption.Get()) {
+                    if (stateChange && isPressed) {
+                        IsToggledOn.Set(!IsToggledOn.Get());
+                    }
+                } else {
+                    IsToggledOn.Set(false);
                 }
-            } else {
-                isToggleOn = false;
             }
 
             bool isPowering = IsPowering();
@@ -176,8 +179,8 @@ namespace PressurePlate {
         }
 
         private bool IsPowering() {
-            if (ToggleMode.Get()) {
-                return isToggleOn;
+            if (ToggleModeOption.Get()) {
+                return IsToggledOn.Get();
             }
 
             return isPressed;
