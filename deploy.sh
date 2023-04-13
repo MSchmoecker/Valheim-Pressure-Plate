@@ -56,6 +56,8 @@ cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_steamworks.dll" "UnityAssets/
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_googleanalytics.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlayFab.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlayFabParty.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/Fishlabs.Core.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/Fishlabs.Common.dll" "UnityAssets/Assets/Assemblies"
 
 # make zip files
 cd "$ModDir" || exit
