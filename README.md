@@ -44,6 +44,9 @@ See [contributing](https://github.com/MSchmoecker/Valheim-Pressure-Plate/blob/ma
 
 
 ## Changelog
+0.9.0
+- Added a black marble pressure plate variant
+
 0.8.1
 - Moved the plate items to the Misc tab, since the Building tab got very crowded with Mistlands
 
