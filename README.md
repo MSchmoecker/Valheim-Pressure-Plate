@@ -5,6 +5,7 @@ Adds multiple variation of pressure plates which open and close doors.
 - Wooden pressure plate: 3 wood, 1 surtling core with the hammer. Requires a workbench in range
 - Stone pressure plate: 3 stone, 1 surtling core with the hammer. Requires a workbench in range
 - Crystal pressure plate, 1 crystal, 1 surtling core with the hammer. Requires a workbench in range
+- Black marble pressure plate, 2 black marble, 1 surtling core with the hammer. Requires a workbench in range
 
 ![showcase](https://raw.githubusercontent.com/MSchmoecker/Valheim-Pressure-Plate/master/Docs/Showcase.gif)
 
