@@ -54,6 +54,21 @@ namespace PressurePlate {
                              new Vector2(1.5f, 1.5f),
                              new Vector2(0f, 0f)
                             );
+
+            // black marble pressure plate
+            AddPressurePlate(assetBundle,
+                             "pressure_plate BlackMarble.prefab",
+                             "MS_PressurePlate_BlackMarble",
+                             "$pressure_plate_black_marble",
+                             "pressure_plate_black_marble_icon.png",
+                             "blackmarble",
+                             new RequirementConfig[] {
+                                 new RequirementConfig() { Item = "BlackMarble", Amount = 2, Recover = true },
+                                 new RequirementConfig() { Item = "SurtlingCore", Amount = 1, Recover = true },
+                             },
+                             new Vector2(0.5f, 0.5f),
+                             new Vector2(0f, 0f)
+            );
         }
 
         private static void AddPressurePlate(AssetBundle assetBundle, string assetName, string newName, string tokenName, string iconName,
