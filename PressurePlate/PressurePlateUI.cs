@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
 using Jotunn.Managers;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,6 +14,7 @@ namespace PressurePlate {
 
         // Disable Field XYZ is never assigned to, and will always have its default value XX
 #pragma warning disable 0649
+        [SerializeField] private Transform uiRoot;
         [SerializeField] private Text title;
         [SerializeField] private InputField triggerRadiusHorizontal;
         [SerializeField] private InputField triggerRadiusVertical;
@@ -38,26 +37,31 @@ namespace PressurePlate {
         [SerializeField] private Button resetButton;
 #pragma warning restore 0649
 
-        private static GameObject uiRoot;
         private Plate target;
         private Plate copy;
 
         public static void Init(AssetBundle assetBundle) {
             GameObject prefab = assetBundle.LoadAsset<GameObject>("PressurePlateUI");
-            PressurePlateUI ui = Instantiate(prefab, GUIManager.CustomGUIFront.transform, false).GetComponent<PressurePlateUI>();
-            uiRoot = ui.transform.GetChild(0).gameObject;
+            instance = SpawnUI(prefab);
 
-            ApplyAllComponents(uiRoot);
-            ApplyWoodpanel(uiRoot.GetComponent<Image>());
-            ApplyText(ui.title, GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
-            ApplyLocalization();
+            ApplyAllComponents(instance.uiRoot);
+            ApplyWoodpanel(instance.uiRoot.GetComponent<Image>());
+            ApplyText(instance.title, GUIManager.Instance.AveriaSerifBold, GUIManager.Instance.ValheimOrange);
+        }
 
-            uiRoot.SetActive(false);
+        private static PressurePlateUI SpawnUI(GameObject prefab) {
+            GameObject inactive = new GameObject("inactive");
+            inactive.SetActive(false);
+
+            PressurePlateUI ui = Instantiate(prefab, inactive.transform, false).GetComponent<PressurePlateUI>();
+            ui.uiRoot.gameObject.SetActive(false);
+            ui.transform.SetParent(GUIManager.CustomGUIFront.transform, false);
+
+            Destroy(inactive);
+            return ui;
         }
 
         private void Awake() {
-            instance = this;
-
             triggerRadiusHorizontal.onValueChanged.AddListener(i => target.TriggerRadiusHorizontal.ForceSet(i));
             triggerRadiusVertical.onValueChanged.AddListener(i => target.TriggerRadiusVertical.ForceSet(i));
             openRadiusHorizontal.onValueChanged.AddListener(i => target.OpenRadiusHorizontal.ForceSet(i));
@@ -75,11 +79,7 @@ namespace PressurePlate {
             ignoreWards.onValueChanged.AddListener((_) => UpdateDeactivated());
             allowMobs.onValueChanged.AddListener((_) => UpdateDeactivated());
 
-            mobTameInteraction.options = new List<Dropdown.OptionData>() {
-                new Dropdown.OptionData(Localization.instance.Localize("$pressure_plate_tame_interaction_all")),
-                new Dropdown.OptionData(Localization.instance.Localize("$pressure_plate_tame_interaction_only_tame")),
-                new Dropdown.OptionData(Localization.instance.Localize("$pressure_plate_tame_interaction_only_not_tame"))
-            };
+            mobTameInteraction.onValueChanged.AddListener((_) => Localization.instance.Localize(mobTameInteraction.transform));
 
             copyButton.onClick.AddListener(() => { copy = target; });
             pasteButton.onClick.AddListener(() => {
@@ -142,7 +142,7 @@ namespace PressurePlate {
 
         private void SetGUIState(bool active) {
             isOpen = active;
-            uiRoot.SetActive(active);
+            uiRoot.gameObject.SetActive(active);
             GUIManager.BlockInput(active);
         }
 
@@ -155,7 +155,7 @@ namespace PressurePlate {
             text.color = color;
         }
 
-        public static void ApplyAllDarken(GameObject root) {
+        public static void ApplyAllDarken(Transform root) {
             foreach (Image image in root.GetComponentsInChildren<Image>()) {
                 if (image.gameObject.name == "Darken") {
                     image.sprite = GUIManager.Instance.GetSprite("darken_blob");
@@ -164,7 +164,7 @@ namespace PressurePlate {
             }
         }
 
-        public static void ApplyAllSunken(GameObject root) {
+        public static void ApplyAllSunken(Transform root) {
             foreach (Image image in root.GetComponentsInChildren<Image>()) {
                 if (image.gameObject.name == "Sunken") {
                     image.sprite = GUIManager.Instance.GetSprite("sunken");
@@ -175,7 +175,7 @@ namespace PressurePlate {
             }
         }
 
-        public static void ApplyAllComponents(GameObject root) {
+        public static void ApplyAllComponents(Transform root) {
             foreach (Text text in root.GetComponentsInChildren<Text>()) {
                 ApplyText(text, GUIManager.Instance.AveriaSerif, new Color(219f / 255f, 219f / 255f, 219f / 255f));
             }
@@ -198,12 +198,6 @@ namespace PressurePlate {
 
             ApplyAllDarken(root);
             ApplyAllSunken(root);
-        }
-
-        public static void ApplyLocalization() {
-            foreach (Text text in uiRoot.GetComponentsInChildren<Text>()) {
-                text.text = Localization.instance.Localize(text.text);
-            }
         }
     }
 }
