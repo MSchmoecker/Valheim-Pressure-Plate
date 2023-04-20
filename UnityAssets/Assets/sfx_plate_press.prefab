@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8435922373654420757}
   - component: {fileID: 3796286732198738012}
   - component: {fileID: 6958759359967217489}
-  - component: {fileID: 8094949994811503189}
   - component: {fileID: 5415119689075822276}
   m_Layer: 0
   m_Name: sfx_plate_press
@@ -176,22 +175,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8094949994811503189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1158216214100954689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1521249158, guid: fc988f832275ed1469b849d84548d688, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_persistent: 0
-  m_distant: 0
-  m_type: 0
-  m_syncInitialScale: 0
 --- !u!114 &5415119689075822276
 MonoBehaviour:
   m_ObjectHideFlags: 0

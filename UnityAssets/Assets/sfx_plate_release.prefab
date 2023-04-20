@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 3755780717703345770}
   - component: {fileID: 4902910451314379948}
   - component: {fileID: 7616039193812505811}
-  - component: {fileID: 8808264396518867411}
   - component: {fileID: 1435135364932759483}
   m_Layer: 0
   m_Name: sfx_plate_release
@@ -176,22 +175,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &8808264396518867411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1570967947250614743}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1521249158, guid: fc988f832275ed1469b849d84548d688, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_persistent: 0
-  m_distant: 0
-  m_type: 0
-  m_syncInitialScale: 0
 --- !u!114 &1435135364932759483
 MonoBehaviour:
   m_ObjectHideFlags: 0
