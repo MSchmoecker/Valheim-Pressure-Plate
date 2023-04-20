@@ -1,4 +1,10 @@
-﻿# Changelog
+# Changelog
+
+0.9.1
+- Added Portuguese Brazilian translation (thanks kaiqueknup!)
+- Fixed localization did not reload when changing the language ingame
+- Fixed that sounds had a ZNetView attached but were not registered
+- Changed the UI width to be slightly bigger to fit the new translation
 
 0.9.0
 - Added a black marble pressure plate variant
