@@ -35,6 +35,7 @@ mkdir -p "$ModDir"
 # copy files to mod dir
 cp "./PressurePlate/bin/Debug/net472/PressurePlate.dll" "$ModDir/PressurePlate.dll"
 cp "./README.md"  "$ModDir"
+cp "./CHANGELOG.md"  "$ModDir"
 cp "./icon.png"  "$ModDir"
 cp "./manifest.json"  "$ModDir"
 
@@ -68,7 +69,7 @@ cd "$ModDir" || exit
 mkdir -p plugins
 cp "$ModName.dll" plugins
 
-zip "$ModName.zip" "$ModName.dll" README.md manifest.json icon.png
+zip "$ModName.zip" "$ModName.dll" README.md CHANGELOG.md manifest.json icon.png
 zip -r "$ModName-Nexus.zip" plugins
 
 rm -r plugins
