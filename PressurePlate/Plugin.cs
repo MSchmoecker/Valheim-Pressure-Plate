@@ -38,7 +38,7 @@ namespace PressurePlate {
             plateVolume = Config.Bind("Sound", "Plate Volume", 100f, new ConfigDescription(plateVolumeDescription, percentRange));
 
             AssetBundle assetBundle = AssetUtils.LoadAssetBundleFromResources("pressure_plate");
-            Items.Init(assetBundle);
+            Pieces.Init(assetBundle);
 
             GUIManager.OnCustomGUIAvailable += () => PressurePlateUI.Init(assetBundle);
 

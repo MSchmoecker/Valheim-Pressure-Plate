@@ -8,7 +8,7 @@ using Jotunn.Entities;
 using Jotunn.Managers;
 
 namespace PressurePlate {
-    public class Items {
+    public class Pieces {
         public static void Init(AssetBundle assetBundle) {
             // wood pressure plate
             AddPressurePlate(assetBundle,
