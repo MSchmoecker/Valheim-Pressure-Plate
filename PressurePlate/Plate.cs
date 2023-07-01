@@ -370,14 +370,14 @@ namespace PressurePlate {
                 zNetView.ClaimOwnership();
             }
 
-            zNetView.GetZDO().ReleaseFloats();
-            zNetView.GetZDO().ReleaseVec3();
-            zNetView.GetZDO().ReleaseQuats();
-            zNetView.GetZDO().ReleaseInts();
-            zNetView.GetZDO().ReleaseLongs();
-            zNetView.GetZDO().ReleaseStrings();
+            ZDOExtraData.ReleaseFloats(zNetView.GetZDO().m_uid);
+            ZDOExtraData.ReleaseVec3(zNetView.GetZDO().m_uid);
+            ZDOExtraData.ReleaseQuats(zNetView.GetZDO().m_uid);
+            ZDOExtraData.ReleaseInts(zNetView.GetZDO().m_uid);
+            ZDOExtraData.ReleaseLongs(zNetView.GetZDO().m_uid);
+            ZDOExtraData.ReleaseStrings(zNetView.GetZDO().m_uid);
 
-            zNetView.GetZDO().IncreseDataRevision();
+            zNetView.GetZDO().IncreaseDataRevision();
         }
 
         private void OnDestroy() {
