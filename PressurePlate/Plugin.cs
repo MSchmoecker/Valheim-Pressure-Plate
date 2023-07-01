@@ -14,7 +14,7 @@ namespace PressurePlate {
     public class Plugin : BaseUnityPlugin {
         public const string ModName = "Pressure-Plate";
         public const string ModGuid = "com.maxsch.valheim.pressure_plate";
-        public const string ModVersion = "0.9.1";
+        public const string ModVersion = "0.9.2";
 
         private readonly AcceptableValueRange<float> percentRange = new AcceptableValueRange<float>(0f, 100f);
         public ConfigEntry<float> plateVolume;
