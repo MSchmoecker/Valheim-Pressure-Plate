@@ -1,5 +1,8 @@
 # Changelog
 
+0.9.2
+- Fixed an error when using the reset button on a plate
+
 0.9.1
 - Added Portuguese Brazilian translation (thanks kaiqueknup!)
 - Fixed localization did not reload when changing the language ingame
