@@ -1,8 +1,4 @@
-﻿using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using UnityEngine;
+﻿using UnityEngine;
 using Jotunn.Configs;
 using Jotunn.Entities;
 using Jotunn.Managers;
@@ -78,11 +74,11 @@ namespace PressurePlate {
             Sprite icon = assetBundle.LoadAsset<Sprite>(iconName);
 
             PieceConfig pieceConfig = new PieceConfig() {
-                CraftingStation = "piece_workbench",
+                CraftingStation = CraftingStations.Workbench,
                 Requirements = requirements,
-                PieceTable = "Hammer",
+                PieceTable = PieceTables.Hammer,
                 Icon = icon,
-                Category = Piece.PieceCategory.Misc.ToString(),
+                Category = PieceCategories.Misc,
                 Name = tokenName
             };
 
