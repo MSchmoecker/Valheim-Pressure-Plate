@@ -100,7 +100,7 @@ namespace PressurePlate {
             bool wasPressed = isPressed;
             bool newPressed = CheckPress(out Player activator);
             ZDO targetArea = GetArea(transform.position);
-            List<DoorPowerState> doors = DoorPowerState.FindDoorsInPlateRange(this, transform.position);
+            List<PowerState> doors = PowerState.FindDoorsInPlateRange(this, transform.position);
 
             if (newPressed) {
                 if (pressTriggerDelay <= 0) {
@@ -145,8 +145,8 @@ namespace PressurePlate {
                     releaseEffects.Create(transform.position, Quaternion.identity);
                 }
 
-                foreach (DoorPowerState door in doors) {
-                    if (!CanInteractWithDoor(activator, door, targetArea)) {
+                foreach (PowerState door in doors) {
+                    if (!door.CanInteract(activator, targetArea)) {
                         continue;
                     }
 
@@ -161,8 +161,8 @@ namespace PressurePlate {
             if (!zNetView.IsOwner()) return;
             if (!stateChange && !isPowering) return;
 
-            foreach (DoorPowerState door in doors) {
-                if (!CanInteractWithDoor(activator, door, targetArea)) {
+            foreach (PowerState door in doors) {
+                if (!door.CanInteract(activator, targetArea)) {
                     continue;
                 }
 
@@ -186,7 +186,7 @@ namespace PressurePlate {
             return isPressed;
         }
 
-        private static bool CanInteractWithDoor(Player activator, DoorPowerState door, ZDO targetArea) {
+        public static bool CanInteractWithDoor(Player activator, DoorPowerState door, ZDO targetArea) {
             if (activator != null && PlayerHasAccess(activator, door.transform.position)) {
                 return true;
             }
@@ -264,7 +264,7 @@ namespace PressurePlate {
             return false;
         }
 
-        private static bool PlayerHasAccess(Player player, Vector3 pos) {
+        public static bool PlayerHasAccess(Player player, Vector3 pos) {
             if (WardIsLovePlugin.IsLoaded() && DoorInteract.InsideWard(pos)) {
                 return DoorInteract.CanInteract(player, pos);
             }
@@ -282,7 +282,7 @@ namespace PressurePlate {
             return true;
         }
 
-        private static ZDO GetArea(Vector3 pos) {
+        public static ZDO GetArea(Vector3 pos) {
             if (WardIsLovePlugin.IsLoaded() && DoorInteract.InsideWard(pos)) {
                 return WardMonoscriptExt.GetWardMonoscript(pos).GetZDO();
             }

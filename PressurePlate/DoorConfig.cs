@@ -34,7 +34,7 @@ namespace PressurePlate {
             return true;
         }
 
-        public static DoorConfig GetDoorConfig(DoorPowerState doorPowerState) {
+        public static DoorConfig GetDoorConfig(PowerState doorPowerState) {
             if (specificDoors.ContainsKey(doorPowerState.GetPrefabId())) {
                 return specificDoors[doorPowerState.GetPrefabId()];
             }
