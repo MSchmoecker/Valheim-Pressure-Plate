@@ -53,12 +53,15 @@ cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_utils.dll" "UnityAssets/Asset
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_postprocessing.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_sunshafts.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_guiutils.dll" "UnityAssets/Assets/Assemblies"
-cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_steamworks.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/assembly_googleanalytics.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlayFab.dll" "UnityAssets/Assets/Assemblies"
 cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlayFabParty.dll" "UnityAssets/Assets/Assemblies"
-cp "$VALHEIM_INSTALL/valheim_Data/Managed/Fishlabs.Core.dll" "UnityAssets/Assets/Assemblies"
-cp "$VALHEIM_INSTALL/valheim_Data/Managed/Fishlabs.Common.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlatformTools.Core.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/PlatformTools.Common.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/ConnectedStorage.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/gui_framework.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/com.rlabrecque.steamworks.net.dll" "UnityAssets/Assets/Assemblies"
+cp "$VALHEIM_INSTALL/valheim_Data/Managed/SoftReferenceableAssets.dll" "UnityAssets/Assets/Assemblies"
 
 # make zip files
 cd "$ModDir" || exit
