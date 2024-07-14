@@ -1,5 +1,9 @@
 # Changelog
 
+0.9.3
+- Fixed an error when a plate is instantly destroyed after being placed
+- Updated and cleaned up some internal code
+
 0.9.2
 - Fixed an error when using the reset button on a plate
 
