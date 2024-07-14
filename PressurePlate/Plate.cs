@@ -324,6 +324,9 @@ namespace PressurePlate {
         }
 
         public string GetHoverText() {
+            if (!zNetView.IsValid()) {
+                return string.Empty;
+            }
 
             if (!PlayerHasAccess(Player.m_localPlayer, Player.m_localPlayer.transform.position)) {
                 return Localization.instance.Localize($"{GetHoverName()}\n$piece_noaccess");
@@ -354,7 +357,7 @@ namespace PressurePlate {
                 return true;
             }
 
-            if (!PressurePlateUI.IsOpen() && !PressurePlateUI.instance.IsFrameBlocked) {
+            if (!PressurePlateUI.IsOpen && !PressurePlateUI.instance.IsFrameBlocked) {
                 PressurePlateUI.instance.OpenUI(this);
             }
 

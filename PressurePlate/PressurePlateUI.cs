@@ -6,11 +6,10 @@ using UnityEngine.UI;
 namespace PressurePlate {
     public class PressurePlateUI : MonoBehaviour {
         public static PressurePlateUI instance;
-        public static bool IsOpen() => isOpen;
+
+        public static bool IsOpen { get; private set; }
 
         public bool IsFrameBlocked { get; private set; }
-
-        private static bool isOpen;
 
         // Disable Field XYZ is never assigned to, and will always have its default value XX
 #pragma warning disable 0649
@@ -95,7 +94,7 @@ namespace PressurePlate {
         private void Update() {
             IsFrameBlocked = false;
 
-            if (IsOpen() && (Input.GetKeyDown(KeyCode.Escape) || ZInput.GetButtonDown("Use") || ZInput.GetButtonDown("Inventory"))) {
+            if (IsOpen && (!target || Input.GetKeyDown(KeyCode.Escape) || ZInput.GetButtonDown("Use") || ZInput.GetButtonDown("Inventory"))) {
                 IsFrameBlocked = true;
 
                 target = null;
@@ -141,7 +140,7 @@ namespace PressurePlate {
         }
 
         private void SetGUIState(bool active) {
-            isOpen = active;
+            IsOpen = active;
             uiRoot.gameObject.SetActive(active);
             GUIManager.BlockInput(active);
         }
