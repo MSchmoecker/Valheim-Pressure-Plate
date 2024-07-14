@@ -15,7 +15,7 @@
       <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
     </PropertyGroup>
     <ItemGroup>
-      <PackageReference Include="JotunnLib" Version="2.17.0" />
+      <PackageReference Include="JotunnLib" Version="2.20.1" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="pressure_plate" />
