@@ -133,8 +133,10 @@ MonoBehaviour:
       m_enabled: 1
       m_variant: -1
       m_attach: 0
+      m_follow: 0
       m_inheritParentRotation: 0
       m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
       m_randomRotation: 0
       m_scale: 0
       m_childTransform: 
@@ -145,8 +147,10 @@ MonoBehaviour:
       m_enabled: 1
       m_variant: -1
       m_attach: 0
+      m_follow: 0
       m_inheritParentRotation: 0
       m_inheritParentScale: 0
+      m_multiplyParentVisualScale: 0
       m_randomRotation: 0
       m_scale: 0
       m_childTransform: 
@@ -168,9 +172,15 @@ MonoBehaviour:
   m_wet: {fileID: 0}
   m_noRoofWear: 1
   m_noSupportWear: 1
+  m_ashDamageImmune: 0
+  m_ashDamageResist: 0
+  m_burnable: 1
   m_materialType: 0
-  m_supports: 0
+  m_supports: 1
   m_comOffset: {x: 0, y: 0, z: 0}
+  m_forceCorrectCOMCalculation: 0
+  m_staticPosition: 1
+  m_nonSolidRenderers: []
   m_health: 100
   m_damages:
     m_blunt: 0
@@ -183,6 +193,7 @@ MonoBehaviour:
     m_lightning: 0
     m_poison: 0
     m_spirit: 0
+  m_minToolTier: 0
   m_hitNoise: 0
   m_destroyNoise: 0
   m_triggerPrivateArea: 1
@@ -202,9 +213,17 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 338738119813995370}
   m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
   m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 2
+  serializedVersion: 3
   m_Size: {x: 1, y: 0.1, z: 1}
   m_Center: {x: 0, y: 0.05, z: 0}
 --- !u!1 &8881251175063360947
@@ -232,12 +251,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8881251175063360947}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.05, z: 0}
   m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5990601836939204857}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &983780263237294949
 MeshFilter:
@@ -258,10 +278,12 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -286,3 +308,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
