@@ -30,6 +30,7 @@ namespace PressurePlate {
             localization.AddJsonFile("German", AssetUtils.LoadTextFromResources("German.json"));
             localization.AddJsonFile("Spanish", AssetUtils.LoadTextFromResources("Spanish.json"));
             localization.AddJsonFile("Portuguese_Brazilian", AssetUtils.LoadTextFromResources("Portuguese_Brazilian.json"));
+            localization.AddJsonFile("Russian", AssetUtils.LoadTextFromResources("Russian.json"));
 
             const string plateVolumeDescription = "Volume of the press and release sound of pressure plates. Value in percent, can be changed while ingame";
             plateVolume = Config.Bind("Sound", "Plate Volume", 100f, new ConfigDescription(plateVolumeDescription, percentRange));
