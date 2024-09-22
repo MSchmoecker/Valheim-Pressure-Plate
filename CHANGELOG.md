@@ -1,5 +1,9 @@
 # Changelog
 
+0.10.0
+- Added Russian translation (thanks Iterny!)
+- Added structure support to pressure plates, so pieces can be placed on top of them
+
 0.9.3
 - Fixed an error when a plate is instantly destroyed after being placed
 - Updated and cleaned up some internal code
