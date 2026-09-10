@@ -348,6 +348,10 @@ namespace PressurePlate {
             return Localization.instance.Localize(piece.m_name);
         }
 
+        public float GetHoverOffset() {
+            return 0f;
+        }
+
         public bool Interact(Humanoid user, bool hold, bool alt) {
             if (hold) {
                 return false;
