@@ -1,5 +1,8 @@
 # Changelog
 
+0.10.1
+- Updated for Valheim 1.0
+
 0.10.0
 - Added Russian translation (thanks Iterny!)
 - Added structure support to pressure plates, so pieces can be placed on top of them
